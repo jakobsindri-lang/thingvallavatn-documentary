@@ -1,0 +1,9 @@
+# Upprunalegar háupplausnarmyndir (myndavélaskrár) - of stórar fyrir git
+# og ekki notaðar beint á síðunni. Vefvænar útgáfur eru í site/assets/images/web/
+site/assets/images/*
+!site/assets/images/web/
+!site/assets/images/web/**
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
