@@ -24,3 +24,15 @@
   hnappar fyrir hópfjármögnun, beinan stuðning og samstarf.
 - **Sneak peek efni (myndbönd, stillur) verður sett inn sem local assets síðar**,
   undir `site/assets/images/` og `site/assets/video/`.
+
+## 2026-06-13 — Hosting og deployment
+
+- **Verkefnið er hýst í public GitHub repo**:
+  `https://github.com/jakobsindri-lang/thingvallavatn-documentary`. Public repo
+  var valið m.a. til að nýta frítt GitHub Pages hosting og því innihaldið
+  (efnisplan, ákvarðanir, todo) er ekki viðkvæmt fyrir þetta public
+  kynningarverkefni.
+- **Vefsíðan er birt með GitHub Pages í gegnum GitHub Actions** —
+  `.github/workflows/pages.yml` byggir og birtir `site/` mappuna sjálfkrafa
+  við hvert push á `master`.
+- **Live URL**: https://jakobsindri-lang.github.io/thingvallavatn-documentary/

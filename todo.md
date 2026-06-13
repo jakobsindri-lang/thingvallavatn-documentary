@@ -11,3 +11,5 @@
 - [ ] Þjappa/minnka myndir í `site/assets/images/web/` fyrir endanlega birtingu
 - [ ] Skrifa 60 sekúndna pitch texta fyrir styrktaraðila
 - [ ] Ákveða styrktarleið (Karolina Fund eða annað)
+- [x] Stofna GitHub repo (public) og pusha kóðanum
+- [x] Virkja GitHub Pages með sjálfvirkri deployment (GitHub Actions)

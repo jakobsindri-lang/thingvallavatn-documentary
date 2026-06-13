@@ -14,6 +14,11 @@ Vefsíðan sem er í þróun hér er **opin kynningar- og stuðningssíða fyrir
 hugsuð fyrir almenning, áhugafólk um náttúru, veiðimenn, vísindafólk, fjölmiðla og mögulega
 styrktaraðila — markmiðið er að hjálpa fólki að skilja verkefnið og leggja því lið.
 
+## Hlekkir
+
+- **Live síða**: https://jakobsindri-lang.github.io/thingvallavatn-documentary/
+- **GitHub repo**: https://github.com/jakobsindri-lang/thingvallavatn-documentary
+
 ## Markmið
 
 - Halda utan um hugmynd, efni, næstu skref og þróun verkefnisins
