@@ -35,4 +35,11 @@ if (galleryScroll && galleryPrev && galleryNext) {
   galleryNext.addEventListener("click", () => {
     galleryScroll.scrollBy({ left: scrollStep(), behavior: "smooth" });
   });
+
+  galleryScroll.addEventListener("wheel", (event) => {
+    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+      event.preventDefault();
+      galleryScroll.scrollLeft += event.deltaY;
+    }
+  });
 }
