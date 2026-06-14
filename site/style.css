@@ -401,6 +401,11 @@ body {
   max-width: none;
 }
 
+.funding-card .account-details {
+  flex-grow: 0;
+  color: var(--color-text);
+}
+
 .funding-card .button {
   align-self: center;
 }
