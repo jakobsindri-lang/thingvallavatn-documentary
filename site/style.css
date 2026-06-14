@@ -634,6 +634,11 @@ body {
   align-items: center;
   justify-content: center;
   max-width: 220px;
+  transition: opacity 0.2s ease;
+}
+
+.partner-logo:hover {
+  opacity: 0.85;
 }
 
 .partner-logo img {
