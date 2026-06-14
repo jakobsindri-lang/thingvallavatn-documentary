@@ -21,6 +21,22 @@ const galleryScroll = document.querySelector(".gallery-scroll");
 const galleryPrev = document.getElementById("gallery-prev");
 const galleryNext = document.getElementById("gallery-next");
 
+if (galleryScroll) {
+  const items = Array.from(galleryScroll.children);
+  const firstIndex = items.findIndex((item) =>
+    item.querySelector("img").src.includes("stillur-ur-lofti-1.jpg")
+  );
+  const first = firstIndex >= 0 ? items.splice(firstIndex, 1)[0] : null;
+
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+
+  if (first) items.unshift(first);
+  items.forEach((item) => galleryScroll.appendChild(item));
+}
+
 if (galleryScroll && galleryPrev && galleryNext) {
   const scrollStep = () => {
     const item = galleryScroll.querySelector(".gallery-item");
