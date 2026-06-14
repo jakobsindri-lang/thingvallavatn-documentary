@@ -336,25 +336,6 @@ body {
   max-width: none;
 }
 
-/* Why it matters */
-.value-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.value-item {
-  text-align: center;
-  padding: 1.2rem 1rem;
-  border-radius: var(--radius);
-  background-color: var(--color-bg-alt);
-  border: 1px solid var(--border-soft);
-  color: var(--color-accent-light);
-  font-size: 0.95rem;
-  letter-spacing: 0.03em;
-}
-
 /* Support overview */
 .support-grid {
   display: grid;
