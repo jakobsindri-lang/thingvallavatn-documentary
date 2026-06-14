@@ -483,7 +483,7 @@ body {
 }
 
 #af-hverju .section-banner img {
-  object-position: center top;
+  object-position: center 12%;
 }
 
 /* Card grid (themes) */
@@ -643,6 +643,15 @@ body {
   width: 100%;
   height: auto;
   display: block;
+}
+
+#styrktaradilar .section-intro a {
+  color: var(--color-accent-light);
+  text-decoration: none;
+}
+
+#styrktaradilar .section-intro a:hover {
+  text-decoration: underline;
 }
 
 /* Footer */
