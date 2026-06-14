@@ -642,6 +642,31 @@ body {
   display: block;
 }
 
+.partner-person {
+  flex-direction: column;
+  gap: 0.6rem;
+  background-color: var(--color-bg-card);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.partner-person:hover {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
+.partner-person img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.partner-person span {
+  font-size: 0.9rem;
+}
+
 #styrktaradilar .button {
   margin-top: 0.5rem;
 }
