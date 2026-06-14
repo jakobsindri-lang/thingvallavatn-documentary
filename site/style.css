@@ -351,6 +351,10 @@ body {
   filter: saturate(0.9) brightness(0.85);
 }
 
+#af-hverju .section-banner img {
+  object-position: center top;
+}
+
 /* Card grid (themes) */
 .card-grid {
   display: grid;
