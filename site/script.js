@@ -108,6 +108,7 @@ if (weatherGrid || anglerCard) {
     showers: "🌦️",
     sleet: "🌨️",
     snow: "❄️",
+    chanceflurries: "🌨️",
     thunder: "⛈️",
   };
 
