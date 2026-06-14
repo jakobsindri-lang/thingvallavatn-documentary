@@ -274,7 +274,7 @@ body {
 }
 
 .gallery-item img[src$="stillur-bleikja-3.jpg"] {
-  object-position: 70% center;
+  object-position: right center;
 }
 
 .gallery-arrow {
