@@ -258,7 +258,7 @@ body {
 
 .gallery-item {
   flex: 0 0 auto;
-  width: min(85vw, 480px);
+  width: min(85vw, 960px);
   aspect-ratio: 3 / 2;
   border-radius: var(--radius);
   overflow: hidden;
