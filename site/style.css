@@ -20,6 +20,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -86,18 +88,6 @@ body {
   max-width: 60ch;
   margin-left: auto;
   margin-right: auto;
-}
-
-.working-title {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  letter-spacing: 0.03em;
-}
-
-.working-title span {
-  color: var(--color-accent-light);
-  font-style: italic;
 }
 
 .hero-buttons {
