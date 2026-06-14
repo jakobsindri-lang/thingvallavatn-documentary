@@ -517,11 +517,11 @@ body {
   object-fit: cover;
   display: block;
   filter: saturate(0.9) brightness(0.92);
-  transition: object-fit 0.3s ease, filter 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .card:hover .card-image img {
-  object-fit: contain;
+  transform: scale(1.05);
   filter: none;
 }
 
