@@ -420,6 +420,18 @@ body {
   color: var(--color-text-muted);
 }
 
+.water-temp {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+
+.water-temp strong {
+  color: var(--color-accent-light);
+  font-size: 1.3rem;
+}
+
 .weather-source {
   text-align: center;
   font-size: 0.85rem;
@@ -483,7 +495,7 @@ body {
 }
 
 #af-hverju .section-banner img {
-  object-position: center 12%;
+  object-position: center 20%;
 }
 
 /* Card grid (themes) */
@@ -645,13 +657,8 @@ body {
   display: block;
 }
 
-#styrktaradilar .section-intro a {
-  color: var(--color-accent-light);
-  text-decoration: none;
-}
-
-#styrktaradilar .section-intro a:hover {
-  text-decoration: underline;
+#styrktaradilar .button {
+  margin-top: 0.5rem;
 }
 
 /* Footer */

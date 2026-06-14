@@ -61,6 +61,27 @@ if (weatherTabs.length) {
   });
 }
 
+const waterTemp = document.getElementById("water-temp");
+
+if (waterTemp) {
+  fetch("assets/data/vatnshiti.json")
+    .then((response) => response.json())
+    .then((data) => {
+      const updated = new Date(data.updated);
+      const timeLabel = updated.toLocaleString("is-IS", {
+        day: "numeric",
+        month: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const tempLabel = data.temp.toFixed(1).replace(".", ",");
+      waterTemp.innerHTML = `Vatnshiti í Þingvallavatni er <strong>${tempLabel}°C</strong> (mælt ${timeLabel}).`;
+    })
+    .catch(() => {
+      waterTemp.textContent = "";
+    });
+}
+
 if (weatherGrid || anglerCard) {
   const weatherIcons = {
     clear: "☀️",
