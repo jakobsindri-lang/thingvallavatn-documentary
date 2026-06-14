@@ -131,10 +131,10 @@ if (weatherGrid || anglerCard) {
         anglerCard.innerHTML = `
           <p class="angler-verdict">${verdict}</p>
           <p class="angler-detail">
-            Í dag á Vatnskoti: ${weatherIcons[today.merki] || "🌡️"} ${Math.round(today.t2)}°,
+            Í dag í Vatnskoti: ${weatherIcons[today.merki] || "🌡️"} ${Math.round(today.t2)}°,
             vindur ${Math.round(today.f10)} m/s ${windDirections[today.dtexti] || today.dtexti.toUpperCase()}${rainText}.
           </p>
-          <p class="angler-note">Veiðitímabil í Þingvallavatni er 20. apríl til 15. september.</p>
+          <p class="angler-note">Veiðitímabil í þjóðgarðinum í Þingvallavatni er 20. apríl til 15. september.</p>
         `;
       }
     })
