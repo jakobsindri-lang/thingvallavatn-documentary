@@ -430,21 +430,6 @@ body {
   display: block;
 }
 
-/* Status box */
-.status-box {
-  max-width: 700px;
-  margin: 0 auto 4rem;
-  padding: 1rem 1.5rem;
-  border-radius: var(--radius);
-  background-color: var(--color-bg-alt);
-  border: 1px solid var(--border-soft);
-  color: var(--color-accent-light);
-  text-align: center;
-  font-size: 0.9rem;
-  font-style: italic;
-  min-height: 1.5rem;
-}
-
 /* Footer */
 .site-footer {
   text-align: center;
