@@ -750,17 +750,18 @@ body {
   align-items: center;
   justify-content: center;
   max-width: 220px;
-  transition: opacity 0.2s ease;
-}
-
-.partner-logo:hover {
-  opacity: 0.85;
+  overflow: hidden;
 }
 
 .partner-logo img {
   width: 100%;
   height: auto;
   display: block;
+  transition: transform 0.3s ease;
+}
+
+.partner-logo:hover img {
+  transform: scale(1.05);
 }
 
 .partner-person {
@@ -782,6 +783,11 @@ body {
   height: 90px;
   border-radius: 50%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.partner-person:hover img {
+  transform: scale(1.05);
 }
 
 .partner-person span {
