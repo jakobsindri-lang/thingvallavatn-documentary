@@ -38,18 +38,38 @@ if (galleryScroll) {
 }
 
 if (galleryScroll && galleryPrev && galleryNext) {
-  const scrollStep = () => {
-    const item = galleryScroll.querySelector(".gallery-item");
-    const gap = parseFloat(getComputedStyle(galleryScroll).gap) || 0;
-    return item.getBoundingClientRect().width + gap;
+  const getCurrentIndex = () => {
+    const items = Array.from(galleryScroll.querySelectorAll(".gallery-item"));
+    const center = galleryScroll.scrollLeft + galleryScroll.clientWidth / 2;
+    let closest = 0;
+    let closestDistance = Infinity;
+    items.forEach((item, index) => {
+      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const distance = Math.abs(itemCenter - center);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closest = index;
+      }
+    });
+    return closest;
+  };
+
+  const scrollToIndex = (index) => {
+    const items = galleryScroll.querySelectorAll(".gallery-item");
+    const item = items[Math.max(0, Math.min(index, items.length - 1))];
+    const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+    galleryScroll.scrollTo({
+      left: itemCenter - galleryScroll.clientWidth / 2,
+      behavior: "smooth",
+    });
   };
 
   galleryPrev.addEventListener("click", () => {
-    galleryScroll.scrollBy({ left: -scrollStep(), behavior: "smooth" });
+    scrollToIndex(getCurrentIndex() - 1);
   });
 
   galleryNext.addEventListener("click", () => {
-    galleryScroll.scrollBy({ left: scrollStep(), behavior: "smooth" });
+    scrollToIndex(getCurrentIndex() + 1);
   });
 
   galleryScroll.addEventListener("wheel", (event) => {
