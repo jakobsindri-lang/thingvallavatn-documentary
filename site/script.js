@@ -72,10 +72,17 @@ if (galleryScroll && galleryPrev && galleryNext) {
     scrollToIndex(getCurrentIndex() + 1);
   });
 
+  let wheelLocked = false;
+
   galleryScroll.addEventListener("wheel", (event) => {
     if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
       event.preventDefault();
-      galleryScroll.scrollLeft += event.deltaY;
+      if (wheelLocked) return;
+      wheelLocked = true;
+      scrollToIndex(getCurrentIndex() + (event.deltaY > 0 ? 1 : -1));
+      setTimeout(() => {
+        wheelLocked = false;
+      }, 500);
     }
   });
 }
