@@ -277,9 +277,9 @@
     </section>
 
     <section class="section weather" id="vedur">
-      <h2>Veður í Vatnskoti</h2>
+      <h2>Aðstæður til veiða</h2>
       <p class="section-intro">
-        Lifandi veðurspá frá Bliku fyrir Vatnskot, í þjóðgarðinum á Þingvöllum.
+        Lifandi veðurspá og mat á aðstæðum til veiða fyrir Vatnskot, í þjóðgarðinum á Þingvöllum.
       </p>
       <div class="weather-tabs">
         <button type="button" class="weather-tab active" data-tab="vikuspa">Vikuspá</button>
@@ -293,6 +293,44 @@
       <div class="weather-panel" data-panel="veidimenn" hidden>
         <div class="angler-card" id="angler-card">
           <p class="weather-status">Hleð inn veðurspá&hellip;</p>
+        </div>
+
+        <div class="conditions-table-wrap">
+          <p class="conditions-note">
+            Sýnidæmi &ndash; tafla og viðmið um aðstæður til veiða eftir veðri, hitastigi,
+            tíma á veiðitímabilinu og tíma dags eru í vinnslu. Gildin hér eru aðeins til skýringar.
+          </p>
+          <table class="conditions-table">
+            <thead>
+              <tr>
+                <th>Tími dags</th>
+                <th>Urriði</th>
+                <th>Bleikja</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Morgunn</td>
+                <td><span class="condition condition-good">Góðar</span></td>
+                <td><span class="condition condition-fair">Sæmilegar</span></td>
+              </tr>
+              <tr>
+                <td>Dagur</td>
+                <td><span class="condition condition-poor">Litlar</span></td>
+                <td><span class="condition condition-fair">Sæmilegar</span></td>
+              </tr>
+              <tr>
+                <td>Kvöld</td>
+                <td><span class="condition condition-good">Góðar</span></td>
+                <td><span class="condition condition-good">Góðar</span></td>
+              </tr>
+              <tr>
+                <td>Nótt</td>
+                <td><span class="condition condition-fair">Sæmilegar</span></td>
+                <td><span class="condition condition-poor">Litlar</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <p class="water-temp" id="water-temp"></p>
