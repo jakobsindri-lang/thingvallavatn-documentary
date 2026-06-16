@@ -306,7 +306,7 @@ body {
 }
 
 .gallery-item {
-  flex: 0 0 calc(100% / 3);
+  flex: 0 0 100%;
   min-width: 0;
   padding: 0 0.5rem;
 }
@@ -329,15 +329,15 @@ body {
   object-position: right center;
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 1200px) {
   .gallery-item {
     flex-basis: 50%;
   }
 }
 
-@media (max-width: 640px) {
+@media (min-width: 1800px) {
   .gallery-item {
-    flex-basis: 100%;
+    flex-basis: calc(100% / 3);
   }
 }
 

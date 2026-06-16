@@ -57,8 +57,8 @@ if (galleryScroll) {
   let transitionFallback;
 
   const getItemsPerView = () => {
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 640) return 2;
+    if (window.innerWidth >= 1800) return 3;
+    if (window.innerWidth >= 1200) return 2;
     return 1;
   };
 
