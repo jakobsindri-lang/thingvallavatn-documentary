@@ -5,9 +5,10 @@
 - [x] Ákveða sjónrænan stíl
 - [x] Bæta við myndefni (39 myndir + sneak peek myndband)
 - [ ] Bæta við tökustöðum
+- [ ] Fínstilla gagnvirkt kort (punktastaðsetningar, texta og möguleg veiðisvæði/veiðibann)
 - [ ] Bæta við upplýsingum um lífríki, sögu og landslag
 - [x] Gera fyrstu útgáfu vefsíðunnar
-- [ ] Prófa síðuna local í browser
+- [x] Prófa síðuna local í browser
 - [ ] Þjappa/minnka myndir í `site/assets/images/web/` fyrir endanlega birtingu
 - [ ] Skrifa 60 sekúndna pitch texta fyrir styrktaraðila
 - [ ] Ákveða styrktarleið (Karolina Fund eða annað)

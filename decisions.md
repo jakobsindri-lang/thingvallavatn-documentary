@@ -36,3 +36,17 @@
   `.github/workflows/pages.yml` byggir og birtir `site/` mappuna sjálfkrafa
   við hvert push á `master`.
 - **Live URL**: https://jakobsindri-lang.github.io/thingvallavatn-documentary/
+
+## 2026-06-16 — Gagnvirkt kort og vatnshiti
+
+- **Gagnvirkt kort er komið inn sem vinnuútgáfa** — SVG-kortið
+  `site/assets/Map/veidisvaedi_thingvallavatni.svg` er hlaðið inn á síðuna og birt
+  sem kafli eftir `Stillur` og á undan `Aðstæður til veiða`.
+- **Kortið notar punkta frekar en örnefna-texta á kortinu** — textarnir í SVG-inu
+  eru faldir í fyrstu útgáfu og JavaScript býr til smellanlega punkta úr
+  staðsetningum örnefnanna. Nafn og lýsing birtast í upplýsingaspjaldi.
+- **Kortið er merkt sem vinnuútgáfa** — punktastaðsetningar og textar þurfa
+  fínstillingu síðar. `Langatangi` er birt sem `Langitangi` í UI.
+- **Vatnshiti er sóttur með cache-buster** — síðan biður um ferskt
+  `assets/data/vatnshiti.json` með `cache: "no-store"` og workflow fyrir
+  vatnshita deploy-ar Pages eftir uppfærslu.
