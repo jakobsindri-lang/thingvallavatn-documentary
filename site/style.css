@@ -239,16 +239,32 @@ body {
 }
 
 .interactive-map-svg .ornefni {
-  cursor: pointer;
-  outline: none;
-  transition: fill 0.2s ease, filter 0.2s ease;
+  display: none;
 }
 
-.interactive-map-svg .ornefni:hover,
-.interactive-map-svg .ornefni:focus,
-.interactive-map-svg .ornefni.is-active {
+.interactive-map-svg .ornefni-halo {
+  display: none;
+}
+
+.interactive-map-svg .map-point {
+  cursor: pointer;
+  fill: rgba(232, 243, 247, 0.88);
+  stroke: #16313c;
+  stroke-width: 1.5;
+  outline: none;
+  transition: fill 0.2s ease, stroke 0.2s ease, filter 0.2s ease, r 0.2s ease;
+}
+
+.interactive-map-svg .map-point-featured {
   fill: var(--color-accent-light);
-  filter: drop-shadow(0 0 4px rgba(143, 217, 232, 0.85));
+}
+
+.interactive-map-svg .map-point:hover,
+.interactive-map-svg .map-point:focus,
+.interactive-map-svg .map-point.is-active {
+  fill: #ffffff;
+  stroke: var(--color-accent);
+  filter: drop-shadow(0 0 5px rgba(143, 217, 232, 0.9));
 }
 
 .map-status {

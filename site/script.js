@@ -17,6 +17,201 @@ if (supportButton) {
   });
 }
 
+const mapSvgMount = document.getElementById("interactive-map-svg");
+const mapInfo = document.getElementById("map-info");
+const mapKicker = document.getElementById("map-kicker");
+const mapTitle = document.getElementById("map-title");
+const mapDescription = document.getElementById("map-description");
+const mapRole = document.getElementById("map-role");
+const mapTheme = document.getElementById("map-theme");
+const mapPlaceList = document.getElementById("map-place-list");
+
+const mapPlaces = {
+  Vatnskot: {
+    kicker: "Veiðisvæði þjóðgarðsins",
+    description:
+      "Miðpunktur veiðinnar í þessari fyrstu útgáfu kortsins. Héðan tengist sagan veiðiaðstæðum, aðgengi og lestri vatnsins.",
+    role: "Veiðistaður og viðmiðunarstaður",
+    theme: "Veiði, veður, aðgengi",
+  },
+  Garðsendavík: {
+    kicker: "Víkur og grunnsævi",
+    description:
+      "Ein af víkunum sem hjálpar til við að setja veiðina í samhengi við strandlínu, birtu og vind.",
+    role: "Örnefni við veiðisvæði",
+    theme: "Lestur vatnsins, landslag",
+  },
+  Vörðuvík: {
+    kicker: "Víkur og aðstæður",
+    description:
+      "Staður sem getur nýst vel í kortinu til að sýna hvernig smærri víkur og tangar móta aðstæður við vatnið.",
+    role: "Örnefni við veiðisvæði",
+    theme: "Veiðiaðferðir, aðstæður",
+  },
+  Öfugsnáði: {
+    kicker: "Örnefni við vatnið",
+    description:
+      "Sérkennilegt örnefni sem gefur kortinu staðbundinn karakter og minnir á hve náið fólk hefur lesið vatnið í gegnum tíðina.",
+    role: "Kennileiti",
+    theme: "Saga, staðarþekking",
+  },
+  Davíðsgjá: {
+    kicker: "Gjásvæði",
+    description:
+      "Gjáin tengir veiðikortið við jarðsögu Þingvalla og sjónrænan heim myndarinnar: hraun, dýpi og tæran vatnsheim.",
+    role: "Gjásvæði og kennileiti",
+    theme: "Jarðsaga, neðansjávarstemning",
+  },
+  Hallvík: {
+    kicker: "Víkur og veiði",
+    description:
+      "Víkin er góður punktur fyrir umfjöllun um hvernig form strandarinnar, vindur og birta breyta lestri vatnsins.",
+    role: "Örnefni við veiðisvæði",
+    theme: "Veiði, birta, vindur",
+  },
+  Gjáarendar: {
+    kicker: "Gjásvæði",
+    description:
+      "Staður sem getur brúað saman kortið, þjóðgarðinn og jarðfræðina sem gerir Þingvallavatn einstakt.",
+    role: "Kennileiti við gjár",
+    theme: "Þjóðgarðurinn, jarðsaga",
+  },
+  Ólafsdráttur: {
+    kicker: "Veiðistaður",
+    description:
+      "Örnefni sem hentar vel til að tengja kortið við hefðir, staðarþekkingu og sögur veiðimanna við vatnið.",
+    role: "Örnefni við veiðisvæði",
+    theme: "Veiðimenning, staðarþekking",
+  },
+  Langitangi: {
+    kicker: "Tangi við vatnið",
+    description:
+      "Tangi sem sýnir vel hvernig nes, víkur og opið vatn skapa ólíkar aðstæður eftir vindátt og árstíma.",
+    role: "Kennileiti og veiðisamhengi",
+    theme: "Vindur, dýpi, aðgengi",
+  },
+};
+
+if (mapSvgMount && mapInfo) {
+  const mapNameAliases = {
+    Langatangi: "Langitangi",
+  };
+  const placeNames = Object.keys(mapPlaces);
+  let activeMapElement = null;
+  let activeMapButton = null;
+  const svgNamespace = "http://www.w3.org/2000/svg";
+  const escapeSelectorValue = (value) => {
+    if (window.CSS && CSS.escape) return CSS.escape(value);
+    return value.replace(/["\\]/g, "\\$&");
+  };
+
+  const normalizeMapName = (name) => mapNameAliases[name] || name;
+
+  const updateMapInfo = (rawName) => {
+    const name = normalizeMapName(rawName);
+    const place = mapPlaces[name] || {
+      kicker: "Örnefni við Þingvallavatn",
+      description:
+        "Þessi staður er hluti af veiðisvæðinu og verður hægt að tengja við nánari upplýsingar síðar.",
+      role: "Örnefni",
+      theme: "Veiði, landslag",
+    };
+
+    mapKicker.textContent = place.kicker;
+    mapTitle.textContent = name;
+    mapDescription.textContent = place.description;
+    mapRole.textContent = place.role;
+    mapTheme.textContent = place.theme;
+
+    if (activeMapElement) activeMapElement.classList.remove("is-active");
+    activeMapElement = mapSvgMount.querySelector(
+      `.map-point[data-nafn="${escapeSelectorValue(name)}"]`
+    );
+    if (activeMapElement) activeMapElement.classList.add("is-active");
+
+    if (activeMapButton) activeMapButton.classList.remove("is-active");
+    activeMapButton = mapPlaceList?.querySelector(
+      `[data-map-place="${escapeSelectorValue(name)}"]`
+    );
+    if (activeMapButton) activeMapButton.classList.add("is-active");
+  };
+
+  if (mapPlaceList) {
+    placeNames.forEach((name) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "map-place-button";
+      button.dataset.mapPlace = name;
+      button.textContent = name;
+      button.addEventListener("click", () => updateMapInfo(name));
+      mapPlaceList.appendChild(button);
+    });
+  }
+
+  fetch("assets/Map/veidisvaedi_thingvallavatni.svg")
+    .then((response) => {
+      if (!response.ok) throw new Error("Map SVG not found");
+      return response.text();
+    })
+    .then((svgText) => {
+      const parser = new DOMParser();
+      const svgDocument = parser.parseFromString(svgText, "image/svg+xml");
+      const svg = svgDocument.documentElement;
+      if (svg.nodeName.toLowerCase() === "parsererror") throw new Error("Invalid SVG");
+
+      svg.removeAttribute("width");
+      svg.removeAttribute("height");
+      svg.setAttribute("role", "img");
+      svg.setAttribute("focusable", "false");
+      mapSvgMount.replaceChildren(document.importNode(svg, true));
+
+      const inlineSvg = mapSvgMount.querySelector("svg");
+      const pointLayer = document.createElementNS(svgNamespace, "g");
+      pointLayer.setAttribute("id", "map-points");
+
+      mapSvgMount.querySelectorAll(".ornefni, .ornefni-halo").forEach((label) => {
+        label.setAttribute("aria-hidden", "true");
+      });
+
+      mapSvgMount.querySelectorAll(".ornefni").forEach((label) => {
+        const sourceName = label.dataset.nafn || label.textContent.trim();
+        const name = normalizeMapName(sourceName);
+        const x = label.getAttribute("x");
+        const y = label.getAttribute("y");
+
+        if (!x || !y) return;
+
+        const point = document.createElementNS(svgNamespace, "circle");
+        point.classList.add("map-point");
+        if (mapPlaces[name]) point.classList.add("map-point-featured");
+        point.dataset.nafn = name;
+        point.setAttribute("cx", x);
+        point.setAttribute("cy", y);
+        point.setAttribute("r", mapPlaces[name] ? "5.5" : "3.8");
+        point.setAttribute("tabindex", "0");
+        point.setAttribute("role", "button");
+        point.setAttribute("aria-label", name);
+        point.addEventListener("click", () => updateMapInfo(name));
+        point.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            updateMapInfo(name);
+          }
+        });
+        pointLayer.appendChild(point);
+      });
+
+      inlineSvg.appendChild(pointLayer);
+
+      updateMapInfo("Vatnskot");
+    })
+    .catch(() => {
+      mapSvgMount.innerHTML =
+        '<p class="map-status">Ekki tókst að hlaða kortinu í þessari lotu.</p>';
+      updateMapInfo("Vatnskot");
+    });
+}
+
 const galleryScroll = document.querySelector(".gallery-scroll");
 const galleryPrev = document.getElementById("gallery-prev");
 const galleryNext = document.getElementById("gallery-next");
