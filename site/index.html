@@ -319,6 +319,7 @@
       <div class="weather-tabs">
         <button type="button" class="weather-tab active" data-tab="vikuspa">Vikuspá</button>
         <button type="button" class="weather-tab" data-tab="veidimenn">Fyrir veiðimenn</button>
+        <button type="button" class="weather-tab" data-tab="tungl">Tungl</button>
       </div>
       <div class="weather-panel" data-panel="vikuspa">
         <div class="weather-grid" id="weather-grid">
@@ -351,6 +352,21 @@
           </table>
         </div>
       </div>
+      <div class="weather-panel" data-panel="tungl" hidden>
+        <div class="moon-widget" id="moon-widget">
+          <div class="moon-graphic-wrap">
+            <div id="moon-svg-container" class="moon-svg-container" aria-hidden="true"></div>
+          </div>
+          <div class="moon-info">
+            <div class="moon-phase-name" id="moon-phase-name">Hleð&hellip;</div>
+            <div class="moon-illumination" id="moon-illumination"></div>
+            <div class="moon-times" id="moon-times"></div>
+            <div class="moon-clouds" id="moon-clouds"></div>
+            <p class="moon-note" id="moon-note"></p>
+          </div>
+        </div>
+      </div>
+
       <p class="water-temp" id="water-temp"></p>
       <p class="weather-source">
         Veðurgögn frá <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Bliku ↗</a>
@@ -443,6 +459,7 @@
     <p>&copy; 2026</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -527,3 +527,159 @@ if (weatherGrid || anglerCard) {
       }
     });
 }
+
+// --- Moon widget ---
+
+function moonPhaseSVG(phase, fraction) {
+  const size = 130;
+  const r = 56;
+  const cx = size / 2;
+  const cy = size / 2;
+  const top = `${cx} ${cy - r}`;
+  const bot = `${cx} ${cy + r}`;
+
+  let litPath = "";
+
+  if (fraction > 0.995) {
+    litPath = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#f5e6b0"/>`;
+  } else if (fraction > 0.005) {
+    let rx, outerSweep;
+
+    if (phase < 0.5) {
+      rx = r * Math.cos(2 * Math.PI * phase);
+      outerSweep = 1;
+    } else {
+      rx = r * Math.cos(2 * Math.PI * (phase - 0.5));
+      outerSweep = 0;
+    }
+
+    const absRx = Math.abs(rx);
+    const tSweep = rx >= 0 ? 1 : 0;
+
+    let d;
+    if (absRx < 0.5) {
+      d = `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} L ${top} Z`;
+    } else {
+      d = `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} A ${absRx} ${r} 0 0 ${tSweep} ${top} Z`;
+    }
+
+    litPath = `<path d="${d}" fill="#f5e6b0" clip-path="url(#moonClip)"/>`;
+  }
+
+  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <clipPath id="moonClip"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
+    </defs>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#0c1d2c"/>
+    ${litPath}
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(245,230,176,0.1)" stroke-width="1.5"/>
+  </svg>`;
+}
+
+function moonPhaseName(phase) {
+  if (phase < 0.03 || phase > 0.97) return "Nýmáni";
+  if (phase < 0.22) return "Vaxandi máni";
+  if (phase < 0.28) return "Fyrsti kvartill";
+  if (phase < 0.47) return "Vaxandi tungl";
+  if (phase < 0.53) return "Fullt tungl";
+  if (phase < 0.72) return "Minnkandi tungl";
+  if (phase < 0.78) return "Síðasti kvartill";
+  return "Minnkandi máni";
+}
+
+function cloudCoverLabel(pct) {
+  if (pct < 15) return "skýlaust";
+  if (pct < 35) return "lítil ský";
+  if (pct < 65) return "nokkur ský";
+  if (pct < 85) return "að mestu skýjað";
+  return "alskýjað";
+}
+
+function moonFishingNote(phase, fraction, cloudCover) {
+  const isWaxing = phase < 0.5;
+  const dirLabel = isWaxing ? "Vaxandi" : "Minnkandi";
+  const pct = Math.round(fraction * 100);
+  const effective = cloudCover != null ? fraction * (1 - cloudCover / 100) : fraction;
+
+  if (cloudCover != null && cloudCover > 85) {
+    return `Þykk skýjahula (${cloudCover}%) dregur verulega úr birtu tungls — næturnar líkjast nýmána aðstæðum.`;
+  }
+  if (fraction > 0.9) {
+    return "Fullt tungl. Urriðar eru oft virkir við yfirborð í kvöldroðanum, en björtu næturnar geta gert þá varfærnari.";
+  }
+  if (fraction < 0.1) {
+    return "Nýmáni — myrkrar nætur. Stórir urriðar þora frekar að koma upp við yfirborð þegar myrkt er.";
+  }
+  if (effective > 0.55) {
+    return `${dirLabel} tungl, ${pct}% birt. Gott að nota ljósar flugur snemma á kvöldið.`;
+  }
+  if (effective < 0.15) {
+    return `${dirLabel} tungl, ${pct}% birt${cloudCover != null ? ` en skýjahula ${cloudCover}%` : ""}. Dökkar aðstæður — henta vel fyrir stórar flugur.`;
+  }
+  return `${dirLabel} tungl, ${pct}% birt.`;
+}
+
+function formatMoonTime(date) {
+  return date.toLocaleTimeString("is-IS", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Atlantic/Reykjavik",
+  });
+}
+
+function initMoonWidget() {
+  const svgContainer = document.getElementById("moon-svg-container");
+  const phaseNameEl = document.getElementById("moon-phase-name");
+  const illuminationEl = document.getElementById("moon-illumination");
+  const timesEl = document.getElementById("moon-times");
+  const cloudsEl = document.getElementById("moon-clouds");
+  const noteEl = document.getElementById("moon-note");
+
+  if (!svgContainer) return;
+
+  if (typeof SunCalc === "undefined") {
+    phaseNameEl.textContent = "Ekki tókst að hlaða tunglagögnum.";
+    return;
+  }
+
+  const now = new Date();
+  const LAT = 64.2559;
+  const LON = -21.1179;
+
+  const illum = SunCalc.getMoonIllumination(now);
+  const phase = illum.phase;
+  const fraction = illum.fraction;
+
+  svgContainer.innerHTML = moonPhaseSVG(phase, fraction);
+  phaseNameEl.textContent = moonPhaseName(phase);
+
+  const pct = Math.round(fraction * 100);
+  illuminationEl.innerHTML = `
+    <span>${pct}% birt</span>
+    <span class="moon-illum-bar" role="presentation">
+      <span class="moon-illum-fill" style="width:${pct}%"></span>
+    </span>
+  `;
+
+  const mt = SunCalc.getMoonTimes(now, LAT, LON);
+  const parts = [];
+  if (mt.rise) parts.push(`Rís ${formatMoonTime(mt.rise)}`);
+  if (mt.set) parts.push(`Sest ${formatMoonTime(mt.set)}`);
+  timesEl.textContent = parts.length ? parts.join(" · ") : "Gengur ekki niður í nótt";
+
+  const renderNote = (cc) => {
+    if (cc != null) {
+      cloudsEl.textContent = `Skýjahula: ${cc}% — ${cloudCoverLabel(cc)}`;
+    }
+    noteEl.textContent = moonFishingNote(phase, fraction, cc);
+  };
+
+  fetch(
+    `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=cloud_cover&timezone=Atlantic%2FReykjavik`
+  )
+    .then((r) => r.json())
+    .then((data) => renderNote(data?.current?.cloud_cover ?? null))
+    .catch(() => renderNote(null));
+}
+
+initMoonWidget();
