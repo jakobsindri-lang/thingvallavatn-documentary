@@ -979,11 +979,12 @@ body {
   display: flex;
   align-items: center;
   gap: 2.5rem;
-  margin-top: 1.5rem;
+  margin: 1.5rem auto 0;
   padding: 2rem 2.5rem;
   background: var(--color-bg-card);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius);
+  max-width: 640px;
 }
 
 .moon-graphic-wrap {
