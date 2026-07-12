@@ -362,8 +362,9 @@ if (waterTempEl) {
 if (weatherGrid) {
   const weatherIcons = {
     clear:"☀️", partlycloudy:"🌤️", mostlycloudy:"⛅", cloudy:"☁️",
+    fog:"🌫️", drizzle:"🌦️",
     rain:"🌧️", showers:"🌦️", sleet:"🌨️", snow:"❄️",
-    chanceflurries:"🌨️", thunder:"⛈️",
+    chanceflurries:"🌨️", thunder:"⛈️", hail:"🌨️",
   };
   const windDirections = { n:"N", na:"NA", a:"A", sa:"SA", s:"S", sv:"SV", v:"V", nv:"NV" };
   const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://www.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
