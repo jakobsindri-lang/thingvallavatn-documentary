@@ -360,28 +360,39 @@ if (waterTempEl) {
 }
 
 if (weatherGrid) {
-  const weatherIcons = {
-    clear: "☀️", partlycloudy: "🌤️", mostlycloudy: "⛅", cloudy: "☁️",
-    rain: "🌧️", showers: "🌦️", sleet: "🌨️", snow: "❄️",
-    chanceflurries: "🌨️", thunder: "⛈️",
+  const wmoIcons = {
+    0:"☀️", 1:"🌤️", 2:"🌤️", 3:"☁️",
+    45:"🌫️", 48:"🌫️",
+    51:"🌦️", 53:"🌦️", 55:"🌦️", 56:"🌦️", 57:"🌧️",
+    61:"🌧️", 63:"🌧️", 65:"🌧️", 66:"🌨️", 67:"🌨️",
+    71:"❄️", 73:"❄️", 75:"❄️", 77:"❄️",
+    80:"🌦️", 81:"🌦️", 82:"🌧️", 85:"🌨️", 86:"🌨️",
+    95:"⛈️", 96:"⛈️", 99:"⛈️",
   };
-  const windDirections = { n:"N", na:"NA", a:"A", sa:"SA", s:"S", sv:"SV", v:"V", nv:"NV" };
+  const degToDir = (deg) => ["N","NA","A","SA","S","SV","V","NV"][Math.round(deg / 45) % 8];
   const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
+  const { lat, lon } = FORECAST_CONFIG.location;
 
-  fetch(FORECAST_CONFIG.api.blikaForecast)
+  fetch(
+    `${FORECAST_CONFIG.api.openMeteoCurrent}?latitude=${lat}&longitude=${lon}` +
+    `&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant` +
+    `&forecast_days=7&timezone=Atlantic%2FReykjavik`
+  )
     .then((r) => r.json())
-    .then((days) => {
+    .then((data) => {
+      const d = data.daily;
       weatherGrid.innerHTML = "";
-      days.slice(0, 7).forEach((day) => {
-        const date = new Date(day.dags_spar);
-        const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric" });
+      d.time.forEach((dateStr, i) => {
+        const [y, m, day] = dateStr.split("-").map(Number);
+        const date = new Date(Date.UTC(y, m - 1, day));
+        const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric", timeZone: "UTC" });
         const item = document.createElement("div");
         item.className = "weather-day";
         item.innerHTML = `
           <div class="weather-date">${dateLabel}</div>
-          <div class="weather-icon">${weatherIcons[day.merki] || "🌡️"}</div>
-          <div class="weather-temp">${Math.round(day.t2)}°</div>
-          <div class="weather-wind">${Math.round(day.f10)} m/s ${windDirections[day.dtexti] || day.dtexti.toUpperCase()}</div>
+          <div class="weather-icon">${wmoIcons[d.weather_code[i]] || "🌡️"}</div>
+          <div class="weather-temp">${Math.round(d.temperature_2m_max[i])}°</div>
+          <div class="weather-wind">${Math.round(d.wind_speed_10m_max[i])} m/s ${degToDir(d.wind_direction_10m_dominant[i])}</div>
         `;
         weatherGrid.appendChild(item);
       });
@@ -498,21 +509,22 @@ if (typeof runForecast === "function") {
 
 // --- Moon widget ---
 
-function moonPhaseSVG(phase, fraction) {
-  const size = 130;
-  const r = 56;
-  const cx = size / 2;
-  const cy = size / 2;
-  const top = `${cx} ${cy - r}`;
-  const bot = `${cx} ${cy + r}`;
+function moonPhaseSVG(phase, fraction, cloudCover) {
+  const size = 160;
+  const r    = 72;
+  const cx   = size / 2;
+  const cy   = size / 2;
+  const ix   = cx - r;
+  const iy   = cy - r;
+  const id   = r * 2;
+  const top  = `${cx} ${cy - r}`;
+  const bot  = `${cx} ${cy + r}`;
 
-  let litPath = "";
-
+  let litClip = "";
   if (fraction > 0.995) {
-    litPath = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#f5e6b0"/>`;
+    litClip = `<clipPath id="moonLit"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>`;
   } else if (fraction > 0.005) {
     let rx, outerSweep;
-
     if (phase < 0.5) {
       rx = r * Math.cos(2 * Math.PI * phase);
       outerSweep = 1;
@@ -520,39 +532,49 @@ function moonPhaseSVG(phase, fraction) {
       rx = r * Math.cos(2 * Math.PI * (phase - 0.5));
       outerSweep = 0;
     }
-
     const absRx = Math.abs(rx);
-    const tSweep = rx >= 0 ? 1 : 0;
-
-    let d;
-    if (absRx < 0.5) {
-      d = `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} L ${top} Z`;
-    } else {
-      d = `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} A ${absRx} ${r} 0 0 ${tSweep} ${top} Z`;
-    }
-
-    litPath = `<path d="${d}" fill="#f5e6b0" clip-path="url(#moonClip)"/>`;
+    const tSweep = rx >= 0 ? 0 : 1;
+    const d = absRx < 0.5
+      ? `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} L ${top} Z`
+      : `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} A ${absRx} ${r} 0 0 ${tSweep} ${top} Z`;
+    litClip = `<clipPath id="moonLit"><path d="${d}"/></clipPath>`;
   }
+
+  const cloudOp = cloudCover != null && cloudCover > 5
+    ? (cloudCover / 100 * 0.72).toFixed(2)
+    : "0";
+  const showCloud = parseFloat(cloudOp) > 0;
 
   return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <clipPath id="moonClip"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
+      <clipPath id="moonCircle"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
+      ${litClip}
+      <radialGradient id="limbDark" cx="50%" cy="50%" r="50%">
+        <stop offset="65%" stop-color="rgba(0,0,0,0)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0.60)"/>
+      </radialGradient>
     </defs>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#0c1d2c"/>
-    ${litPath}
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(245,230,176,0.1)" stroke-width="1.5"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#06080c"/>
+    <image href="assets/images/web/moon.jpg" x="${ix}" y="${iy}" width="${id}" height="${id}"
+           clip-path="url(#moonCircle)" opacity="0.09" preserveAspectRatio="xMidYMid slice"/>
+    ${fraction > 0.005 ? `
+    <image href="assets/images/web/moon.jpg" x="${ix}" y="${iy}" width="${id}" height="${id}"
+           clip-path="url(#moonLit)" preserveAspectRatio="xMidYMid slice"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#limbDark)" clip-path="url(#moonLit)"/>` : ""}
+    ${showCloud ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(175,190,210,${cloudOp})"/>` : ""}
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1"/>
   </svg>`;
 }
 
 function moonPhaseName(phase) {
   if (phase < 0.03 || phase > 0.97) return "Nýmáni";
-  if (phase < 0.22) return "Vaxandi máni";
+  if (phase < 0.22) return "Vaxandi gormáni";
   if (phase < 0.28) return "Fyrsti kvartill";
-  if (phase < 0.47) return "Vaxandi tungl";
-  if (phase < 0.53) return "Fullt tungl";
-  if (phase < 0.72) return "Minnkandi tungl";
+  if (phase < 0.47) return "Vaxandi máni";
+  if (phase < 0.53) return "Fullmáni";
+  if (phase < 0.72) return "Minnkandi máni";
   if (phase < 0.78) return "Síðasti kvartill";
-  return "Minnkandi máni";
+  return "Minnkandi gormáni";
 }
 
 function cloudCoverLabel(pct) {
@@ -618,7 +640,7 @@ function initMoonWidget() {
   const phase = illum.phase;
   const fraction = illum.fraction;
 
-  svgContainer.innerHTML = moonPhaseSVG(phase, fraction);
+  svgContainer.innerHTML = moonPhaseSVG(phase, fraction, null);
   phaseNameEl.textContent = moonPhaseName(phase);
 
   const pct = Math.round(fraction * 100);
@@ -636,6 +658,7 @@ function initMoonWidget() {
   timesEl.textContent = parts.length ? parts.join(" · ") : "Gengur ekki niður í nótt";
 
   const renderNote = (cc) => {
+    svgContainer.innerHTML = moonPhaseSVG(phase, fraction, cc);
     if (cc != null) {
       cloudsEl.textContent = `Skýjahula: ${cc}% — ${cloudCoverLabel(cc)}`;
     }

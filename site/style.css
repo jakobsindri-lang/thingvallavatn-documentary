@@ -1202,6 +1202,18 @@ body {
   }
 }
 
+.moon-photo-credit {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  opacity: 0.55;
+  text-align: center;
+  margin: 0.5rem 0 0;
+}
+
+.moon-photo-credit a {
+  color: inherit;
+}
+
 /* Footer */
 .site-footer {
   text-align: center;
