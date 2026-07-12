@@ -360,39 +360,28 @@ if (waterTempEl) {
 }
 
 if (weatherGrid) {
-  const wmoIcons = {
-    0:"☀️", 1:"🌤️", 2:"🌤️", 3:"☁️",
-    45:"🌫️", 48:"🌫️",
-    51:"🌦️", 53:"🌦️", 55:"🌦️", 56:"🌦️", 57:"🌧️",
-    61:"🌧️", 63:"🌧️", 65:"🌧️", 66:"🌨️", 67:"🌨️",
-    71:"❄️", 73:"❄️", 75:"❄️", 77:"❄️",
-    80:"🌦️", 81:"🌦️", 82:"🌧️", 85:"🌨️", 86:"🌨️",
-    95:"⛈️", 96:"⛈️", 99:"⛈️",
+  const weatherIcons = {
+    clear:"☀️", partlycloudy:"🌤️", mostlycloudy:"⛅", cloudy:"☁️",
+    rain:"🌧️", showers:"🌦️", sleet:"🌨️", snow:"❄️",
+    chanceflurries:"🌨️", thunder:"⛈️",
   };
-  const degToDir = (deg) => ["N","NA","A","SA","S","SV","V","NV"][Math.round(deg / 45) % 8];
-  const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
-  const { lat, lon } = FORECAST_CONFIG.location;
+  const windDirections = { n:"N", na:"NA", a:"A", sa:"SA", s:"S", sv:"SV", v:"V", nv:"NV" };
+  const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://www.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
 
-  fetch(
-    `${FORECAST_CONFIG.api.openMeteoCurrent}?latitude=${lat}&longitude=${lon}` +
-    `&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant` +
-    `&forecast_days=7&timezone=Atlantic%2FReykjavik`
-  )
+  fetch(FORECAST_CONFIG.api.blikaForecast)
     .then((r) => r.json())
-    .then((data) => {
-      const d = data.daily;
+    .then((days) => {
       weatherGrid.innerHTML = "";
-      d.time.forEach((dateStr, i) => {
-        const [y, m, day] = dateStr.split("-").map(Number);
-        const date = new Date(Date.UTC(y, m - 1, day));
-        const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric", timeZone: "UTC" });
+      days.forEach((day) => {
+        const date = new Date(day.dags_spar);
+        const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric" });
         const item = document.createElement("div");
         item.className = "weather-day";
         item.innerHTML = `
           <div class="weather-date">${dateLabel}</div>
-          <div class="weather-icon">${wmoIcons[d.weather_code[i]] || "🌡️"}</div>
-          <div class="weather-temp">${Math.round(d.temperature_2m_max[i])}°</div>
-          <div class="weather-wind">${Math.round(d.wind_speed_10m_max[i])} m/s ${degToDir(d.wind_direction_10m_dominant[i])}</div>
+          <div class="weather-icon">${weatherIcons[day.merki] || "🌡️"}</div>
+          <div class="weather-temp">${Math.round(day.t2)}°</div>
+          <div class="weather-wind">${Math.round(day.f10)} m/s ${windDirections[day.dtexti] || day.dtexti.toUpperCase()}</div>
         `;
         weatherGrid.appendChild(item);
       });
