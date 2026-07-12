@@ -327,30 +327,48 @@
         </div>
       </div>
       <div class="weather-panel" data-panel="veidimenn" hidden>
-        <div class="angler-card" id="angler-card">
-          <p class="weather-status">Hleð inn veðurspá&hellip;</p>
+
+        <div class="forecast-loading" id="forecast-loading">
+          <p class="weather-status">Hleð inn veiðispá&hellip;</p>
         </div>
 
-        <div class="conditions-table-wrap">
-          <p class="conditions-note">
-            Mat byggt á einföldum viðmiðum um veiðitímabil, tíma dags, vind og úrkomu.
-            Þetta verður betrumbætt þegar nákvæmari viðmið liggja fyrir.
-          </p>
-          <table class="conditions-table">
-            <thead>
-              <tr>
-                <th>Tími dags</th>
-                <th>Urriði</th>
-                <th>Bleikja</th>
-              </tr>
-            </thead>
-            <tbody id="conditions-table-body">
-              <tr>
-                <td colspan="3">Hleð inn mati á aðstæðum&hellip;</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="forecast-closed" id="forecast-closed" hidden>
+          <h3>Veiðitímabilið er ekki í gangi</h3>
+          <p>Veiðitímabilið í þjóðgarðinum á Þingvöllum er frá 20. apríl til 15. september. Spálíkanið er ekki virkt utan veiðitímabilsins.</p>
         </div>
+
+        <div class="forecast-result" id="forecast-result" hidden>
+          <div class="forecast-grid">
+
+            <div class="forecast-card" id="fc-trout">
+              <div class="forecast-card-header">
+                <span class="forecast-species">Urriði — tökulíkur</span>
+                <span class="forecast-badge" id="trout-badge">—</span>
+              </div>
+              <p class="forecast-explanation" id="trout-explanation"></p>
+            </div>
+
+            <div class="forecast-card" id="fc-char">
+              <div class="forecast-card-header">
+                <span class="forecast-species">Bleikja — tökulíkur</span>
+                <span class="forecast-badge" id="char-badge">—</span>
+              </div>
+              <p class="forecast-explanation" id="char-explanation"></p>
+              <p class="forecast-model-note" id="char-model-note"></p>
+            </div>
+
+            <div class="forecast-card forecast-card-fly" id="fc-fly">
+              <div class="forecast-card-header">
+                <span class="forecast-species">Fluguveiðiaðstæður</span>
+                <span class="forecast-badge" id="fly-badge">—</span>
+              </div>
+              <p class="forecast-explanation" id="fly-explanation"></p>
+            </div>
+
+          </div>
+          <p class="forecast-data-note" id="forecast-data-note"></p>
+        </div>
+
       </div>
       <div class="weather-panel" data-panel="tungl" hidden>
         <div class="moon-widget" id="moon-widget">
@@ -460,6 +478,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
+  <script src="forecast-config.js"></script>
+  <script src="forecast-engine.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

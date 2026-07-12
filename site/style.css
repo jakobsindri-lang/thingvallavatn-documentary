@@ -974,6 +974,138 @@ body {
   margin-top: 0.5rem;
 }
 
+/* Forecast cards */
+.forecast-closed {
+  margin-top: 1.5rem;
+  padding: 2rem;
+  border-radius: var(--radius);
+  background: var(--color-bg-card);
+  border: 1px solid var(--border-soft);
+  text-align: center;
+}
+
+.forecast-closed h3 {
+  color: var(--color-accent-light);
+  font-weight: 400;
+  margin-bottom: 0.75rem;
+}
+
+.forecast-closed p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  max-width: none;
+}
+
+.forecast-loading {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.forecast-result {
+  margin-top: 1.5rem;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.forecast-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.forecast-card-fly {
+  border-left: 3px solid var(--color-accent);
+}
+
+.forecast-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.forecast-species {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.forecast-badge {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border-soft);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.forecast-score-4 {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent-light);
+  color: var(--color-accent-light);
+  font-weight: 600;
+}
+
+.forecast-score-3 {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+}
+
+.forecast-score-2 {
+  background: rgba(143, 217, 232, 0.07);
+  border-color: var(--border-soft);
+  color: var(--color-text-muted);
+}
+
+.forecast-score-1 {
+  background: rgba(217, 150, 90, 0.12);
+  border-color: rgba(217, 150, 90, 0.4);
+  color: #d9965a;
+}
+
+.forecast-score-0 {
+  background: var(--color-warning-soft);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.forecast-explanation {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+  max-width: none;
+}
+
+.forecast-model-note {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  max-width: none;
+  font-style: italic;
+}
+
+.forecast-data-note {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  max-width: none;
+}
+
 /* Moon widget */
 .moon-widget {
   display: flex;

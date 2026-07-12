@@ -323,8 +323,6 @@ if (galleryScroll) {
 }
 
 const weatherGrid = document.getElementById("weather-grid");
-const anglerCard = document.getElementById("angler-card");
-const conditionsTableBody = document.getElementById("conditions-table-body");
 const weatherTabs = document.querySelectorAll(".weather-tab");
 const weatherPanels = document.querySelectorAll(".weather-panel");
 
@@ -340,9 +338,9 @@ if (weatherTabs.length) {
   });
 }
 
-const waterTemp = document.getElementById("water-temp");
+const waterTempEl = document.getElementById("water-temp");
 
-if (waterTemp) {
+if (waterTempEl) {
   fetch(`assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
     .then((response) => response.json())
     .then((data) => {
@@ -354,178 +352,148 @@ if (waterTemp) {
         minute: "2-digit",
       });
       const tempLabel = data.temp.toFixed(1).replace(".", ",");
-      waterTemp.innerHTML = `Vatnshiti í Þingvallavatni er <strong>${tempLabel}°C</strong> (mælt ${timeLabel}).`;
+      waterTempEl.innerHTML = `Vatnshiti í Þingvallavatni er <strong>${tempLabel}°C</strong> (mælt ${timeLabel}).`;
     })
     .catch(() => {
-      waterTemp.textContent = "";
+      waterTempEl.textContent = "";
     });
 }
 
-if (weatherGrid || anglerCard) {
+if (weatherGrid) {
   const weatherIcons = {
-    clear: "☀️",
-    partlycloudy: "🌤️",
-    mostlycloudy: "⛅",
-    cloudy: "☁️",
-    rain: "🌧️",
-    showers: "🌦️",
-    sleet: "🌨️",
-    snow: "❄️",
-    chanceflurries: "🌨️",
-    thunder: "⛈️",
+    clear: "☀️", partlycloudy: "🌤️", mostlycloudy: "⛅", cloudy: "☁️",
+    rain: "🌧️", showers: "🌦️", sleet: "🌨️", snow: "❄️",
+    chanceflurries: "🌨️", thunder: "⛈️",
   };
+  const windDirections = { n:"N", na:"NA", a:"A", sa:"SA", s:"S", sv:"SV", v:"V", nv:"NV" };
+  const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
 
-  const windDirections = {
-    n: "N",
-    na: "NA",
-    a: "A",
-    sa: "SA",
-    s: "S",
-    sv: "SV",
-    v: "V",
-    nv: "NV",
-  };
-
-  const errorMessage =
-    '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
-
-  const fishingSeason = {
-    opens: { month: 3, date: 20 },
-    closes: { month: 8, date: 15 },
-    label: "20. apríl til 15. september",
-  };
-
-  const timeSlots = [
-    { label: "Morgunn", trout: 2, char: 1 },
-    { label: "Dagur", trout: -1, char: 0 },
-    { label: "Kvöld", trout: 2, char: 2 },
-    { label: "Nótt", trout: 1, char: -1 },
-  ];
-
-  const isFishingSeason = (date) => {
-    const month = date.getMonth();
-    const day = date.getDate();
-    return (
-      (month > fishingSeason.opens.month ||
-        (month === fishingSeason.opens.month && day >= fishingSeason.opens.date)) &&
-      (month < fishingSeason.closes.month ||
-        (month === fishingSeason.closes.month && day <= fishingSeason.closes.date))
-    );
-  };
-
-  const scoreWeather = (day) => {
-    let score = 0;
-    const wind = Number(day.f10) || 0;
-    const rain = Number(day.r) || 0;
-
-    if (wind >= 2 && wind <= 8) score += 1;
-    if (wind >= 12) score -= 2;
-    if (rain > 0 && rain <= 4) score += 1;
-    if (rain > 8) score -= 1;
-    if (["clear", "partlycloudy", "mostlycloudy"].includes(day.merki)) score += 1;
-
-    return score;
-  };
-
-  const conditionFromScore = (score, inSeason) => {
-    if (!inSeason) {
-      return { label: "Utan tímabils", className: "condition-closed" };
-    }
-    if (score >= 3) return { label: "Góðar", className: "condition-good" };
-    if (score >= 1) return { label: "Sæmilegar", className: "condition-fair" };
-    return { label: "Litlar", className: "condition-poor" };
-  };
-
-  const renderCondition = (condition) =>
-    `<span class="condition ${condition.className}">${condition.label}</span>`;
-
-  const renderConditionsTable = (today, inSeason) => {
-    if (!conditionsTableBody) return;
-    const weatherScore = scoreWeather(today);
-    conditionsTableBody.innerHTML = timeSlots
-      .map((slot) => {
-        const trout = conditionFromScore(weatherScore + slot.trout, inSeason);
-        const char = conditionFromScore(weatherScore + slot.char, inSeason);
-        return `
-          <tr>
-            <td>${slot.label}</td>
-            <td>${renderCondition(trout)}</td>
-            <td>${renderCondition(char)}</td>
-          </tr>
-        `;
-      })
-      .join("");
-  };
-
-  fetch("https://api.blika.is/GetBlikaForecast24klst/8553/")
-    .then((response) => response.json())
+  fetch(FORECAST_CONFIG.api.blikaForecast)
+    .then((r) => r.json())
     .then((days) => {
-      if (weatherGrid) {
-        weatherGrid.innerHTML = "";
-        days.slice(0, 7).forEach((day) => {
-          const date = new Date(day.dags_spar);
-          const dateLabel = date.toLocaleDateString("is-IS", {
-            weekday: "short",
-            day: "numeric",
-            month: "numeric",
-          });
-
-          const item = document.createElement("div");
-          item.className = "weather-day";
-          item.innerHTML = `
-            <div class="weather-date">${dateLabel}</div>
-            <div class="weather-icon">${weatherIcons[day.merki] || "🌡️"}</div>
-            <div class="weather-temp">${Math.round(day.t2)}°</div>
-            <div class="weather-wind">${Math.round(day.f10)} m/s ${windDirections[day.dtexti] || day.dtexti.toUpperCase()}</div>
-          `;
-          weatherGrid.appendChild(item);
-        });
-      }
-
-      if (anglerCard && days.length) {
-        const today = days[0];
-        const now = new Date();
-        const inSeason = isFishingSeason(now);
-        const weatherScore = scoreWeather(today);
-
-        const overallCondition = conditionFromScore(weatherScore + 1, inSeason);
-        const verdict = inSeason
-          ? overallCondition.label === "Góðar"
-            ? "Aðstæður líta vel út fyrir veiði í dag."
-            : "Aðstæður eru veiðilegar, en ekki endilega í toppi."
-          : "Veiðitímabilið er ekki opið akkúrat núna.";
-
-        const rainText = today.r > 0 ? `, úrkoma ${today.r} mm` : "";
-
-        anglerCard.innerHTML = `
-          <p class="angler-verdict">${verdict}</p>
-          <p class="angler-detail">
-            Í dag í Vatnskoti: ${weatherIcons[today.merki] || "🌡️"} ${Math.round(today.t2)}°,
-            vindur ${Math.round(today.f10)} m/s ${windDirections[today.dtexti] || today.dtexti.toUpperCase()}${rainText}.
-          </p>
-          <p class="angler-note">Veiðitímabil í þjóðgarðinum í Þingvallavatni er ${fishingSeason.label}.</p>
+      weatherGrid.innerHTML = "";
+      days.slice(0, 7).forEach((day) => {
+        const date = new Date(day.dags_spar);
+        const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric" });
+        const item = document.createElement("div");
+        item.className = "weather-day";
+        item.innerHTML = `
+          <div class="weather-date">${dateLabel}</div>
+          <div class="weather-icon">${weatherIcons[day.merki] || "🌡️"}</div>
+          <div class="weather-temp">${Math.round(day.t2)}°</div>
+          <div class="weather-wind">${Math.round(day.f10)} m/s ${windDirections[day.dtexti] || day.dtexti.toUpperCase()}</div>
         `;
-
-        renderConditionsTable(today, inSeason);
-      } else if (conditionsTableBody) {
-        conditionsTableBody.innerHTML = `
-          <tr>
-            <td colspan="3">Engin veðurspá fannst til að reikna aðstæður.</td>
-          </tr>
-        `;
-      }
+        weatherGrid.appendChild(item);
+      });
     })
-    .catch(() => {
-      if (weatherGrid) weatherGrid.innerHTML = errorMessage;
-      if (anglerCard) anglerCard.innerHTML = errorMessage;
-      if (conditionsTableBody) {
-        conditionsTableBody.innerHTML = `
-          <tr>
-            <td colspan="3">Ekki tókst að reikna aðstæður núna.</td>
-          </tr>
-        `;
-      }
-    });
+    .catch(() => { weatherGrid.innerHTML = blikaError; });
+}
+
+// ── Veiðispá ─────────────────────────────────────────────────────────────────
+
+async function fetchHistoricalCloud() {
+  const { lat, lon } = FORECAST_CONFIG.location;
+  const now   = new Date();
+  const end   = new Date(+now - 86400000);
+  const start = new Date(+now - 4 * 86400000);
+  const fmt   = (d) => d.toISOString().slice(0, 10);
+  const url   = `${FORECAST_CONFIG.api.openMeteoArchive}?latitude=${lat}&longitude=${lon}` +
+                `&hourly=cloud_cover&start_date=${fmt(start)}&end_date=${fmt(end)}&timezone=UTC`;
+  const data  = await fetch(url).then((r) => r.json());
+  if (!data.hourly?.time?.length) return null;
+  return data.hourly.time.map((t, i) => ({
+    utcHour:    new Date(t.endsWith("Z") ? t : t + "Z"),
+    cloudCover: data.hourly.cloud_cover[i],
+  }));
+}
+
+async function initForecast() {
+  const { lat, lon } = FORECAST_CONFIG.location;
+  const dataWarnings = [];
+
+  const [currentRes, archiveRes, waterRes] = await Promise.allSettled([
+    fetch(
+      `${FORECAST_CONFIG.api.openMeteoCurrent}?latitude=${lat}&longitude=${lon}` +
+      `&current=cloud_cover,wind_speed_10m,wind_direction_10m&timezone=Atlantic%2FReykjavik`
+    ).then((r) => r.json()),
+    fetchHistoricalCloud(),
+    fetch(`assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
+      .then((r) => r.json())
+      .catch(() => null),
+  ]);
+
+  if (currentRes.status === "rejected") dataWarnings.push("Veðurgögn ekki tiltæk");
+  if (archiveRes.status === "rejected")  dataWarnings.push("Söguleg skýjahulugögn ekki tiltæk — áhrif fyrri bjartra nátta ekki reiknuð");
+
+  const current     = currentRes.value ?? null;
+  const archiveData = archiveRes.value ?? null;
+  const waterData   = waterRes.value   ?? null;
+
+  const result = runForecast({
+    cloudCover:            current?.current?.cloud_cover           ?? null,
+    windSpeedMs:           current?.current?.wind_speed_10m        ?? null,
+    windDirDeg:            current?.current?.wind_direction_10m    ?? null,
+    windDirText:           null,
+    waterTemp:             waterData?.temp                         ?? null,
+    historicalHourlyCloud: archiveData,
+    dataWarnings,
+  });
+
+  renderForecast(result);
+}
+
+function renderForecast(result) {
+  const loadingEl = document.getElementById("forecast-loading");
+  const closedEl  = document.getElementById("forecast-closed");
+  const resultEl  = document.getElementById("forecast-result");
+
+  if (loadingEl) loadingEl.hidden = true;
+
+  if (!result.inSeason) {
+    if (closedEl) closedEl.hidden = false;
+    return;
+  }
+  if (resultEl) resultEl.hidden = false;
+
+  const tl = FORECAST_CONFIG.scoreLabels.take;
+  const fl = FORECAST_CONFIG.scoreLabels.fly;
+
+  function applyCard(badgeId, explId, score, labels, reasons) {
+    const badge = document.getElementById(badgeId);
+    const expl  = document.getElementById(explId);
+    if (badge) { badge.textContent = labels[score]; badge.className = `forecast-badge forecast-score-${score}`; }
+    if (expl)  expl.textContent = buildForecastExplanation(reasons);
+  }
+
+  if (result.trout) {
+    applyCard("trout-badge", "trout-explanation", result.trout.score, tl, result.trout.reasons);
+    if (result.trout.provisional) {
+      const e = document.getElementById("trout-explanation");
+      if (e) e.textContent += " (Bráðabirgðamat eftir 20. maí.)";
+    }
+  }
+
+  if (result.char) {
+    applyCard("char-badge", "char-explanation", result.char.score, tl, result.char.reasons);
+    const mn = document.getElementById("char-model-note");
+    if (mn) {
+      mn.textContent =
+        result.char.activeModel === "large" ? "Stórbleikjulíkanið ráðandi." :
+        result.char.activeModel === "small" ? "Smábleikjulíkanið ráðandi." :
+        result.char.activeModel === "both"  ? "Bæði stórbleikja- og smábleikjulíkön virk." : "";
+    }
+  }
+
+  if (result.fly) {
+    applyCard("fly-badge", "fly-explanation", result.fly.score, fl, result.fly.reasons);
+  }
+
+  const noteEl = document.getElementById("forecast-data-note");
+  if (noteEl && result.dataWarnings.length) noteEl.textContent = result.dataWarnings.join(" · ");
+}
+
+if (typeof runForecast === "function") {
+  initForecast();
 }
 
 // --- Moon widget ---
