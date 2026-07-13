@@ -1246,8 +1246,8 @@ body {
 /* Moon widget */
 .moon-widget {
   display: flex;
-  align-items: center;
-  gap: 2.5rem;
+  flex-direction: column;
+  gap: 1.5rem;
   margin: 1.5rem auto 0;
   padding: 2rem 2.5rem;
   background: var(--color-bg-card);
@@ -1256,26 +1256,45 @@ body {
   max-width: 640px;
 }
 
-.moon-graphic-wrap {
-  flex-shrink: 0;
+.moon-graphics-row {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  align-items: flex-start;
 }
 
-.moon-svg-container svg {
+.moon-graphic-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.moon-svg-container svg,
+.moon-cloud-container svg {
   display: block;
-  filter: drop-shadow(0 0 14px rgba(245, 230, 176, 0.22));
+  filter: drop-shadow(0 0 14px rgba(245, 230, 176, 0.18));
 }
 
-.moon-info {
-  flex: 1;
+.moon-cloud-label {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  max-width: 150px;
+  line-height: 1.4;
+}
+
+.moon-details {
   min-width: 0;
 }
 
 .moon-phase-name {
-  font-size: 1.4rem;
+  font-size: 0.9rem;
   font-weight: 400;
   color: var(--color-accent-light);
   letter-spacing: 0.02em;
-  margin-bottom: 0.35rem;
+  text-align: center;
+  max-width: 150px;
 }
 
 .moon-illumination {
@@ -1309,11 +1328,6 @@ body {
   margin-bottom: 0.4rem;
 }
 
-.moon-clouds {
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-}
-
 .moon-note {
   font-size: 0.9rem;
   color: var(--color-text);
@@ -1327,15 +1341,26 @@ body {
 
 @media (max-width: 600px) {
   .moon-widget {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.5rem;
     padding: 1.5rem 1.2rem;
+    gap: 1.2rem;
+  }
+
+  .moon-graphics-row {
+    gap: 1.2rem;
+  }
+
+  .moon-svg-container svg,
+  .moon-cloud-container svg {
+    width: 120px;
+    height: 120px;
   }
 
   .moon-illumination {
     justify-content: center;
+  }
+
+  .moon-details {
+    text-align: center;
   }
 }
 

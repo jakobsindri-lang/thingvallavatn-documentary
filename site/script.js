@@ -591,11 +591,6 @@ function moonPhaseSVG(phase, fraction, cloudCover) {
     litClip = `<clipPath id="moonLit"><path d="${d}"/></clipPath>`;
   }
 
-  const cloudOp = cloudCover != null && cloudCover > 5
-    ? (cloudCover / 100 * 0.72).toFixed(2)
-    : "0";
-  const showCloud = parseFloat(cloudOp) > 0;
-
   return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <clipPath id="moonCircle"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
@@ -612,7 +607,66 @@ function moonPhaseSVG(phase, fraction, cloudCover) {
     <image href="assets/images/web/moon.jpg" x="${ix}" y="${iy}" width="${id}" height="${id}"
            clip-path="url(#moonLit)" preserveAspectRatio="xMidYMid slice"/>
     <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#limbDark)" clip-path="url(#moonLit)"/>` : ""}
-    ${showCloud ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(175,190,210,${cloudOp})"/>` : ""}
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1"/>
+  </svg>`;
+}
+
+function cloudCoverSVG(pct) {
+  const size = 160;
+  const r    = 68;
+  const cx   = size / 2;
+  const cy   = size / 2;
+  const p    = pct ?? 0;
+
+  const starOp = Math.max(0, (35 - p) / 35);
+  const stars = starOp > 0 ? [
+    [55,38],[95,32],[112,55],[38,62],[68,28],[105,78],[42,95],[118,92]
+  ].map(([x,y]) =>
+    `<circle cx="${x}" cy="${y}" r="1.4" fill="rgba(255,248,220,${(starOp * 0.65).toFixed(2)})"/>`
+  ).join("") : "";
+
+  const c1Op = Math.max(0, Math.min(1, (p -  5) / 25)).toFixed(2);
+  const c2Op = Math.max(0, Math.min(1, (p - 30) / 25)).toFixed(2);
+  const c3Op = Math.max(0, Math.min(1, (p - 60) / 25)).toFixed(2);
+  const ovOp = Math.max(0, Math.min(0.45, (p - 80) / 40)).toFixed(2);
+
+  const cloud1 = +c1Op > 0 ? `<g opacity="${c1Op}">
+      <ellipse cx="96" cy="52" rx="22" ry="11" fill="#c8d4e0"/>
+      <ellipse cx="80" cy="57" rx="17" ry="10" fill="#ccd7e3"/>
+      <ellipse cx="110" cy="56" rx="15" ry="9"  fill="#c4d0dc"/>
+      <ellipse cx="96" cy="63" rx="24" ry="8"   fill="#d0dbe7"/>
+    </g>` : "";
+
+  const cloud2 = +c2Op > 0 ? `<g opacity="${c2Op}">
+      <ellipse cx="56" cy="78" rx="20" ry="11" fill="#bcc8d4"/>
+      <ellipse cx="40" cy="83" rx="15" ry="9"  fill="#c0ccd8"/>
+      <ellipse cx="70" cy="82" rx="17" ry="9"  fill="#b9c5d1"/>
+      <ellipse cx="56" cy="88" rx="22" ry="7"  fill="#c4d0dc"/>
+    </g>` : "";
+
+  const cloud3 = +c3Op > 0 ? `<g opacity="${c3Op}">
+      <ellipse cx="82" cy="108" rx="28" ry="13" fill="#b0bcc8"/>
+      <ellipse cx="60" cy="105" rx="20" ry="12" fill="#b8c4d0"/>
+      <ellipse cx="104" cy="104" rx="21" ry="11" fill="#aebac6"/>
+      <ellipse cx="82" cy="96"  rx="30" ry="10" fill="#bcc8d4"/>
+    </g>` : "";
+
+  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <clipPath id="skyCircle"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
+      <radialGradient id="skyGrad" cx="50%" cy="40%" r="65%">
+        <stop offset="0%"   stop-color="#0d1520"/>
+        <stop offset="100%" stop-color="#060a10"/>
+      </radialGradient>
+    </defs>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#skyGrad)"/>
+    <g clip-path="url(#skyCircle)">
+      ${stars}
+      ${cloud1}
+      ${cloud2}
+      ${cloud3}
+      ${+ovOp > 0 ? `<rect x="0" y="0" width="${size}" height="${size}" fill="rgba(145,160,175,${ovOp})"/>` : ""}
+    </g>
     <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1"/>
   </svg>`;
 }
@@ -669,12 +723,13 @@ function formatMoonTime(date) {
 }
 
 function initMoonWidget() {
-  const svgContainer = document.getElementById("moon-svg-container");
-  const phaseNameEl = document.getElementById("moon-phase-name");
+  const svgContainer   = document.getElementById("moon-svg-container");
+  const cloudContainer = document.getElementById("moon-cloud-container");
+  const phaseNameEl    = document.getElementById("moon-phase-name");
+  const cloudLabelEl   = document.getElementById("moon-cloud-label");
   const illuminationEl = document.getElementById("moon-illumination");
-  const timesEl = document.getElementById("moon-times");
-  const cloudsEl = document.getElementById("moon-clouds");
-  const noteEl = document.getElementById("moon-note");
+  const timesEl        = document.getElementById("moon-times");
+  const noteEl         = document.getElementById("moon-note");
 
   if (!svgContainer) return;
 
@@ -691,7 +746,8 @@ function initMoonWidget() {
   const phase = illum.phase;
   const fraction = illum.fraction;
 
-  svgContainer.innerHTML = moonPhaseSVG(phase, fraction, null);
+  svgContainer.innerHTML = moonPhaseSVG(phase, fraction);
+  if (cloudContainer) cloudContainer.innerHTML = cloudCoverSVG(null);
   phaseNameEl.textContent = moonPhaseName(phase);
 
   const pct = Math.round(fraction * 100);
@@ -709,9 +765,11 @@ function initMoonWidget() {
   timesEl.textContent = parts.length ? parts.join(" · ") : "Gengur ekki niður í nótt";
 
   const renderNote = (cc) => {
-    svgContainer.innerHTML = moonPhaseSVG(phase, fraction, cc);
-    if (cc != null) {
-      cloudsEl.textContent = `Skýjahula: ${cc}% — ${cloudCoverLabel(cc)}`;
+    if (cloudContainer) cloudContainer.innerHTML = cloudCoverSVG(cc);
+    if (cloudLabelEl) {
+      cloudLabelEl.textContent = cc != null
+        ? `${cc}% — ${cloudCoverLabel(cc)}`
+        : "Óþekkt";
     }
     noteEl.textContent = moonFishingNote(phase, fraction, cc);
   };

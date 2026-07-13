@@ -148,14 +148,19 @@
     <section class="section weather" id="tungl">
       <h2>Tungl</h2>
       <div class="moon-widget" id="moon-widget">
-        <div class="moon-graphic-wrap">
-          <div id="moon-svg-container" class="moon-svg-container" aria-hidden="true"></div>
+        <div class="moon-graphics-row">
+          <div class="moon-graphic-item">
+            <div id="moon-svg-container" class="moon-svg-container" aria-hidden="true"></div>
+            <div class="moon-phase-name" id="moon-phase-name">Hleð&hellip;</div>
+          </div>
+          <div class="moon-graphic-item">
+            <div id="moon-cloud-container" class="moon-cloud-container" aria-hidden="true"></div>
+            <div class="moon-cloud-label" id="moon-cloud-label">Hleð&hellip;</div>
+          </div>
         </div>
-        <div class="moon-info">
-          <div class="moon-phase-name" id="moon-phase-name">Hleð&hellip;</div>
+        <div class="moon-details">
           <div class="moon-illumination" id="moon-illumination"></div>
           <div class="moon-times" id="moon-times"></div>
-          <div class="moon-clouds" id="moon-clouds"></div>
           <p class="moon-note" id="moon-note"></p>
         </div>
       </div>
