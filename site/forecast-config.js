@@ -170,7 +170,7 @@ const FORECAST_CONFIG = {
   },
 
   api: {
-    blikaForecast: 'https://api.blika.is/GetBlikaForecast24klst/8553/',
+    blikaForecast: 'https://api.blika.is/GetCorrdiffForecast24klst/8553/',
     openMeteoCurrent: 'https://api.open-meteo.com/v1/forecast',
     openMeteoArchive: 'https://archive-api.open-meteo.com/v1/archive',
   },
