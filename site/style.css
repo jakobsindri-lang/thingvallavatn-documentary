@@ -927,6 +927,12 @@ body {
 }
 
 /* Support overview */
+.support-overview > .button {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
 .support-financial {
   background: linear-gradient(160deg, var(--color-bg-card), var(--color-bg-alt));
   border: 1px solid var(--border-soft);
