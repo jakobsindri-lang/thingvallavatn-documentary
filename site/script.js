@@ -62,7 +62,7 @@ const mapPlaces = {
     role: "Gjásvæði og kennileiti",
     theme: "Jarðsaga, neðansjávarstemning",
   },
-  Hallvík: {
+  Hallvik: {
     kicker: "Víkur og veiði",
     description:
       "Víkin er góður punktur fyrir umfjöllun um hvernig form strandarinnar, vindur og birta breyta lestri vatnsins.",
@@ -136,18 +136,6 @@ if (mapSvgMount && mapInfo) {
     if (activeMapButton) activeMapButton.classList.add("is-active");
   };
 
-  if (mapPlaceList) {
-    placeNames.forEach((name) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "map-place-button";
-      button.dataset.mapPlace = name;
-      button.textContent = name;
-      button.addEventListener("click", () => updateMapInfo(name));
-      mapPlaceList.appendChild(button);
-    });
-  }
-
   fetch(`${window.ASSET_BASE ?? ""}assets/Map/veidisvaedi_thingvallavatni.svg`)
     .then((response) => {
       if (!response.ok) throw new Error("Map SVG not found");
@@ -203,6 +191,20 @@ if (mapSvgMount && mapInfo) {
 
       const ornefniGroup = inlineSvg.querySelector("#ornefni-group");
       (ornefniGroup || inlineSvg).appendChild(pointLayer);
+
+      if (mapPlaceList) {
+        mapPlaceList.replaceChildren();
+        mapSvgMount.querySelectorAll(".ornefni").forEach((label) => {
+          const rawName = label.dataset.nafn || label.textContent.trim();
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "map-place-button";
+          button.dataset.mapPlace = rawName;
+          button.textContent = rawName;
+          button.addEventListener("click", () => updateMapInfo(rawName));
+          mapPlaceList.appendChild(button);
+        });
+      }
 
       updateMapInfo("Vatnskot");
     })

@@ -390,7 +390,7 @@
     <text
        id="ornefni-vatnsvik"
        class="ornefni"
-       data-nafn="Vatnsvík"
+       data-nafn="Vatnsvik"
        x="756.93774"
        y="210.71196"
        text-anchor="start"
@@ -438,11 +438,11 @@
        stroke="#16313c"
        stroke-width="2.2"
        stroke-linejoin="round"
-       id="text16">Hallvík</text>
+       id="text16">Hallvik</text>
     <text
        id="ornefni-hallvik"
        class="ornefni"
-       data-nafn="Hallvík"
+       data-nafn="Hallvik"
        x="766.71198"
        y="264.54877"
        text-anchor="start"
@@ -450,7 +450,7 @@
        font-size="10px"
        font-style="italic"
        font-weight="400"
-       fill="#eef5f3">Hallvík</text>
+       fill="#eef5f3">Hallvik</text>
     <text
        class="ornefni-halo"
        x="762.43481"
