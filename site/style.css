@@ -329,27 +329,74 @@ body {
 
 .map-place-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-direction: column;
   margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-soft);
 }
 
-.map-place-button {
-  padding: 0.42rem 0.7rem;
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  background-color: transparent;
+.map-place-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-place-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.42rem 0;
+  border: none;
+  background: none;
   color: var(--color-text-muted);
   font-family: inherit;
   font-size: 0.82rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  text-align: left;
+  transition: color 0.15s ease;
+}
+
+.map-place-group-header:hover {
+  color: var(--color-text);
+}
+
+.map-group-chevron {
+  transition: transform 0.18s ease;
+  opacity: 0.4;
+  font-style: normal;
+}
+
+.map-place-group-header[aria-expanded="true"] .map-group-chevron {
+  transform: rotate(90deg);
+}
+
+.map-place-group-children {
+  display: flex;
+  flex-direction: column;
+  padding: 0.1rem 0 0.3rem 0.8rem;
+  border-left: 1px solid var(--border-soft);
+  margin-left: 0.15rem;
+  margin-bottom: 0.15rem;
+}
+
+.map-place-button {
+  padding: 0.32rem 0;
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s ease;
+}
+
+.map-place-single {
+  font-size: 0.82rem;
 }
 
 .map-place-button:hover,
 .map-place-button.is-active {
-  background-color: var(--color-accent-soft);
-  border-color: var(--color-accent);
   color: var(--color-accent-light);
 }
 

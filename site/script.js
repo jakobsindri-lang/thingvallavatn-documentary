@@ -92,11 +92,22 @@ const mapPlaces = {
   },
 };
 
+const MAP_GROUPS = [
+  { label: "Lambhagi",     children: ["Leirutá", "Lambhagatá", "Presthólmi", "Garðsendavík"] },
+  { label: "Vatnskot" },
+  { label: "Tóftir",      children: ["Vörðuvík"] },
+  { label: "Öfugsnáði" },
+  { label: "Nes",         children: ["Nautatangar", "Vatnsvik"] },
+  { label: "Vellankatla" },
+  { label: "Hallvik",     children: ["Hallvik", "Gjáarendar", "Davíðsgjá"] },
+  { label: "Ólafsdráttur", children: ["Þvotta", "Fornasel", "Búr", "Einbúi"] },
+  { label: "Arnarfell",   children: ["Arnarsetur", "Sandskörð", "Arnarnes", "Sláttulág", "Klofhóll", "Langatangagjár", "Langitangi"] },
+];
+
 if (mapSvgMount && mapInfo) {
   const mapNameAliases = {
     Langatangi: "Langitangi",
   };
-  const placeNames = Object.keys(mapPlaces);
   let activeMapElement = null;
   let activeMapButton = null;
   const svgNamespace = "http://www.w3.org/2000/svg";
@@ -133,7 +144,15 @@ if (mapSvgMount && mapInfo) {
     activeMapButton = mapPlaceList?.querySelector(
       `[data-map-place="${escapeSelectorValue(name)}"]`
     );
-    if (activeMapButton) activeMapButton.classList.add("is-active");
+    if (activeMapButton) {
+      activeMapButton.classList.add("is-active");
+      const childrenEl = activeMapButton.closest(".map-place-group-children");
+      if (childrenEl && childrenEl.hidden) {
+        childrenEl.hidden = false;
+        const header = childrenEl.previousElementSibling;
+        if (header) header.setAttribute("aria-expanded", "true");
+      }
+    }
   };
 
   fetch(`${window.ASSET_BASE ?? ""}assets/Map/veidisvaedi_thingvallavatni.svg`)
@@ -194,15 +213,49 @@ if (mapSvgMount && mapInfo) {
 
       if (mapPlaceList) {
         mapPlaceList.replaceChildren();
-        mapSvgMount.querySelectorAll(".ornefni").forEach((label) => {
-          const rawName = label.textContent.trim() || label.dataset.nafn;
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "map-place-button";
-          button.dataset.mapPlace = rawName;
-          button.textContent = rawName;
-          button.addEventListener("click", () => updateMapInfo(rawName));
-          mapPlaceList.appendChild(button);
+        MAP_GROUPS.forEach((group) => {
+          if (!group.children) {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "map-place-button map-place-single";
+            btn.dataset.mapPlace = normalizeMapName(group.label);
+            btn.textContent = group.label;
+            btn.addEventListener("click", () => updateMapInfo(group.label));
+            mapPlaceList.appendChild(btn);
+          } else {
+            const groupEl = document.createElement("div");
+            groupEl.className = "map-place-group";
+
+            const header = document.createElement("button");
+            header.type = "button";
+            header.className = "map-place-group-header";
+            header.setAttribute("aria-expanded", "false");
+            header.innerHTML = `<span>${group.label}</span><span class="map-group-chevron">›</span>`;
+
+            const childrenEl = document.createElement("div");
+            childrenEl.className = "map-place-group-children";
+            childrenEl.hidden = true;
+
+            header.addEventListener("click", () => {
+              const expanded = header.getAttribute("aria-expanded") === "true";
+              header.setAttribute("aria-expanded", String(!expanded));
+              childrenEl.hidden = expanded;
+            });
+
+            group.children.forEach((childName) => {
+              const btn = document.createElement("button");
+              btn.type = "button";
+              btn.className = "map-place-button";
+              btn.dataset.mapPlace = normalizeMapName(childName);
+              btn.textContent = childName;
+              btn.addEventListener("click", () => updateMapInfo(childName));
+              childrenEl.appendChild(btn);
+            });
+
+            groupEl.appendChild(header);
+            groupEl.appendChild(childrenEl);
+            mapPlaceList.appendChild(groupEl);
+          }
         });
       }
 
