@@ -93,15 +93,15 @@ const mapPlaces = {
 };
 
 const MAP_GROUPS = [
-  { label: "Lambhagi",     children: ["Leirutá", "Lambhagatá", "Presthólmi", "Garðsendavík"] },
-  { label: "Vatnskot" },
-  { label: "Tóftir",      children: ["Vörðuvík"] },
+  { label: "Lambhagi",     children: ["Garðsendavík", "Lambhagatá", "Leirutá", "Presthólmi"] },
+  { label: "Vatnskot",     children: ["Murtusker", "Veiðitangi"] },
+  { label: "Tóftir",      children: ["Murtutangi", "Vörðuvík"] },
   { label: "Öfugsnáði" },
   { label: "Nes",         children: ["Nautatangar", "Vatnsvik"] },
   { label: "Vellankatla" },
-  { label: "Hallvik",     children: ["Hallvik", "Gjáarendar", "Davíðsgjá"] },
-  { label: "Ólafsdráttur", children: ["Þvotta", "Fornasel", "Búr", "Einbúi"] },
-  { label: "Arnarfell",   children: ["Arnarsetur", "Sandskörð", "Arnarnes", "Sláttulág", "Klofhóll", "Langatangagjár", "Langitangi"] },
+  { label: "Hallvik",     children: ["Davíðsgjá", "Gjáarendar", "Hallvik"] },
+  { label: "Ólafsdráttur", children: ["Búr", "Einbúi", "Fornasel", "Þvotta"] },
+  { label: "Arnarfell",   children: ["Arnarnes", "Arnarsetur", "Klofhóll", "Langatangagjár", "Langitangi", "Sandskörð", "Sláttulág"] },
 ];
 
 if (mapSvgMount && mapInfo) {
