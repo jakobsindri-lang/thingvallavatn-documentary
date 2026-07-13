@@ -19,14 +19,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="2.2674891"
-     inkscape:cx="347.07995"
-     inkscape:cy="257.1126"
-     inkscape:window-width="1916"
-     inkscape:window-height="2041"
-     inkscape:window-x="-9"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:zoom="4.5349781"
+     inkscape:cx="87.541767"
+     inkscape:cy="380.04594"
+     inkscape:window-width="3840"
+     inkscape:window-height="2054"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
      inkscape:current-layer="ornefni-group" />
   <style
      id="style1">
@@ -141,6 +141,87 @@
      transform="translate(65.871965,22.906542)">
     <text
        class="ornefni-halo"
+       x="610.12347"
+       y="524.48926"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="none"
+       stroke="#16313c"
+       stroke-width="2.2"
+       stroke-linejoin="round"
+       id="text5-9-8-5">Langatangagjár</text>
+    <text
+       id="ornefni-leiruta-4-2-5"
+       class="ornefni"
+       data-nafn="Leirutá"
+       x="610.12347"
+       y="524.48926"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="#eef5f3"
+       inkscape:label="ornefni-langatangagjar">Langatangagjár</text>
+    <text
+       class="ornefni-halo"
+       x="602.79437"
+       y="467.18689"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="none"
+       stroke="#16313c"
+       stroke-width="2.2"
+       stroke-linejoin="round"
+       id="text5-9-8-5-7">Arnarnes</text>
+    <text
+       id="ornefni-leiruta-4-2-5-1"
+       class="ornefni"
+       data-nafn="Leirutá"
+       x="602.79437"
+       y="467.18689"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="#eef5f3"
+       inkscape:label="ornefni-Arnarnes">Arnarnes</text>
+    <text
+       class="ornefni-halo"
+       x="628.52136"
+       y="493.92813"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="none"
+       stroke="#16313c"
+       stroke-width="2.2"
+       stroke-linejoin="round"
+       id="text5-9-8">Klofhóll</text>
+    <text
+       id="ornefni-leiruta-4-2"
+       class="ornefni"
+       data-nafn="Leirutá"
+       x="628.52136"
+       y="493.92813"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="#eef5f3"
+       inkscape:label="ornefni-klofholl">Klofhóll</text>
+    <text
+       class="ornefni-halo"
        x="497.55469"
        y="181.95813"
        text-anchor="end"
@@ -165,6 +246,33 @@
        font-style="italic"
        font-weight="400"
        fill="#eef5f3">Leirutá</text>
+    <text
+       class="ornefni-halo"
+       x="633.68738"
+       y="479.14609"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="none"
+       stroke="#16313c"
+       stroke-width="2.2"
+       stroke-linejoin="round"
+       id="text5-9">Sláttulág</text>
+    <text
+       id="ornefni-leiruta-4"
+       class="ornefni"
+       data-nafn="Leirutá"
+       x="633.68738"
+       y="479.14609"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="#eef5f3"
+       inkscape:label="ornefni-slattulag">Sláttulág</text>
     <text
        class="ornefni-halo"
        x="562.0105"
@@ -390,7 +498,7 @@
     <text
        id="ornefni-vatnsvik"
        class="ornefni"
-       data-nafn="Vatnsvik"
+       data-nafn="Vatnsvík"
        x="756.93774"
        y="210.71196"
        text-anchor="start"
@@ -438,11 +546,11 @@
        stroke="#16313c"
        stroke-width="2.2"
        stroke-linejoin="round"
-       id="text16">Hallvik</text>
+       id="text16">Hallvík</text>
     <text
        id="ornefni-hallvik"
        class="ornefni"
-       data-nafn="Hallvik"
+       data-nafn="Hallvík"
        x="766.71198"
        y="264.54877"
        text-anchor="start"
@@ -450,7 +558,7 @@
        font-size="10px"
        font-style="italic"
        font-weight="400"
-       fill="#eef5f3">Hallvik</text>
+       fill="#eef5f3">Hallvík</text>
     <text
        class="ornefni-halo"
        x="762.43481"
