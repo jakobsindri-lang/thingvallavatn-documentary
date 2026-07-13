@@ -408,6 +408,43 @@ async function fetchHistoricalCloud() {
   }));
 }
 
+const VSP_SLOTS = [
+  { key: "morgunn", repHour:  9 },
+  { key: "dagur",   repHour: 15 },
+  { key: "kvold",   repHour: 20 },
+  { key: "nott",    repHour: 23 },
+];
+
+function getCurrentSlotKey() {
+  const h = new Date().getUTCHours();
+  if (h >=  6 && h < 12) return "morgunn";
+  if (h >= 12 && h < 18) return "dagur";
+  if (h >= 18 && h < 22) return "kvold";
+  return "nott";
+}
+
+function slotNow(repHour) {
+  const d = new Date();
+  d.setUTCHours(repHour, 0, 0, 0);
+  return d;
+}
+
+function fishHTML(score) {
+  const n = (score === null || score === undefined) ? -1 : score;
+  const brightCount = n < 0 ? 0 : Math.min(n + 1, 5);
+  const colorCls    = n >= 0 ? (n <= 1 ? "fish-red" : n === 2 ? "fish-yellow" : "fish-green") : "";
+  let out = "";
+  for (let i = 0; i < brightCount; i++) out += `<span class="fish bright ${colorCls}">🐟</span>`;
+  for (let i = 0; i < (5 - brightCount); i++) out += `<span class="fish dull">🐟</span>`;
+  return out;
+}
+
+function condLabel(flyScore) {
+  if (flyScore <= 1) return { text: "Slæmar",     cls: "cond-bad" };
+  if (flyScore === 2) return { text: "Fínar",     cls: "cond-ok" };
+  return               { text: "Mjög fínar",      cls: "cond-good" };
+}
+
 async function initForecast() {
   const { lat, lon } = FORECAST_CONFIG.location;
   const dataWarnings = [];
@@ -430,7 +467,7 @@ async function initForecast() {
   const archiveData = archiveRes.value ?? null;
   const waterData   = waterRes.value   ?? null;
 
-  const result = runForecast({
+  const rawInputs = {
     cloudCover:            current?.current?.cloud_cover           ?? null,
     windSpeedMs:           current?.current?.wind_speed_10m        ?? null,
     windDirDeg:            current?.current?.wind_direction_10m    ?? null,
@@ -438,59 +475,66 @@ async function initForecast() {
     waterTemp:             waterData?.temp                         ?? null,
     historicalHourlyCloud: archiveData,
     dataWarnings,
-  });
+  };
 
-  renderForecast(result);
+  const currentSlotKey = getCurrentSlotKey();
+  const slotResults    = VSP_SLOTS.map((s) => runForecast(rawInputs, slotNow(s.repHour)));
+
+  renderForecast(slotResults, currentSlotKey);
 }
 
-function renderForecast(result) {
+function renderForecast(slotResults, currentSlotKey) {
   const loadingEl = document.getElementById("forecast-loading");
   const closedEl  = document.getElementById("forecast-closed");
   const resultEl  = document.getElementById("forecast-result");
 
   if (loadingEl) loadingEl.hidden = true;
 
-  if (!result.inSeason) {
+  if (!slotResults[0].inSeason) {
     if (closedEl) closedEl.hidden = false;
     return;
   }
   if (resultEl) resultEl.hidden = false;
 
-  const tl = FORECAST_CONFIG.scoreLabels.take;
-  const fl = FORECAST_CONFIG.scoreLabels.fly;
+  VSP_SLOTS.forEach((s) => {
+    const th = document.getElementById(`th-${s.key}`);
+    if (th) th.classList.toggle("is-current", s.key === currentSlotKey);
+  });
 
-  function applyCard(badgeId, explId, score, labels, reasons) {
-    const badge = document.getElementById(badgeId);
-    const expl  = document.getElementById(explId);
-    if (badge) { badge.textContent = labels[score]; badge.className = `forecast-badge forecast-score-${score}`; }
-    if (expl)  expl.textContent = buildForecastExplanation(reasons);
-  }
+  slotResults.forEach((r, i) => {
+    const key     = VSP_SLOTS[i].key;
+    const isCurr  = key === currentSlotKey;
 
-  if (result.trout) {
-    applyCard("trout-badge", "trout-explanation", result.trout.score, tl, result.trout.reasons);
-    if (result.trout.provisional) {
-      const e = document.getElementById("trout-explanation");
-      if (e) e.textContent += " (Bráðabirgðamat eftir 20. maí.)";
+    const tc = document.getElementById(`trout-${key}`);
+    if (tc) { tc.innerHTML = fishHTML(r.trout?.score ?? null); tc.classList.toggle("is-current", isCurr); }
+
+    const lc = document.getElementById(`largechar-${key}`);
+    if (lc) { lc.innerHTML = fishHTML(r.char?.largeFinalScore ?? null); lc.classList.toggle("is-current", isCurr); }
+
+    const cc = document.getElementById(`char-${key}`);
+    if (cc) { cc.innerHTML = fishHTML(r.char?.smallFinalScore ?? null); cc.classList.toggle("is-current", isCurr); }
+
+    const condEl = document.getElementById(`cond-${key}`);
+    if (condEl) {
+      const { text, cls } = condLabel(r.fly?.score ?? 2);
+      condEl.textContent = text;
+      condEl.className   = `vsp-cell vsp-cell-cond ${cls}${isCurr ? " is-current" : ""}`;
     }
-  }
+  });
 
-  if (result.char) {
-    applyCard("char-badge", "char-explanation", result.char.score, tl, result.char.reasons);
-    const mn = document.getElementById("char-model-note");
-    if (mn) {
-      mn.textContent =
-        result.char.activeModel === "large" ? "Stórbleikjulíkanið ráðandi." :
-        result.char.activeModel === "small" ? "Smábleikjulíkanið ráðandi." :
-        result.char.activeModel === "both"  ? "Bæði stórbleikja- og smábleikjulíkön virk." : "";
-    }
-  }
-
-  if (result.fly) {
-    applyCard("fly-badge", "fly-explanation", result.fly.score, fl, result.fly.reasons);
+  const currIdx = VSP_SLOTS.findIndex((s) => s.key === currentSlotKey);
+  const curr    = slotResults[currIdx] ?? slotResults[0];
+  const notesEl = document.getElementById("vsp-notes");
+  if (notesEl) {
+    const lines = [];
+    if (curr.trout?.reasons?.[0]) lines.push(`<strong>Urriði:</strong> ${curr.trout.reasons[0]}.`);
+    if (curr.char?.reasons?.[0])  lines.push(`<strong>Bleikja:</strong> ${curr.char.reasons[0]}.`);
+    if (curr.fly?.reasons?.[0])   lines.push(`<strong>Aðstæður:</strong> ${curr.fly.reasons[0]}.`);
+    notesEl.innerHTML = lines.map((l) => `<p class="vsp-note">${l}</p>`).join("");
   }
 
   const noteEl = document.getElementById("forecast-data-note");
-  if (noteEl && result.dataWarnings.length) noteEl.textContent = result.dataWarnings.join(" · ");
+  if (noteEl) noteEl.textContent = (slotResults[0].dataWarnings || []).join(" · ");
 }
 
 if (typeof runForecast === "function") {

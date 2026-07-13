@@ -338,34 +338,64 @@
         </div>
 
         <div class="forecast-result" id="forecast-result" hidden>
-          <div class="forecast-grid">
+          <div class="vsp-wrap">
+            <div class="vsp-table">
 
-            <div class="forecast-card" id="fc-trout">
-              <div class="forecast-card-header">
-                <span class="forecast-species">Urriði — tökulíkur</span>
-                <span class="forecast-badge" id="trout-badge">—</span>
+              <div class="vsp-header">
+                <div class="vsp-row-label"></div>
+                <div class="vsp-col" id="th-morgunn">
+                  <span class="vsp-col-name">Morgunn</span>
+                  <span class="vsp-col-range">06–12</span>
+                </div>
+                <div class="vsp-col" id="th-dagur">
+                  <span class="vsp-col-name">Dagur</span>
+                  <span class="vsp-col-range">12–18</span>
+                </div>
+                <div class="vsp-col" id="th-kvold">
+                  <span class="vsp-col-name">Kvöld</span>
+                  <span class="vsp-col-range">18–22</span>
+                </div>
+                <div class="vsp-col" id="th-nott">
+                  <span class="vsp-col-name">Nótt</span>
+                  <span class="vsp-col-range">22–06</span>
+                </div>
               </div>
-              <p class="forecast-explanation" id="trout-explanation"></p>
-            </div>
 
-            <div class="forecast-card" id="fc-char">
-              <div class="forecast-card-header">
-                <span class="forecast-species">Bleikja — tökulíkur</span>
-                <span class="forecast-badge" id="char-badge">—</span>
+              <div class="vsp-row">
+                <div class="vsp-row-label">Urriði</div>
+                <div class="vsp-cell" id="trout-morgunn"></div>
+                <div class="vsp-cell" id="trout-dagur"></div>
+                <div class="vsp-cell" id="trout-kvold"></div>
+                <div class="vsp-cell" id="trout-nott"></div>
               </div>
-              <p class="forecast-explanation" id="char-explanation"></p>
-              <p class="forecast-model-note" id="char-model-note"></p>
-            </div>
 
-            <div class="forecast-card forecast-card-fly" id="fc-fly">
-              <div class="forecast-card-header">
-                <span class="forecast-species">Fluguveiðiaðstæður</span>
-                <span class="forecast-badge" id="fly-badge">—</span>
+              <div class="vsp-row">
+                <div class="vsp-row-label">Stór bleikja</div>
+                <div class="vsp-cell" id="largechar-morgunn"></div>
+                <div class="vsp-cell" id="largechar-dagur"></div>
+                <div class="vsp-cell" id="largechar-kvold"></div>
+                <div class="vsp-cell" id="largechar-nott"></div>
               </div>
-              <p class="forecast-explanation" id="fly-explanation"></p>
-            </div>
 
+              <div class="vsp-row">
+                <div class="vsp-row-label">Bleikja</div>
+                <div class="vsp-cell" id="char-morgunn"></div>
+                <div class="vsp-cell" id="char-dagur"></div>
+                <div class="vsp-cell" id="char-kvold"></div>
+                <div class="vsp-cell" id="char-nott"></div>
+              </div>
+
+              <div class="vsp-row vsp-row-last">
+                <div class="vsp-row-label">Aðstæður</div>
+                <div class="vsp-cell vsp-cell-cond" id="cond-morgunn"></div>
+                <div class="vsp-cell vsp-cell-cond" id="cond-dagur"></div>
+                <div class="vsp-cell vsp-cell-cond" id="cond-kvold"></div>
+                <div class="vsp-cell vsp-cell-cond" id="cond-nott"></div>
+              </div>
+
+            </div>
           </div>
+          <div class="vsp-notes" id="vsp-notes"></div>
           <p class="forecast-data-note" id="forecast-data-note"></p>
         </div>
 

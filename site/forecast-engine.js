@@ -307,6 +307,7 @@ function calculateTroutScore(inputs) {
 
   return {
     score:      finalScore,
+    slot,
     reasons:    [...reasons, ...provisionalReasons].slice(0, 3),
     provisional,
   };
@@ -370,52 +371,63 @@ function calculateCharScore(inputs) {
     smallReasons.push('Seintímabili bleikju (eftir 10. ágúst) — hrygningarhegðun dregur úr tökulíkum');
   }
 
-  // ── Velja hærra líkanið ────────────────────────────────────────────────
-  let base, activeModel, reasons;
-
-  if (largeScore >= smallScore && largeScore >= 0) {
-    base        = largeScore;
-    activeModel = smallScore >= 0 ? 'both' : 'large';
-    reasons     = [...largeReasons];
-  } else if (smallScore >= 0) {
-    base        = smallScore;
-    activeModel = 'small';
-    reasons     = [...smallReasons];
-  } else {
-    return { score: 0, reasons: ['Engin bleikjulíkön virk á þessum tíma'], activeModel: 'none' };
-  }
-
-  // ── Vatnshitaleiðréttingar ────────────────────────────────────────────
+  // ── Sameiginlegar leiðréttingar (gilda fyrir bæði líkön) ─────────────
+  const adjReasons = [];
   let tempPenalty = 0;
   if (waterTemp == null) {
-    reasons.push('Vatnshiti ekki tiltækur — hitamat sleppt');
+    adjReasons.push('Vatnshiti ekki tiltækur — hitamat sleppt');
   } else if (waterTemp < cfg.waterTemp.coldPenalty2Below) {
     tempPenalty = -2;
-    reasons.push(`Kaldur vatnshiti (${waterTemp.toFixed(1)}°C) — bleikja hefur lítinn hug á að taka`);
+    adjReasons.push(`Kaldur vatnshiti (${waterTemp.toFixed(1)}°C) — bleikja hefur lítinn hug á að taka`);
   } else if (waterTemp < cfg.waterTemp.coldPenalty1Below) {
     tempPenalty = -1;
-    reasons.push(`Fremur kaldur vatnshiti (${waterTemp.toFixed(1)}°C)`);
+    adjReasons.push(`Fremur kaldur vatnshiti (${waterTemp.toFixed(1)}°C)`);
   }
 
-  // ── Sólskin / skýjahula ───────────────────────────────────────────────
   let solarBonus = 0;
   if (cloudCover != null && cloudCover <= cfg.solar.sunnyCloudMax) {
     solarBonus = cfg.solar.sunnyBonus;
-    reasons.push('Sólskin og lítil skýjahula — bleikjan er virk');
+    adjReasons.push('Sólskin og lítil skýjahula — bleikjan er virk');
   }
 
-  // ── Yfirborð ──────────────────────────────────────────────────────────
   const surfaceAdj = surface?.charBonus ?? 0;
-  if (surfaceAdj > 0)  reasons.push(`${surface.label} hjálpar til við að fela flugulínuna`);
-  if (surfaceAdj < 0)  reasons.push(`${surface.label} — sjáanlegri lína getur dregið úr tökulíkum`);
+  if (surfaceAdj > 0) adjReasons.push(`${surface.label} hjálpar til við að fela flugulínuna`);
+  if (surfaceAdj < 0) adjReasons.push(`${surface.label} — sjáanlegri lína getur dregið úr tökulíkum`);
 
-  // Seint-tímabil-hámark
-  let finalScore = clamp(base + tempPenalty + solarBonus + surfaceAdj, 0, 4);
-  if (inLate) finalScore = Math.min(finalScore, sc.lateCapMaxScore);
+  // ── Lokamat hvers líkans — inLate gildir fyrir bæði (hrygning hefst) ──
+  function applyAdj(baseScore) {
+    if (baseScore < 0) return null;
+    let s = clamp(baseScore + tempPenalty + solarBonus + surfaceAdj, 0, 4);
+    if (inLate) s = Math.min(s, sc.lateCapMaxScore);
+    return s;
+  }
+
+  const largeFinalScore = applyAdj(largeScore);
+  const smallFinalScore = applyAdj(smallScore);
+
+  // ── Velja hærra líkanið til yfirlit ────────────────────────────────────
+  let finalScore, activeModel, baseReasons;
+
+  if (largeFinalScore !== null && (smallFinalScore === null || largeFinalScore >= smallFinalScore)) {
+    finalScore  = largeFinalScore;
+    activeModel = smallFinalScore !== null ? 'both' : 'large';
+    baseReasons = largeReasons;
+  } else if (smallFinalScore !== null) {
+    finalScore  = smallFinalScore;
+    activeModel = 'small';
+    baseReasons = smallReasons;
+  } else {
+    return {
+      score: 0, largeFinalScore: null, smallFinalScore: null,
+      reasons: ['Engin bleikjulíkön virk á þessum tíma'], activeModel: 'none',
+    };
+  }
 
   return {
-    score:       finalScore,
-    reasons:     reasons.slice(0, 3),
+    score:           finalScore,
+    largeFinalScore,
+    smallFinalScore,
+    reasons:         [...baseReasons, ...adjReasons].slice(0, 3),
     activeModel,
   };
 }
@@ -501,8 +513,8 @@ function buildForecastExplanation(reasons) {
  *   dataWarnings:         string[]
  * }
  */
-function runForecast(rawInputs) {
-  const now = new Date();
+function runForecast(rawInputs, nowOverride) {
+  const now = nowOverride instanceof Date ? nowOverride : new Date();
 
   if (!isFishingSeason(now)) {
     return { inSeason: false, trout: null, char: null, fly: null,

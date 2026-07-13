@@ -1106,6 +1106,149 @@ body {
   max-width: none;
 }
 
+/* ── Veiðispá tafla ────────────────────────────────────────────────────── */
+
+.vsp-wrap {
+  overflow-x: auto;
+  margin-top: 1.25rem;
+}
+
+.vsp-table {
+  min-width: 420px;
+  width: 100%;
+}
+
+.vsp-header,
+.vsp-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.vsp-header {
+  border-bottom: 1px solid var(--border-soft);
+  padding-bottom: 0.5rem;
+}
+
+.vsp-row {
+  border-bottom: 1px solid var(--border-soft);
+  padding: 0.55rem 0;
+}
+
+.vsp-row-last {
+  border-bottom: none;
+}
+
+.vsp-row-label {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  padding-right: 0.5rem;
+  white-space: nowrap;
+}
+
+.vsp-col {
+  text-align: center;
+  padding: 0.35rem 0.2rem;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.vsp-col.is-current {
+  background: rgba(143, 217, 232, 0.07);
+}
+
+.vsp-col-name {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.vsp-col.is-current .vsp-col-name {
+  color: var(--color-accent-light);
+}
+
+.vsp-col-range {
+  display: block;
+  font-size: 0.67rem;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.vsp-cell {
+  text-align: center;
+  padding: 0.2rem 0.15rem;
+  border-radius: var(--radius);
+  line-height: 1;
+  transition: background 0.2s;
+}
+
+.vsp-cell.is-current {
+  background: rgba(143, 217, 232, 0.07);
+}
+
+/* Fish icons */
+.fish {
+  display: inline-block;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.fish.dull {
+  filter: grayscale(1);
+  opacity: 0.15;
+}
+
+.fish.bright.fish-red    { filter: sepia(1) saturate(8) hue-rotate(330deg); }
+.fish.bright.fish-yellow { filter: sepia(1) saturate(5) hue-rotate(15deg); }
+.fish.bright.fish-green  { filter: sepia(1) saturate(7) hue-rotate(80deg); }
+
+/* Aðstæður */
+.vsp-cell-cond {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.3rem 0.1rem;
+}
+
+.cond-bad  { color: #e05c5c; }
+.cond-ok   { color: #c9a030; }
+.cond-good { color: var(--color-accent-light); }
+
+/* Skýringar undir töflu */
+.vsp-notes {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.vsp-note {
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+  max-width: none;
+}
+
+.vsp-note strong {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+@media (max-width: 560px) {
+  .vsp-header,
+  .vsp-row {
+    grid-template-columns: 5.5rem 1fr 1fr 1fr 1fr;
+  }
+  .vsp-row-label { font-size: 0.72rem; }
+  .fish          { font-size: 0.72rem; }
+  .vsp-col-name  { font-size: 0.68rem; }
+  .vsp-col-range { font-size: 0.58rem; }
+  .vsp-cell-cond { font-size: 0.7rem; }
+}
+
 /* Moon widget */
 .moon-widget {
   display: flex;
