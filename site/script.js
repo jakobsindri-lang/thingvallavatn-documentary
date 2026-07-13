@@ -406,26 +406,75 @@ if (weatherTabs.length) {
   });
 }
 
-const waterTempEl = document.getElementById("water-temp");
+function waterTempChartSVG(history) {
+  if (!history || history.length < 2) return "";
+  const W = 600, H = 130;
+  const padL = 34, padR = 12, padT = 14, padB = 28;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+  const temps = history.map((d) => d.temp);
+  const minT = Math.min(...temps) - 0.3;
+  const maxT = Math.max(...temps) + 0.3;
+  const range = maxT - minT || 1;
+  const n = history.length;
+  const toX = (i) => padL + (i / (n - 1)) * plotW;
+  const toY = (t) => padT + plotH - ((t - minT) / range) * plotH;
+  const pts = history.map((d, i) => `${toX(i).toFixed(1)},${toY(d.temp).toFixed(1)}`);
+  const line = `M ${pts.join(" L ")}`;
+  const area = `M ${toX(0).toFixed(1)},${(padT + plotH).toFixed(1)} L ${pts.join(" L ")} L ${toX(n - 1).toFixed(1)},${(padT + plotH).toFixed(1)} Z`;
+  const step = n <= 7 ? 1 : 2;
+  const xLabels = history.map((d, i) => {
+    if (i % step !== 0 && i !== n - 1) return "";
+    const dt = new Date(d.date + "T12:00:00Z");
+    const lbl = dt.toLocaleDateString("is-IS", { day: "numeric", month: "numeric" });
+    return `<text x="${toX(i).toFixed(1)}" y="${H - 5}" text-anchor="middle" font-size="9.5" fill="rgba(200,215,220,0.55)">${lbl}</text>`;
+  }).join("");
+  const yMin = `${minT.toFixed(1)}°`;
+  const yMax = `${maxT.toFixed(1)}°`;
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" class="water-temp-chart" aria-hidden="true">
+    <defs>
+      <linearGradient id="wtGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(143,217,232,0.22)"/>
+        <stop offset="100%" stop-color="rgba(143,217,232,0.01)"/>
+      </linearGradient>
+    </defs>
+    <path d="${area}" fill="url(#wtGrad)"/>
+    <path d="${line}" fill="none" stroke="#8fd9e8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+    ${history.map((d, i) => `<circle cx="${toX(i).toFixed(1)}" cy="${toY(d.temp).toFixed(1)}" r="2.4" fill="#8fd9e8"/>`).join("")}
+    ${xLabels}
+    <text x="${padL - 4}" y="${toY(maxT - 0.3) + 4}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMax}</text>
+    <text x="${padL - 4}" y="${toY(minT + 0.3) + 4}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMin}</text>
+  </svg>`;
+}
 
-if (waterTempEl) {
+function initWaterTemp() {
+  const widget = document.getElementById("water-temp-widget");
+  if (!widget) return;
   fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
-    .then((response) => response.json())
+    .then((r) => r.json())
     .then((data) => {
+      const tempLabel = data.temp.toFixed(1).replace(".", ",");
       const updated = new Date(data.updated);
       const timeLabel = updated.toLocaleString("is-IS", {
-        day: "numeric",
-        month: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
+        day: "numeric", month: "numeric",
+        hour: "2-digit", minute: "2-digit",
+        timeZone: "Atlantic/Reykjavik",
       });
-      const tempLabel = data.temp.toFixed(1).replace(".", ",");
-      waterTempEl.innerHTML = `Vatnshiti í Þingvallavatni er <strong>${tempLabel}°C</strong> (mælt ${timeLabel}).`;
+      const chart = waterTempChartSVG(data.history);
+      widget.innerHTML = `
+        <div class="water-temp-current">
+          <span class="water-temp-value">${tempLabel}°C</span>
+          <span class="water-temp-time">mælt ${timeLabel}</span>
+        </div>
+        ${chart ? `<div class="water-temp-chart-wrap">${chart}</div>` : ""}
+      `;
     })
     .catch(() => {
-      waterTempEl.textContent = "";
+      widget.innerHTML = '<p class="weather-status">Ekki tókst að sækja vatnshita.</p>';
     });
 }
+
+initWaterTemp();
 
 if (weatherGrid) {
   const weatherIcons = {

@@ -665,16 +665,42 @@ body {
   color: var(--color-text-muted);
 }
 
-.water-temp {
-  text-align: center;
+.water-temp-widget {
+  background: var(--color-bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
   margin-top: 1.5rem;
-  font-size: 1.05rem;
-  color: var(--color-text);
 }
 
-.water-temp strong {
+.water-temp-current {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.water-temp-value {
+  font-size: 2.8rem;
+  font-weight: 300;
   color: var(--color-accent-light);
-  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.water-temp-time {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.water-temp-chart-wrap {
+  margin-top: 0.25rem;
+}
+
+.water-temp-chart {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .weather-source {
