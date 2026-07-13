@@ -117,7 +117,7 @@ if (mapSvgMount && mapInfo) {
       theme: "Veiði, landslag",
     };
 
-    mapKicker.textContent = place.kicker;
+    mapKicker.textContent = "Veiðisvæði";
     mapTitle.textContent = name;
     mapDescription.textContent = place.description;
     mapRole.textContent = place.role;
@@ -187,7 +187,7 @@ if (mapSvgMount && mapInfo) {
         point.dataset.nafn = name;
         point.setAttribute("cx", cx);
         point.setAttribute("cy", cy);
-        point.setAttribute("r", mapPlaces[name] ? "5.5" : "3.8");
+        point.setAttribute("r", "5");
         point.setAttribute("tabindex", "0");
         point.setAttribute("role", "button");
         point.setAttribute("aria-label", name);
