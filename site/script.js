@@ -439,10 +439,10 @@ if (weatherGrid) {
   fetch(FORECAST_CONFIG.api.blikaForecast)
     .then((r) => r.json())
     .then((days) => {
-      const first3 = days.slice(0, 3);
-      if (!first3.length) { weatherGrid.innerHTML = blikaError; return; }
+      const first7 = days.slice(0, 7);
+      if (!first7.length) { weatherGrid.innerHTML = blikaError; return; }
       weatherGrid.innerHTML = "";
-      first3.forEach((day) => {
+      first7.forEach((day) => {
         const date      = new Date(day.dags_spar.slice(0, 10) + "T12:00:00Z");
         const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric" });
         const item = document.createElement("div");
