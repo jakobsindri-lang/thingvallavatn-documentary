@@ -1491,6 +1491,28 @@ body {
   margin: 1rem 0;
 }
 
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 0.8rem 0;
+}
+
+.footer-social a {
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+}
+
+.footer-social a:hover {
+  color: var(--color-accent-light);
+}
+
+.social-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .site-nav {
