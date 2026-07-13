@@ -20,14 +20,14 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="2.2674891"
-     inkscape:cx="159.64796"
-     inkscape:cy="257.3331"
-     inkscape:window-width="3840"
-     inkscape:window-height="2054"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="veidisvaedi-kort" />
+     inkscape:cx="347.07995"
+     inkscape:cy="257.1126"
+     inkscape:window-width="1916"
+     inkscape:window-height="2041"
+     inkscape:window-x="-9"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="ornefni-group" />
   <style
      id="style1">
     .ornefni {
@@ -271,8 +271,8 @@
        fill="#eef5f3">Öfugsnáði</text>
     <text
        class="ornefni-halo"
-       x="561.20551"
-       y="218.08705"
+       x="535.62653"
+       y="215.44095"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -287,8 +287,8 @@
        id="ornefni-prestsholmi"
        class="ornefni"
        data-nafn="Presthólmi"
-       x="561.20551"
-       y="218.08705"
+       x="535.62653"
+       y="215.44095"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -297,8 +297,8 @@
        fill="#eef5f3">Presthólmi</text>
     <text
        class="ornefni-halo"
-       x="541.5592"
-       y="220.54877"
+       x="520.39044"
+       y="223.19487"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -313,8 +313,8 @@
        id="ornefni-lambhagata"
        class="ornefni"
        data-nafn="Lambhagatá"
-       x="541.5592"
-       y="220.54877"
+       x="520.39044"
+       y="223.19487"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -323,8 +323,8 @@
        fill="#eef5f3">Lambhagatá</text>
     <text
        class="ornefni-halo"
-       x="767.40057"
-       y="212.627"
+       x="746.67279"
+       y="217.03717"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -339,8 +339,8 @@
        id="ornefni-nautatangar"
        class="ornefni"
        data-nafn="Nautatangar"
-       x="767.40057"
-       y="212.627"
+       x="746.67279"
+       y="217.03717"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -349,7 +349,7 @@
        fill="#eef5f3">Nautatangar</text>
     <text
        class="ornefni-halo"
-       x="754.15869"
+       x="759.00989"
        y="194.19504"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -365,7 +365,7 @@
        id="ornefni-vellankatla"
        class="ornefni"
        data-nafn="Vellankatla"
-       x="754.15869"
+       x="759.00989"
        y="194.19504"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -375,8 +375,8 @@
        fill="#eef5f3">Vellankatla</text>
     <text
        class="ornefni-halo"
-       x="741.06116"
-       y="208.50688"
+       x="745.47131"
+       y="210.71196"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -391,8 +391,8 @@
        id="ornefni-vatnsvik"
        class="ornefni"
        data-nafn="Vatnsvík"
-       x="741.06116"
-       y="208.50688"
+       x="745.47131"
+       y="210.71196"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -401,8 +401,8 @@
        fill="#eef5f3">Vatnsvik</text>
     <text
        class="ornefni-halo"
-       x="794.40552"
-       y="233.38843"
+       x="778.08789"
+       y="228.97826"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -417,8 +417,8 @@
        id="ornefni-davidsgja"
        class="ornefni"
        data-nafn="Davíðsgjá"
-       x="794.40552"
-       y="233.38843"
+       x="778.08789"
+       y="228.97826"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -427,7 +427,7 @@
        fill="#eef5f3">Davíðsgjá</text>
     <text
        class="ornefni-halo"
-       x="752.59943"
+       x="766.71198"
        y="264.54877"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -443,7 +443,7 @@
        id="ornefni-hallvik"
        class="ornefni"
        data-nafn="Hallvík"
-       x="752.59943"
+       x="766.71198"
        y="264.54877"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -453,7 +453,7 @@
        fill="#eef5f3">Hallvík</text>
     <text
        class="ornefni-halo"
-       x="739.50195"
+       x="762.43481"
        y="247.36418"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -469,7 +469,7 @@
        id="ornefni-gjaarendar"
        class="ornefni"
        data-nafn="Gjáarendar"
-       x="739.50195"
+       x="762.43481"
        y="247.36418"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -479,8 +479,8 @@
        fill="#eef5f3">Gjáarendar</text>
     <text
        class="ornefni-halo"
-       x="773.0661"
-       y="298.65674"
+       x="749.6922"
+       y="289.39539"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -495,8 +495,8 @@
        id="ornefni-olafsdrattur"
        class="ornefni"
        data-nafn="Ólafsdráttur"
-       x="773.0661"
-       y="298.65674"
+       x="749.6922"
+       y="289.39539"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -505,7 +505,7 @@
        fill="#eef5f3">Ólafsdráttur</text>
     <text
        class="ornefni-halo"
-       x="716.52783"
+       x="697.56415"
        y="321.65674"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
@@ -521,7 +521,7 @@
        id="ornefni-einbui"
        class="ornefni"
        data-nafn="Einbúi"
-       x="716.52783"
+       x="697.56415"
        y="321.65674"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
@@ -531,8 +531,8 @@
        fill="#eef5f3">Einbúi</text>
     <text
        class="ornefni-halo"
-       x="706.39893"
-       y="340.0766"
+       x="678.61487"
+       y="342.28168"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -547,8 +547,8 @@
        id="ornefni-arnarpufa"
        class="ornefni"
        data-nafn="Arnarþúfa"
-       x="706.39893"
-       y="340.0766"
+       x="678.61487"
+       y="342.28168"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -557,8 +557,8 @@
        fill="#eef5f3">Arnarþúfa</text>
     <text
        class="ornefni-halo"
-       x="677.6463"
-       y="369.0661"
+       x="649.86224"
+       y="366.86102"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
@@ -573,8 +573,8 @@
        id="ornefni-sandskord"
        class="ornefni"
        data-nafn="Sandskörð"
-       x="677.6463"
-       y="369.0661"
+       x="649.86224"
+       y="366.86102"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
        font-size="10px"
