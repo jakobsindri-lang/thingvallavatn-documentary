@@ -929,9 +929,16 @@ body {
 /* Support overview */
 .support-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
+}
+
+.support-item:first-child {
+  grid-column: 1 / -1;
+  max-width: 360px;
+  justify-self: center;
+  width: 100%;
 }
 
 .support-item {
@@ -953,6 +960,13 @@ body {
   font-size: 0.95rem;
   margin-bottom: 0;
   max-width: none;
+}
+
+.support-item .account-details {
+  color: var(--color-text);
+  font-size: 1rem;
+  margin-top: 0.8rem;
+  line-height: 1.7;
 }
 
 /* Funding cards */
@@ -1521,6 +1535,16 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 700px) {
+  .support-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-item:first-child {
+    max-width: none;
+  }
+}
+
 @media (max-width: 600px) {
   .site-nav {
     gap: 1rem;
