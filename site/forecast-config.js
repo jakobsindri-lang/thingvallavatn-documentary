@@ -51,8 +51,8 @@ const FORECAST_CONFIG = {
     // ATHUGASEMD: Þessi gildi eru bráðabirgðaviðmið sem hafa ekki verið staðfest
     // með vettvangsrannsóknum. Uppfærðu þegar nákvæmari gögn liggja fyrir.
     postSpringScores: {
-      peak:        3,
-      midNight:    3,
+      peak:        2,
+      midNight:    2,
       preRise:     1,
       postRise:    1,
       outOfWindow: 0,
@@ -87,7 +87,7 @@ const FORECAST_CONFIG = {
       feedingWindowEndH:    5,   // 05:00 (næsta dag)
 
       // Hámark samanlagðra tungla- og myrkurviðurlaga
-      maxCombinedPenalty: -2,
+      maxCombinedPenalty: -1,
     },
   },
 
