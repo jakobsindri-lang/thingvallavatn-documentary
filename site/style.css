@@ -927,18 +927,34 @@ body {
 }
 
 /* Support overview */
-.support-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+.support-financial {
+  background: linear-gradient(160deg, var(--color-bg-card), var(--color-bg-alt));
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
   margin-top: 2rem;
 }
 
-.support-item:first-child {
-  grid-column: 1 / -1;
-  max-width: 360px;
-  justify-self: center;
-  width: 100%;
+.support-financial h3 {
+  color: var(--color-accent-light);
+  font-weight: 400;
+  font-size: 1.15rem;
+  margin-bottom: 0.8rem;
+}
+
+.support-financial .account-details {
+  color: var(--color-text);
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.5rem;
 }
 
 .support-item {
@@ -962,12 +978,6 @@ body {
   max-width: none;
 }
 
-.support-item .account-details {
-  color: var(--color-text);
-  font-size: 1rem;
-  margin-top: 0.8rem;
-  line-height: 1.7;
-}
 
 /* Funding cards */
 .funding-grid {
@@ -1538,10 +1548,6 @@ body {
 @media (max-width: 700px) {
   .support-grid {
     grid-template-columns: 1fr;
-  }
-
-  .support-item:first-child {
-    max-width: none;
   }
 }
 
