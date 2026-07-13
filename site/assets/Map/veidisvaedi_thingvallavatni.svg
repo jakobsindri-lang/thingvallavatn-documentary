@@ -141,7 +141,7 @@
      transform="translate(65.871965,22.906542)">
     <text
        class="ornefni-halo"
-       x="511.66721"
+       x="497.55469"
        y="181.95813"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
@@ -157,7 +157,7 @@
        id="ornefni-leiruta"
        class="ornefni"
        data-nafn="Leirutá"
-       x="511.66721"
+       x="497.55469"
        y="181.95813"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
@@ -323,7 +323,7 @@
        fill="#eef5f3">Lambhagatá</text>
     <text
        class="ornefni-halo"
-       x="746.67279"
+       x="733.00128"
        y="217.03717"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
@@ -339,7 +339,7 @@
        id="ornefni-nautatangar"
        class="ornefni"
        data-nafn="Nautatangar"
-       x="746.67279"
+       x="733.00128"
        y="217.03717"
        text-anchor="end"
        font-family="Georgia, 'Times New Roman', serif"
@@ -349,7 +349,7 @@
        fill="#eef5f3">Nautatangar</text>
     <text
        class="ornefni-halo"
-       x="759.00989"
+       x="770.47632"
        y="194.19504"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -365,7 +365,7 @@
        id="ornefni-vellankatla"
        class="ornefni"
        data-nafn="Vellankatla"
-       x="759.00989"
+       x="770.47632"
        y="194.19504"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -375,7 +375,7 @@
        fill="#eef5f3">Vellankatla</text>
     <text
        class="ornefni-halo"
-       x="745.47131"
+       x="756.93774"
        y="210.71196"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
@@ -391,7 +391,7 @@
        id="ornefni-vatnsvik"
        class="ornefni"
        data-nafn="Vatnsvík"
-       x="745.47131"
+       x="756.93774"
        y="210.71196"
        text-anchor="start"
        font-family="Georgia, 'Times New Roman', serif"
