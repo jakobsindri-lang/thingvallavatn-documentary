@@ -19,9 +19,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="4.5349781"
-     inkscape:cx="87.541767"
-     inkscape:cy="380.04594"
+     inkscape:zoom="18.139912"
+     inkscape:cx="510.47655"
+     inkscape:cy="243.63403"
      inkscape:window-width="3840"
      inkscape:window-height="2054"
      inkscape:window-x="-11"
@@ -639,6 +639,87 @@
        fill="#eef5f3">Einbúi</text>
     <text
        class="ornefni-halo"
+       x="707.53644"
+       y="333.35342"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="none"
+       stroke="#16313c"
+       stroke-width="2.2"
+       stroke-linejoin="round"
+       id="text19-5">Búr</text>
+    <text
+       id="ornefni-einbui-2"
+       class="ornefni"
+       data-nafn="Einbúi"
+       x="707.53644"
+       y="333.35342"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="#eef5f3"
+       inkscape:label="ornefni-búr">Búr</text>
+    <text
+       class="ornefni-halo"
+       x="749.81488"
+       y="303.5304"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="none"
+       stroke="#16313c"
+       stroke-width="2.2"
+       stroke-linejoin="round"
+       id="text19-5-6-2">Þvotta</text>
+    <text
+       id="ornefni-einbui-2-1-3"
+       class="ornefni"
+       data-nafn="Einbúi"
+       x="749.81488"
+       y="303.5304"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="#eef5f3"
+       inkscape:label="ornefni-Þvotta">Þvotta</text>
+    <text
+       class="ornefni-halo"
+       x="756.62604"
+       y="327.50586"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="none"
+       stroke="#16313c"
+       stroke-width="2.2"
+       stroke-linejoin="round"
+       id="text19-5-6">Fornasel</text>
+    <text
+       id="ornefni-einbui-2-1"
+       class="ornefni"
+       data-nafn="Einbúi"
+       x="756.62604"
+       y="327.50586"
+       text-anchor="end"
+       font-family="Georgia, 'Times New Roman', serif"
+       font-size="10px"
+       font-style="italic"
+       font-weight="400"
+       fill="#eef5f3"
+       inkscape:label="ornefni-fornasel">Fornasel</text>
+    <text
+       class="ornefni-halo"
        x="678.61487"
        y="342.28168"
        text-anchor="end"
@@ -650,7 +731,7 @@
        stroke="#16313c"
        stroke-width="2.2"
        stroke-linejoin="round"
-       id="text20">Arnarþúfa</text>
+       id="text20">Arnarsetur</text>
     <text
        id="ornefni-arnarpufa"
        class="ornefni"
@@ -662,7 +743,8 @@
        font-size="10px"
        font-style="italic"
        font-weight="400"
-       fill="#eef5f3">Arnarþúfa</text>
+       fill="#eef5f3"
+       inkscape:label="ornefni-arnarsetur">Arnarsetur</text>
     <text
        class="ornefni-halo"
        x="649.86224"
@@ -715,6 +797,14 @@
        font-style="italic"
        font-weight="400"
        fill="#eef5f3">Langitangi</text>
+    <text
+       xml:space="preserve"
+       style="writing-mode:lr-tb;direction:ltr;fill:#000000"
+       x="678.77606"
+       y="344.66702"
+       id="text29"><tspan
+         sodipodi:role="line"
+         id="tspan29"></tspan></text>
   </g>
   <!-- Vignette -->
   <rect
