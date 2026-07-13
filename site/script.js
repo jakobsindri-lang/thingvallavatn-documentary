@@ -148,7 +148,7 @@ if (mapSvgMount && mapInfo) {
     });
   }
 
-  fetch("assets/Map/veidisvaedi_thingvallavatni.svg")
+  fetch(`${window.ASSET_BASE ?? ""}assets/Map/veidisvaedi_thingvallavatni.svg`)
     .then((response) => {
       if (!response.ok) throw new Error("Map SVG not found");
       return response.text();
@@ -341,7 +341,7 @@ if (weatherTabs.length) {
 const waterTempEl = document.getElementById("water-temp");
 
 if (waterTempEl) {
-  fetch(`assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
+  fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
     .then((response) => response.json())
     .then((data) => {
       const updated = new Date(data.updated);
@@ -473,7 +473,7 @@ async function initForecast() {
   const [blikaRes, archiveRes, waterRes] = await Promise.allSettled([
     fetch(FORECAST_CONFIG.api.blikaForecast).then((r) => r.json()),
     fetchHistoricalCloud(),
-    fetch(`assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
+    fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .catch(() => null),
   ]);

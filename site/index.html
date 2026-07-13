@@ -31,8 +31,7 @@
     <a href="#themu">Þemu</a>
     <a href="#vidtol">Viðtöl</a>
     <a href="#stillur">Stillur</a>
-    <a href="#kort">Kort</a>
-    <a href="#vedur">Veður</a>
+    <a href="./veidimenn/">Fyrir veiðimenn</a>
     <a href="#leggja-lid">Leggja lið</a>
     <a href="#samband">Samband</a>
   </nav>
@@ -277,149 +276,6 @@
       </div>
     </section>
 
-    <section class="section map-section" id="kort">
-      <h2>Veiðisvæðið</h2>
-      <p class="section-intro">
-        Örnefni, víkur og gjár við vatnið mynda rammann utan um veiðina og söguna
-        sem heimildamyndin fylgir. Kortið er vinnuútgáfa og verður fínstillt áfram.
-      </p>
-      <div class="map-layout">
-        <div class="map-frame">
-          <div class="interactive-map-svg" id="interactive-map-svg" aria-live="polite">
-            <p class="map-status">Hleð korti&hellip;</p>
-          </div>
-        </div>
-        <aside class="map-info" id="map-info" aria-live="polite">
-          <p class="map-kicker" id="map-kicker">Veiðisvæði þjóðgarðsins</p>
-          <h3 id="map-title">Vatnskot</h3>
-          <p id="map-description">
-            Miðpunktur veiðinnar í þessari fyrstu útgáfu kortsins. Héðan tengist
-            sagan veiðiaðstæðum, aðgengi og lestri vatnsins.
-          </p>
-          <dl class="map-meta">
-            <div>
-              <dt>Hlutverk</dt>
-              <dd id="map-role">Veiðistaður og viðmiðunarstaður</dd>
-            </div>
-            <div>
-              <dt>Tengist</dt>
-              <dd id="map-theme">Veiði, veður, aðgengi</dd>
-            </div>
-          </dl>
-          <div class="map-place-list" id="map-place-list"></div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section weather" id="vedur">
-      <h2>Aðstæður til veiða</h2>
-      <p class="section-intro">
-        Lifandi veðurspá og mat á aðstæðum til veiða fyrir Vatnskot, í þjóðgarðinum á Þingvöllum.
-      </p>
-      <div class="weather-tabs">
-        <button type="button" class="weather-tab active" data-tab="vikuspa">3 daga spá</button>
-        <button type="button" class="weather-tab" data-tab="veidimenn">Veiðispá</button>
-        <button type="button" class="weather-tab" data-tab="tungl">Tungl</button>
-      </div>
-      <div class="weather-panel" data-panel="vikuspa">
-        <div class="weather-grid" id="weather-grid">
-          <p class="weather-status">Hleð inn veðurspá&hellip;</p>
-        </div>
-      </div>
-      <div class="weather-panel" data-panel="veidimenn" hidden>
-
-        <div class="forecast-loading" id="forecast-loading">
-          <p class="weather-status">Hleð inn veiðispá&hellip;</p>
-        </div>
-
-        <div class="forecast-closed" id="forecast-closed" hidden>
-          <h3>Veiðitímabilið er ekki í gangi</h3>
-          <p>Veiðitímabilið í þjóðgarðinum á Þingvöllum er frá 20. apríl til 15. september. Spálíkanið er ekki virkt utan veiðitímabilsins.</p>
-        </div>
-
-        <div class="forecast-result" id="forecast-result" hidden>
-          <div class="vsp-wrap">
-            <table class="vsp-table">
-              <thead>
-                <tr>
-                  <th class="vsp-th-label"></th>
-                  <th class="vsp-th" id="th-morgunn">
-                    <span class="vsp-col-name">Morgunn</span>
-                    <span class="vsp-col-range">04–10</span>
-                  </th>
-                  <th class="vsp-th" id="th-dagur">
-                    <span class="vsp-col-name">Dagur</span>
-                    <span class="vsp-col-range">10–18</span>
-                  </th>
-                  <th class="vsp-th" id="th-kvold">
-                    <span class="vsp-col-name">Kvöld</span>
-                    <span class="vsp-col-range">18–23</span>
-                  </th>
-                  <th class="vsp-th" id="th-nott">
-                    <span class="vsp-col-name">Nótt</span>
-                    <span class="vsp-col-range">23–04</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="vsp-row">
-                  <td class="vsp-row-label">Urriði</td>
-                  <td class="vsp-cell" id="trout-morgunn"></td>
-                  <td class="vsp-cell" id="trout-dagur"></td>
-                  <td class="vsp-cell" id="trout-kvold"></td>
-                  <td class="vsp-cell" id="trout-nott"></td>
-                </tr>
-                <tr class="vsp-row">
-                  <td class="vsp-row-label">Stór bleikja</td>
-                  <td class="vsp-cell" id="largechar-morgunn"></td>
-                  <td class="vsp-cell" id="largechar-dagur"></td>
-                  <td class="vsp-cell" id="largechar-kvold"></td>
-                  <td class="vsp-cell" id="largechar-nott"></td>
-                </tr>
-                <tr class="vsp-row">
-                  <td class="vsp-row-label">Bleikja</td>
-                  <td class="vsp-cell" id="char-morgunn"></td>
-                  <td class="vsp-cell" id="char-dagur"></td>
-                  <td class="vsp-cell" id="char-kvold"></td>
-                  <td class="vsp-cell" id="char-nott"></td>
-                </tr>
-                <tr class="vsp-row vsp-row-last">
-                  <td class="vsp-row-label">Aðstæður</td>
-                  <td class="vsp-cell vsp-cell-cond" id="cond-morgunn"></td>
-                  <td class="vsp-cell vsp-cell-cond" id="cond-dagur"></td>
-                  <td class="vsp-cell vsp-cell-cond" id="cond-kvold"></td>
-                  <td class="vsp-cell vsp-cell-cond" id="cond-nott"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="forecast-data-note" id="forecast-data-note"></p>
-        </div>
-
-      </div>
-      <div class="weather-panel" data-panel="tungl" hidden>
-        <div class="moon-widget" id="moon-widget">
-          <div class="moon-graphic-wrap">
-            <div id="moon-svg-container" class="moon-svg-container" aria-hidden="true"></div>
-          </div>
-          <div class="moon-info">
-            <div class="moon-phase-name" id="moon-phase-name">Hleð&hellip;</div>
-            <div class="moon-illumination" id="moon-illumination"></div>
-            <div class="moon-times" id="moon-times"></div>
-            <div class="moon-clouds" id="moon-clouds"></div>
-            <p class="moon-note" id="moon-note"></p>
-          </div>
-        </div>
-        <p class="moon-photo-credit">Tunglmynd: <a href="https://commons.wikimedia.org/wiki/File:FullMoon2010.jpg" target="_blank" rel="noopener">Gregory H. Revera</a> / Wikimedia Commons CC BY-SA 3.0</p>
-      </div>
-
-      <p class="water-temp" id="water-temp"></p>
-      <p class="weather-source">
-        Veðurgögn frá <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Bliku ↗</a>
-        og vatnshiti frá <a href="https://www.landsvirkjun.is/rauntimavoktun/vatnshiti-thingvallavatns" target="_blank" rel="noopener">Landsvirkjun ↗</a>.
-      </p>
-    </section>
-
     <section class="section support-overview" id="leggja-lid">
       <h2>Hvernig er hægt að leggja verkefninu lið</h2>
       <p class="section-intro">
@@ -505,9 +361,6 @@
     <p>&copy; 2026</p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
-  <script src="forecast-config.js"></script>
-  <script src="forecast-engine.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -51,6 +51,9 @@ body {
   overflow: hidden;
   padding: 6rem 1.5rem 4rem;
 }
+.hero-compact {
+  min-height: 44vh;
+}
 
 .hero-content {
   position: relative;
