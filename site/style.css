@@ -1007,6 +1007,13 @@ body {
   justify-content: center;
   gap: 1.5rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.partners-note {
+  margin-top: 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-soft);
 }
 
 .partner-logo {
