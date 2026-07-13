@@ -410,17 +410,17 @@ async function fetchHistoricalCloud() {
 }
 
 const VSP_SLOTS = [
-  { key: "morgunn", repHour:  9 },
-  { key: "dagur",   repHour: 15 },
+  { key: "morgunn", repHour:  7 },
+  { key: "dagur",   repHour: 14 },
   { key: "kvold",   repHour: 20 },
   { key: "nott",    repHour: 23 },
 ];
 
 function getCurrentSlotKey() {
   const h = new Date().getUTCHours();
-  if (h >=  6 && h < 12) return "morgunn";
-  if (h >= 12 && h < 18) return "dagur";
-  if (h >= 18 && h < 22) return "kvold";
+  if (h >=  4 && h < 10) return "morgunn";
+  if (h >= 10 && h < 18) return "dagur";
+  if (h >= 18 && h < 23) return "kvold";
   return "nott";
 }
 

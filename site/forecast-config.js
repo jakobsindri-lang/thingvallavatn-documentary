@@ -52,7 +52,7 @@ const FORECAST_CONFIG = {
     // með vettvangsrannsóknum. Uppfærðu þegar nákvæmari gögn liggja fyrir.
     postSpringScores: {
       peak:        3,
-      midNight:    2,
+      midNight:    3,
       preRise:     1,
       postRise:    1,
       outOfWindow: 0,
@@ -101,10 +101,10 @@ const FORECAST_CONFIG = {
       // [fromH, toH, score]  (toH er ekki innifalinn)
       hourScores: [
         [0,  4,  1],   // 00–04: Litlar (nótt)
-        [4,  12, 4],   // 04–12: Mjög góðar (morgunn)
-        [12, 18, 2],   // 12–18: Sæmilegar (dagur)
-        [18, 22, 3],   // 18–22: Góðar (kvöld)
-        [22, 24, 1],   // 22–24: Litlar (nótt)
+        [4,  10, 4],   // 04–10: Mjög góðar (morgunn)
+        [10, 18, 2],   // 10–18: Sæmilegar (dagur)
+        [18, 23, 3],   // 18–23: Góðar (kvöld)
+        [23, 24, 1],   // 23–24: Litlar (nótt)
       ],
     },
 
@@ -118,10 +118,10 @@ const FORECAST_CONFIG = {
       hourScores: [
         [0,  3,  1],   // 00–03: Litlar (nótt)
         [3,  4,  2],   // 03–04: Sæmilegar (dögun)
-        [4,  12, 4],   // 04–12: Mjög góðar (morgunn)
-        [12, 18, 2],   // 12–18: Sæmilegar (dagur)
-        [18, 22, 3],   // 18–22: Góðar (kvöld)
-        [22, 24, 1],   // 22–24: Litlar (nótt)
+        [4,  10, 4],   // 04–10: Mjög góðar (morgunn)
+        [10, 18, 2],   // 10–18: Sæmilegar (dagur)
+        [18, 23, 3],   // 18–23: Góðar (kvöld)
+        [23, 24, 1],   // 23–24: Litlar (nótt)
       ],
     },
 
