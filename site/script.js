@@ -366,28 +366,77 @@ if (weatherGrid) {
     rain:"🌧️", showers:"🌦️", sleet:"🌨️", snow:"❄️",
     chanceflurries:"🌨️", thunder:"⛈️", hail:"🌨️",
   };
-  const windDirections = { n:"N", na:"NA", a:"A", sa:"SA", s:"S", sv:"SV", v:"V", nv:"NV" };
+  const wmoIcons = {
+    0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",
+    51:"🌦️",53:"🌦️",55:"🌧️",61:"🌧️",63:"🌧️",65:"🌧️",
+    71:"❄️",73:"❄️",75:"❄️",77:"❄️",80:"🌦️",81:"🌧️",82:"🌧️",
+    85:"🌨️",86:"🌨️",95:"⛈️",96:"⛈️",99:"⛈️",
+  };
   const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://www.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
 
-  fetch(FORECAST_CONFIG.api.blikaForecast)
-    .then((r) => r.json())
-    .then((days) => {
-      weatherGrid.innerHTML = "";
-      days.forEach((day) => {
-        const date = new Date(day.dags_spar);
-        const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric" });
-        const item = document.createElement("div");
-        item.className = "weather-day";
-        item.innerHTML = `
-          <div class="weather-date">${dateLabel}</div>
-          <div class="weather-icon">${weatherIcons[day.merki] || "🌡️"}</div>
-          <div class="weather-temp">${Math.round(day.t2)}°</div>
-          <div class="weather-wind">${Math.round(day.f10)} m/s ${windDirections[day.dtexti] || day.dtexti.toUpperCase()}</div>
-        `;
-        weatherGrid.appendChild(item);
+  function degToDir(deg) {
+    const dirs = ["N","NA","A","SA","S","SV","V","NV"];
+    return deg != null ? dirs[Math.round(deg / 45) % 8] : "";
+  }
+
+  const { lat, lon } = FORECAST_CONFIG.location;
+  const dates3 = [0, 1, 2].map(n => {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  });
+
+  Promise.all([
+    fetch(FORECAST_CONFIG.api.blikaForecast).then(r => r.json()).catch(() => []),
+    fetch(`${FORECAST_CONFIG.api.openMeteoCurrent}?latitude=${lat}&longitude=${lon}` +
+      `&daily=weather_code,temperature_2m_max,wind_speed_10m_max,wind_direction_10m_dominant` +
+      `&timezone=UTC&forecast_days=3`)
+      .then(r => r.json()).catch(() => null),
+  ]).then(([blikaData, omData]) => {
+    const blikaByDate = {};
+    blikaData.forEach(d => { blikaByDate[d.dags_spar.slice(0, 10)] = d; });
+
+    const omByDate = {};
+    if (omData?.daily?.time) {
+      omData.daily.time.forEach((t, i) => {
+        omByDate[t] = {
+          icon: wmoIcons[omData.daily.weather_code[i]] || "🌡️",
+          temp: Math.round(omData.daily.temperature_2m_max[i]),
+          wind: Math.round(omData.daily.wind_speed_10m_max[i]),
+          dir:  degToDir(omData.daily.wind_direction_10m_dominant[i]),
+        };
       });
-    })
-    .catch(() => { weatherGrid.innerHTML = blikaError; });
+    }
+
+    const days = dates3.map(dateStr => {
+      const bl = blikaByDate[dateStr];
+      if (bl) return {
+        dateStr, icon: weatherIcons[bl.merki] || "🌡️",
+        temp: Math.round(bl.t2), wind: Math.round(bl.f10),
+        dir: (bl.dtexti || "").toUpperCase(),
+      };
+      const om = omByDate[dateStr];
+      if (om) return { dateStr, ...om };
+      return null;
+    }).filter(Boolean);
+
+    if (!days.length) { weatherGrid.innerHTML = blikaError; return; }
+
+    weatherGrid.innerHTML = "";
+    days.forEach(day => {
+      const date      = new Date(day.dateStr + "T12:00:00Z");
+      const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric" });
+      const item = document.createElement("div");
+      item.className = "weather-day";
+      item.innerHTML = `
+        <div class="weather-date">${dateLabel}</div>
+        <div class="weather-icon">${day.icon}</div>
+        <div class="weather-temp">${day.temp}°</div>
+        <div class="weather-wind">${day.wind} m/s ${day.dir}</div>
+      `;
+      weatherGrid.appendChild(item);
+    });
+  });
 }
 
 // ── Veiðispá ─────────────────────────────────────────────────────────────────
@@ -445,34 +494,41 @@ function condLabel(flyScore) {
   return               { text: "Mjög fínar",      cls: "cond-good" };
 }
 
+const merkiToCloud = {
+  clear: 5, partlycloudy: 25, mostlycloudy: 65, cloudy: 90,
+  fog: 95, drizzle: 80, rain: 90, showers: 80, sleet: 90, snow: 90,
+  chanceflurries: 70, thunder: 95, hail: 90,
+};
+
 async function initForecast() {
-  const { lat, lon } = FORECAST_CONFIG.location;
   const dataWarnings = [];
 
-  const [currentRes, archiveRes, waterRes] = await Promise.allSettled([
-    fetch(
-      `${FORECAST_CONFIG.api.openMeteoCurrent}?latitude=${lat}&longitude=${lon}` +
-      `&current=cloud_cover,wind_speed_10m,wind_direction_10m&timezone=Atlantic%2FReykjavik`
-    ).then((r) => r.json()),
+  const [blikaRes, archiveRes, waterRes] = await Promise.allSettled([
+    fetch(FORECAST_CONFIG.api.blikaForecast).then((r) => r.json()),
     fetchHistoricalCloud(),
     fetch(`assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .catch(() => null),
   ]);
 
-  if (currentRes.status === "rejected") dataWarnings.push("Veðurgögn ekki tiltæk");
-  if (archiveRes.status === "rejected")  dataWarnings.push("Söguleg skýjahulugögn ekki tiltæk — áhrif fyrri bjartra nátta ekki reiknuð");
+  if (blikaRes.status   === "rejected") dataWarnings.push("Veðurgögn ekki tiltæk");
+  if (archiveRes.status === "rejected") dataWarnings.push("Söguleg skýjahulugögn ekki tiltæk — áhrif fyrri bjartra nátta ekki reiknuð");
 
-  const current     = currentRes.value ?? null;
+  const blikaData   = blikaRes.value   ?? null;
   const archiveData = archiveRes.value ?? null;
   const waterData   = waterRes.value   ?? null;
 
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const today    = Array.isArray(blikaData)
+    ? (blikaData.find(d => d.dags_spar.slice(0, 10) === todayStr) ?? blikaData[0] ?? null)
+    : null;
+
   const rawInputs = {
-    cloudCover:            current?.current?.cloud_cover           ?? null,
-    windSpeedMs:           current?.current?.wind_speed_10m        ?? null,
-    windDirDeg:            current?.current?.wind_direction_10m    ?? null,
-    windDirText:           null,
-    waterTemp:             waterData?.temp                         ?? null,
+    cloudCover:            today ? (merkiToCloud[today.merki] ?? 50) : null,
+    windSpeedMs:           today?.f10  ?? null,
+    windDirDeg:            null,
+    windDirText:           today?.dtexti ?? null,
+    waterTemp:             waterData?.temp ?? null,
     historicalHourlyCloud: archiveData,
     dataWarnings,
   };
@@ -521,17 +577,6 @@ function renderForecast(slotResults, currentSlotKey) {
       condEl.className   = `vsp-cell vsp-cell-cond ${cls}${isCurr ? " is-current" : ""}`;
     }
   });
-
-  const currIdx = VSP_SLOTS.findIndex((s) => s.key === currentSlotKey);
-  const curr    = slotResults[currIdx] ?? slotResults[0];
-  const notesEl = document.getElementById("vsp-notes");
-  if (notesEl) {
-    const lines = [];
-    if (curr.trout?.reasons?.[0]) lines.push(`<strong>Urriði:</strong> ${curr.trout.reasons[0]}.`);
-    if (curr.char?.reasons?.[0])  lines.push(`<strong>Bleikja:</strong> ${curr.char.reasons[0]}.`);
-    if (curr.fly?.reasons?.[0])   lines.push(`<strong>Aðstæður:</strong> ${curr.fly.reasons[0]}.`);
-    notesEl.innerHTML = lines.map((l) => `<p class="vsp-note">${l}</p>`).join("");
-  }
 
   const noteEl = document.getElementById("forecast-data-note");
   if (noteEl) noteEl.textContent = (slotResults[0].dataWarnings || []).join(" · ");
