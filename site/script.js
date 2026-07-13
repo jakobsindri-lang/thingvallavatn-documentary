@@ -144,15 +144,7 @@ if (mapSvgMount && mapInfo) {
     activeMapButton = mapPlaceList?.querySelector(
       `[data-map-place="${escapeSelectorValue(name)}"]`
     );
-    if (activeMapButton) {
-      activeMapButton.classList.add("is-active");
-      const childrenEl = activeMapButton.closest(".map-place-group-children");
-      if (childrenEl && childrenEl.hidden) {
-        childrenEl.hidden = false;
-        const header = childrenEl.previousElementSibling;
-        if (header) header.setAttribute("aria-expanded", "true");
-      }
-    }
+    if (activeMapButton) activeMapButton.classList.add("is-active");
   };
 
   fetch(`${window.ASSET_BASE ?? ""}assets/Map/veidisvaedi_thingvallavatni.svg`)
@@ -170,6 +162,7 @@ if (mapSvgMount && mapInfo) {
       svg.removeAttribute("height");
       svg.setAttribute("role", "img");
       svg.setAttribute("focusable", "false");
+      svg.setAttribute("overflow", "hidden");
       mapSvgMount.replaceChildren(document.importNode(svg, true));
 
       const inlineSvg = mapSvgMount.querySelector("svg");
@@ -213,50 +206,69 @@ if (mapSvgMount && mapInfo) {
 
       if (mapPlaceList) {
         mapPlaceList.replaceChildren();
+
+        const groupsRow = document.createElement("div");
+        groupsRow.className = "map-place-groups-row";
+
+        const childrenRow = document.createElement("div");
+        childrenRow.className = "map-place-children-row";
+        childrenRow.hidden = true;
+
+        let activeToggle = null;
+
         MAP_GROUPS.forEach((group) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "map-place-button";
+
           if (!group.children) {
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.className = "map-place-button map-place-single";
             btn.dataset.mapPlace = normalizeMapName(group.label);
             btn.textContent = group.label;
-            btn.addEventListener("click", () => updateMapInfo(group.label));
-            mapPlaceList.appendChild(btn);
+            btn.addEventListener("click", () => {
+              if (activeToggle) {
+                activeToggle.setAttribute("aria-expanded", "false");
+                activeToggle = null;
+                childrenRow.hidden = true;
+              }
+              updateMapInfo(group.label);
+            });
           } else {
-            const groupEl = document.createElement("div");
-            groupEl.className = "map-place-group";
+            btn.classList.add("map-place-group-toggle");
+            btn.setAttribute("aria-expanded", "false");
+            btn.innerHTML = `${group.label} <span class="map-group-chevron" aria-hidden="true">›</span>`;
 
-            const header = document.createElement("button");
-            header.type = "button";
-            header.className = "map-place-group-header";
-            header.setAttribute("aria-expanded", "false");
-            header.innerHTML = `<span>${group.label}</span><span class="map-group-chevron">›</span>`;
-
-            const childrenEl = document.createElement("div");
-            childrenEl.className = "map-place-group-children";
-            childrenEl.hidden = true;
-
-            header.addEventListener("click", () => {
-              const expanded = header.getAttribute("aria-expanded") === "true";
-              header.setAttribute("aria-expanded", String(!expanded));
-              childrenEl.hidden = expanded;
+            btn.addEventListener("click", () => {
+              const isOpen = btn.getAttribute("aria-expanded") === "true";
+              if (activeToggle && activeToggle !== btn) {
+                activeToggle.setAttribute("aria-expanded", "false");
+              }
+              if (isOpen) {
+                btn.setAttribute("aria-expanded", "false");
+                childrenRow.hidden = true;
+                activeToggle = null;
+              } else {
+                btn.setAttribute("aria-expanded", "true");
+                activeToggle = btn;
+                childrenRow.replaceChildren();
+                group.children.forEach((childName) => {
+                  const childBtn = document.createElement("button");
+                  childBtn.type = "button";
+                  childBtn.className = "map-place-button map-place-child";
+                  childBtn.dataset.mapPlace = normalizeMapName(childName);
+                  childBtn.textContent = childName;
+                  childBtn.addEventListener("click", () => updateMapInfo(childName));
+                  childrenRow.appendChild(childBtn);
+                });
+                childrenRow.hidden = false;
+              }
             });
-
-            group.children.forEach((childName) => {
-              const btn = document.createElement("button");
-              btn.type = "button";
-              btn.className = "map-place-button";
-              btn.dataset.mapPlace = normalizeMapName(childName);
-              btn.textContent = childName;
-              btn.addEventListener("click", () => updateMapInfo(childName));
-              childrenEl.appendChild(btn);
-            });
-
-            groupEl.appendChild(header);
-            groupEl.appendChild(childrenEl);
-            mapPlaceList.appendChild(groupEl);
           }
+
+          groupsRow.appendChild(btn);
         });
+
+        mapPlaceList.appendChild(groupsRow);
+        mapPlaceList.appendChild(childrenRow);
       }
 
       updateMapInfo("Vatnskot");

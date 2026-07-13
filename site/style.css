@@ -239,6 +239,7 @@ body {
   height: 100%;
   min-height: 420px;
   display: block;
+  overflow: hidden;
 }
 
 .interactive-map-svg .ornefni {
@@ -330,74 +331,64 @@ body {
 .map-place-list {
   display: flex;
   flex-direction: column;
+  gap: 0.6rem;
   margin-top: auto;
-  padding-top: 0.75rem;
+}
+
+.map-place-groups-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.map-place-children-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 0.5rem;
   border-top: 1px solid var(--border-soft);
 }
 
-.map-place-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.map-place-group-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0.42rem 0;
-  border: none;
-  background: none;
-  color: var(--color-text-muted);
-  font-family: inherit;
-  font-size: 0.82rem;
-  cursor: pointer;
-  text-align: left;
-  transition: color 0.15s ease;
-}
-
-.map-place-group-header:hover {
-  color: var(--color-text);
-}
-
-.map-group-chevron {
-  transition: transform 0.18s ease;
-  opacity: 0.4;
-  font-style: normal;
-}
-
-.map-place-group-header[aria-expanded="true"] .map-group-chevron {
-  transform: rotate(90deg);
-}
-
-.map-place-group-children {
-  display: flex;
-  flex-direction: column;
-  padding: 0.1rem 0 0.3rem 0.8rem;
-  border-left: 1px solid var(--border-soft);
-  margin-left: 0.15rem;
-  margin-bottom: 0.15rem;
+.map-place-children-row[hidden] {
+  display: none;
 }
 
 .map-place-button {
-  padding: 0.32rem 0;
-  border: none;
-  background: none;
+  padding: 0.42rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background-color: transparent;
   color: var(--color-text-muted);
   font-family: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
-  text-align: left;
-  transition: color 0.15s ease;
-}
-
-.map-place-single {
   font-size: 0.82rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .map-place-button:hover,
 .map-place-button.is-active {
+  background-color: var(--color-accent-soft);
+  border-color: var(--color-accent);
   color: var(--color-accent-light);
+}
+
+.map-place-group-toggle[aria-expanded="true"] {
+  background-color: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+}
+
+.map-group-chevron {
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+
+.map-place-group-toggle[aria-expanded="true"] .map-group-chevron {
+  transform: rotate(90deg);
+}
+
+.map-place-child {
+  font-size: 0.78rem;
 }
 
 /* Pitch */
