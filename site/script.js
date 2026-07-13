@@ -201,7 +201,8 @@ if (mapSvgMount && mapInfo) {
         pointLayer.appendChild(point);
       });
 
-      inlineSvg.appendChild(pointLayer);
+      const ornefniGroup = inlineSvg.querySelector("#ornefni-group");
+      (ornefniGroup || inlineSvg).appendChild(pointLayer);
 
       updateMapInfo("Vatnskot");
     })
