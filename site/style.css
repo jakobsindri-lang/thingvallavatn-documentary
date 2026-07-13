@@ -1114,47 +1114,24 @@ body {
 }
 
 .vsp-table {
-  min-width: 420px;
+  min-width: 360px;
   width: 100%;
+  border-collapse: collapse;
 }
 
-.vsp-header,
-.vsp-row {
-  display: grid;
-  grid-template-columns: 8rem 1fr 1fr 1fr 1fr;
-  align-items: center;
+.vsp-th-label {
+  width: 7.5rem;
 }
 
-.vsp-header {
-  border-bottom: 1px solid var(--border-soft);
-  padding-bottom: 0.5rem;
-}
-
-.vsp-row {
-  border-bottom: 1px solid var(--border-soft);
-  padding: 0.55rem 0;
-}
-
-.vsp-row-last {
-  border-bottom: none;
-}
-
-.vsp-row-label {
-  font-size: 0.82rem;
-  color: var(--color-text-muted);
-  padding-right: 0.5rem;
-  white-space: nowrap;
-}
-
-.vsp-col {
+.vsp-th {
   text-align: center;
-  padding: 0.35rem 0.2rem;
-  border-radius: var(--radius);
+  padding: 0.5rem 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-soft);
   transition: background 0.2s;
 }
 
-.vsp-col.is-current {
-  background: rgba(143, 217, 232, 0.07);
+.vsp-th.is-current {
+  background: rgba(143, 217, 232, 0.08);
 }
 
 .vsp-col-name {
@@ -1164,7 +1141,7 @@ body {
   color: var(--color-text-muted);
 }
 
-.vsp-col.is-current .vsp-col-name {
+.vsp-th.is-current .vsp-col-name {
   color: var(--color-accent-light);
 }
 
@@ -1175,23 +1152,39 @@ body {
   opacity: 0.6;
 }
 
+.vsp-row {
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.vsp-row-last {
+  border-bottom: none;
+}
+
+.vsp-row-label {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  padding: 0.6rem 0.75rem 0.6rem 0;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 .vsp-cell {
   text-align: center;
-  padding: 0.2rem 0.15rem;
-  border-radius: var(--radius);
-  line-height: 1;
+  padding: 0.5rem 0.4rem;
+  vertical-align: middle;
   transition: background 0.2s;
 }
 
 .vsp-cell.is-current {
-  background: rgba(143, 217, 232, 0.07);
+  background: rgba(143, 217, 232, 0.08);
 }
 
 /* Fish icons */
 .fish {
   display: inline-block;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: 1;
+  margin: 0 0.05rem;
 }
 
 .fish.dull {
@@ -1238,15 +1231,13 @@ body {
 }
 
 @media (max-width: 560px) {
-  .vsp-header,
-  .vsp-row {
-    grid-template-columns: 5.5rem 1fr 1fr 1fr 1fr;
-  }
-  .vsp-row-label { font-size: 0.72rem; }
-  .fish          { font-size: 0.72rem; }
+  .vsp-th-label  { width: 5rem; }
+  .vsp-row-label { font-size: 0.7rem; padding-right: 0.4rem; }
+  .fish          { font-size: 0.75rem; margin: 0 0.02rem; }
   .vsp-col-name  { font-size: 0.68rem; }
   .vsp-col-range { font-size: 0.58rem; }
   .vsp-cell-cond { font-size: 0.7rem; }
+  .vsp-th, .vsp-cell { padding-left: 0.2rem; padding-right: 0.2rem; }
 }
 
 /* Moon widget */
