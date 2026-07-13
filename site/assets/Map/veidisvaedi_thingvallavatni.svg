@@ -19,9 +19,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="9.0699562"
-     inkscape:cx="314.66525"
-     inkscape:cy="96.141589"
+     inkscape:zoom="1.6033569"
+     inkscape:cx="290.01653"
+     inkscape:cy="302.49036"
      inkscape:window-width="1916"
      inkscape:window-height="2041"
      inkscape:window-x="1911"
@@ -90,11 +90,12 @@
   <!-- Land -->
   <rect
      id="land-bg"
-     x="316.30627"
-     y="92.093872"
-     width="598"
-     height="566"
-     fill="#ece5d6" />
+     x="339.38287"
+     y="82.114807"
+     width="604.23694"
+     height="572.23694"
+     fill="#ece5d6"
+     style="stroke-width:1.01072" />
   <!-- Vatn -->
   <path
      id="vatn"
