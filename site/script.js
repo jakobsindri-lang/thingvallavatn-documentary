@@ -162,7 +162,7 @@ if (mapSvgMount && mapInfo) {
       });
 
       mapSvgMount.querySelectorAll(".ornefni").forEach((label) => {
-        const sourceName = label.dataset.nafn || label.textContent.trim();
+        const sourceName = label.textContent.trim() || label.dataset.nafn;
         const name = normalizeMapName(sourceName);
         const cx = label.dataset.cx || label.getAttribute("x");
         const cy = label.dataset.cy || label.getAttribute("y");
@@ -195,7 +195,7 @@ if (mapSvgMount && mapInfo) {
       if (mapPlaceList) {
         mapPlaceList.replaceChildren();
         mapSvgMount.querySelectorAll(".ornefni").forEach((label) => {
-          const rawName = label.dataset.nafn || label.textContent.trim();
+          const rawName = label.textContent.trim() || label.dataset.nafn;
           const button = document.createElement("button");
           button.type = "button";
           button.className = "map-place-button";
