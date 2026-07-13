@@ -410,10 +410,10 @@ async function fetchHistoricalCloud() {
 }
 
 const VSP_SLOTS = [
-  { key: "morgunn", repHour:  7 },
-  { key: "dagur",   repHour: 14 },
-  { key: "kvold",   repHour: 20 },
-  { key: "nott",    repHour: 23 },
+  { key: "morgunn", repHour:  7, fromH:  4, toH: 10 },
+  { key: "dagur",   repHour: 14, fromH: 10, toH: 18 },
+  { key: "kvold",   repHour: 20, fromH: 18, toH: 23 },
+  { key: "nott",    repHour: 23, fromH: 23, toH: 28 },  // toH=28 → 04:00 næsta dag
 ];
 
 function getCurrentSlotKey() {
@@ -422,6 +422,21 @@ function getCurrentSlotKey() {
   if (h >= 10 && h < 18) return "dagur";
   if (h >= 18 && h < 23) return "kvold";
   return "nott";
+}
+
+// Finnur besta urriðamat á tilteknum tímagluggum (30 mín skref).
+// toH getur verið > 23 (t.d. 28 = 04:00 næsta dag) — Date() meðhöndlar yfirfall.
+function bestTroutScoreInSlot(rawInputs, fromH, toH) {
+  const base = new Date();
+  base.setUTCHours(0, 0, 0, 0);
+  let best = null;
+  for (let mins = fromH * 60; mins <= toH * 60; mins += 30) {
+    const t = new Date(+base + mins * 60000);
+    const r = runForecast(rawInputs, t);
+    if (!r.inSeason || !r.trout) continue;
+    if (best === null || r.trout.score > best.score) best = r.trout;
+  }
+  return best;
 }
 
 function slotNow(repHour) {
@@ -486,7 +501,12 @@ async function initForecast() {
   };
 
   const currentSlotKey = getCurrentSlotKey();
-  const slotResults    = VSP_SLOTS.map((s) => runForecast(rawInputs, slotNow(s.repHour)));
+  const slotResults = VSP_SLOTS.map((s) => {
+    const r = runForecast(rawInputs, slotNow(s.repHour));
+    const bestTrout = bestTroutScoreInSlot(rawInputs, s.fromH, s.toH);
+    if (bestTrout) r.trout = bestTrout;
+    return r;
+  });
 
   renderForecast(slotResults, currentSlotKey);
 }
