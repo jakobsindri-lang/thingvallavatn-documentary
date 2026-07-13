@@ -1,5 +1,15 @@
 console.log("Þingvallavatn — kynningar- og stuðningssíða er keyrð.");
 
+const heroVideo = document.querySelector(".hero-video");
+if (heroVideo) {
+  heroVideo.muted = true;
+  heroVideo.defaultMuted = true;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    heroVideo.pause();
+    heroVideo.removeAttribute("autoplay");
+  }
+}
+
 const previewButton = document.getElementById("preview-button");
 const supportButton = document.getElementById("support-button");
 
