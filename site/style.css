@@ -258,9 +258,6 @@ body {
   transition: fill 0.2s ease, stroke 0.2s ease, filter 0.2s ease, r 0.2s ease;
 }
 
-.interactive-map-svg .map-point-featured {
-  fill: var(--color-accent-light);
-}
 
 .interactive-map-svg .map-point:hover,
 .interactive-map-svg .map-point:focus,
