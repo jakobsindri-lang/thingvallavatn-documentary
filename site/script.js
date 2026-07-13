@@ -176,17 +176,17 @@ if (mapSvgMount && mapInfo) {
       mapSvgMount.querySelectorAll(".ornefni").forEach((label) => {
         const sourceName = label.dataset.nafn || label.textContent.trim();
         const name = normalizeMapName(sourceName);
-        const x = label.getAttribute("x");
-        const y = label.getAttribute("y");
+        const cx = label.dataset.cx || label.getAttribute("x");
+        const cy = label.dataset.cy || label.getAttribute("y");
 
-        if (!x || !y) return;
+        if (!cx || !cy) return;
 
         const point = document.createElementNS(svgNamespace, "circle");
         point.classList.add("map-point");
         if (mapPlaces[name]) point.classList.add("map-point-featured");
         point.dataset.nafn = name;
-        point.setAttribute("cx", x);
-        point.setAttribute("cy", y);
+        point.setAttribute("cx", cx);
+        point.setAttribute("cy", cy);
         point.setAttribute("r", mapPlaces[name] ? "5.5" : "3.8");
         point.setAttribute("tabindex", "0");
         point.setAttribute("role", "button");
