@@ -187,7 +187,7 @@ if (mapSvgMount && mapInfo) {
         point.dataset.nafn = name;
         point.setAttribute("cx", cx);
         point.setAttribute("cy", cy);
-        point.setAttribute("r", "5");
+        point.setAttribute("r", "3.5");
         point.setAttribute("tabindex", "0");
         point.setAttribute("role", "button");
         point.setAttribute("aria-label", name);
