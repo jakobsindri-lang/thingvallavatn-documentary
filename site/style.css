@@ -52,7 +52,7 @@ body {
   padding: 6rem 1.5rem 4rem;
 }
 .hero-compact {
-  min-height: 44vh;
+  min-height: 55vh;
 }
 
 .hero::after {
