@@ -1800,6 +1800,14 @@ body {
   margin: 0.4rem auto 0;
 }
 
+.support-card-fill {
+  display: block;
+  width: 130px;
+  margin: 1.4rem auto 0;
+  opacity: 0.85;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+}
+
 .account-block {
   display: block;
   margin: 0.4rem auto 0;

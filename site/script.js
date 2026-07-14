@@ -824,9 +824,6 @@ function renderForecast(slotResults, currentSlotKey) {
     const lc = document.getElementById(`largechar-${key}`);
     if (lc) { lc.innerHTML = fishHTML(r.char?.largeFinalScore ?? null); lc.classList.toggle("is-current", isCurr); }
 
-    const cc = document.getElementById(`char-${key}`);
-    if (cc) { cc.innerHTML = fishHTML(r.char?.smallFinalScore ?? null); cc.classList.toggle("is-current", isCurr); }
-
     const condEl = document.getElementById(`cond-${key}`);
     if (condEl) {
       const { text, cls } = condLabel(r.fly?.score ?? 2);
