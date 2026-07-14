@@ -491,7 +491,9 @@ function initWaterTemp() {
         hour: "2-digit", minute: "2-digit",
         timeZone: "Atlantic/Reykjavik",
       });
-      const chart = waterTempChartSVG(data.history);
+      const history = data.history ? [...data.history] : [];
+      if (history.length > 0) history[history.length - 1] = { ...history[history.length - 1], temp: data.temp };
+      const chart = waterTempChartSVG(history);
       widget.innerHTML = `
         <div class="water-temp-current">
           <span class="water-temp-label">Nýjasta gildi</span>
