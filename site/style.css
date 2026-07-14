@@ -320,11 +320,18 @@ body {
 
 
 .interactive-map-svg .map-point:hover,
-.interactive-map-svg .map-point:focus,
-.interactive-map-svg .map-point.is-active {
+.interactive-map-svg .map-point:focus {
   fill: #ffffff;
   stroke: var(--color-accent);
+  r: 5;
   filter: drop-shadow(0 0 5px rgba(143, 217, 232, 0.9));
+}
+
+.interactive-map-svg .map-point.is-active {
+  fill: var(--color-accent);
+  stroke: #ffffff;
+  r: 6;
+  filter: drop-shadow(0 0 7px rgba(143, 217, 232, 0.95));
 }
 
 .map-status {
@@ -403,23 +410,34 @@ body {
 .map-place-children-row {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.4rem;
-  padding-top: 0.5rem;
+  margin-top: 0.6rem;
+  padding: 0.6rem 0 0 1rem;
   border-top: 1px solid var(--border-soft);
+  border-left: 2px solid var(--border-soft);
 }
 
 .map-place-children-row[hidden] {
   display: none;
 }
 
+.map-children-label {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  opacity: 0.75;
+  margin-right: 0.15rem;
+}
+
 .map-place-button {
   padding: 0.42rem 0.7rem;
   border-radius: 999px;
   border: 1px solid var(--border-soft);
-  background-color: transparent;
+  background-color: var(--color-bg-alt);
   color: var(--color-text-muted);
   font-family: inherit;
   font-size: 0.82rem;
+  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -447,7 +465,11 @@ body {
 }
 
 .map-place-child {
-  font-size: 0.78rem;
+  background-color: transparent;
+  border-style: dashed;
+  font-weight: 400;
+  font-size: 0.76rem;
+  padding: 0.3rem 0.6rem;
 }
 
 /* Pitch */

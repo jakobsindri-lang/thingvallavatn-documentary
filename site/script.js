@@ -363,6 +363,7 @@ if (mapSvgMount && mapInfo) {
             });
           } else {
             btn.classList.add("map-place-group-toggle");
+            btn.dataset.mapPlace = normalizeMapName(group.label);
             btn.setAttribute("aria-expanded", "false");
             btn.innerHTML = `${group.label} <span class="map-group-chevron" aria-hidden="true">›</span>`;
 
@@ -379,6 +380,10 @@ if (mapSvgMount && mapInfo) {
                 btn.setAttribute("aria-expanded", "true");
                 activeToggle = btn;
                 childrenRow.replaceChildren();
+                const label = document.createElement("span");
+                label.className = "map-children-label";
+                label.textContent = `Undir ${group.label}:`;
+                childrenRow.appendChild(label);
                 group.children.forEach((childName) => {
                   const childBtn = document.createElement("button");
                   childBtn.type = "button";
@@ -390,6 +395,7 @@ if (mapSvgMount && mapInfo) {
                 });
                 childrenRow.hidden = false;
               }
+              updateMapInfo(group.label);
             });
           }
 
