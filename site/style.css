@@ -712,10 +712,17 @@ body {
 }
 
 .water-temp-current {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
+  text-align: center;
   margin-bottom: 1rem;
+}
+
+.water-temp-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.3rem;
 }
 
 .water-temp-value {
@@ -733,6 +740,21 @@ body {
 
 .water-temp-chart-wrap {
   margin-top: 0.25rem;
+  position: relative;
+}
+
+.wt-tooltip {
+  position: absolute;
+  background: rgba(8, 22, 32, 0.92);
+  border: 1px solid rgba(143, 217, 232, 0.3);
+  color: var(--color-accent-light);
+  font-size: 0.8rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 6px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 5;
 }
 
 .water-temp-chart {

@@ -418,8 +418,8 @@ if (weatherTabs.length) {
 
 function waterTempChartSVG(history) {
   if (!history || history.length < 2) return "";
-  const W = 600, H = 130;
-  const padL = 34, padR = 12, padT = 14, padB = 28;
+  const W = 600, H = 150;
+  const padL = 34, padR = 12, padT = 22, padB = 28;
   const plotW = W - padL - padR;
   const plotH = H - padT - padB;
   const temps = history.map((d) => d.temp);
@@ -441,7 +441,27 @@ function waterTempChartSVG(history) {
   }).join("");
   const yMin = `${minT.toFixed(1)}°`;
   const yMax = `${maxT.toFixed(1)}°`;
-  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" class="water-temp-chart" aria-hidden="true">
+
+  const lastIdx = n - 1;
+  const lastX = toX(lastIdx);
+  const lastY = toY(history[lastIdx].temp);
+  const lastDt = new Date(history[lastIdx].date + "T12:00:00Z");
+  const lastDateLabel = lastDt.toLocaleDateString("is-IS", { day: "numeric", month: "long" });
+
+  const regularPoints = history.map((d, i) => {
+    if (i === lastIdx) return "";
+    const dt = new Date(d.date + "T12:00:00Z");
+    const dl = dt.toLocaleDateString("is-IS", { day: "numeric", month: "long" });
+    return `<circle class="wt-point" cx="${toX(i).toFixed(1)}" cy="${toY(d.temp).toFixed(1)}" r="2.8" fill="#8fd9e8" data-temp="${d.temp}" data-date="${dl}"/>`;
+  }).join("");
+
+  const labelY = lastY > padT + plotH / 2 ? lastY - 12 : lastY + 18;
+  const currentPoint = `
+    <circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="9" fill="rgba(143,217,232,0.1)"/>
+    <circle class="wt-point" cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="4" fill="#c8f0f8" stroke="#8fd9e8" stroke-width="1.2" data-temp="${history[lastIdx].temp}" data-date="${lastDateLabel}"/>
+    <text x="${(lastX - 14).toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="end" font-size="8.5" fill="rgba(200,220,230,0.55)">Nýjasta gildi</text>`;
+
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" class="water-temp-chart" style="overflow:visible" aria-hidden="true">
     <defs>
       <linearGradient id="wtGrad" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="rgba(143,217,232,0.22)"/>
@@ -450,10 +470,11 @@ function waterTempChartSVG(history) {
     </defs>
     <path d="${area}" fill="url(#wtGrad)"/>
     <path d="${line}" fill="none" stroke="#8fd9e8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
-    ${history.map((d, i) => `<circle cx="${toX(i).toFixed(1)}" cy="${toY(d.temp).toFixed(1)}" r="2.4" fill="#8fd9e8"/>`).join("")}
+    ${regularPoints}
+    ${currentPoint}
     ${xLabels}
-    <text x="${padL - 4}" y="${toY(maxT - 0.3) + 4}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMax}</text>
-    <text x="${padL - 4}" y="${toY(minT + 0.3) + 4}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMin}</text>
+    <text x="${padL - 4}" y="${(toY(maxT - 0.3) + 4).toFixed(1)}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMax}</text>
+    <text x="${padL - 4}" y="${(toY(minT + 0.3) + 4).toFixed(1)}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMin}</text>
   </svg>`;
 }
 
@@ -473,11 +494,42 @@ function initWaterTemp() {
       const chart = waterTempChartSVG(data.history);
       widget.innerHTML = `
         <div class="water-temp-current">
+          <span class="water-temp-label">Nýjasta gildi</span>
           <span class="water-temp-value">${tempLabel}°C</span>
           <span class="water-temp-time">mælt ${timeLabel}</span>
         </div>
         ${chart ? `<div class="water-temp-chart-wrap">${chart}</div>` : ""}
       `;
+      const chartWrap = widget.querySelector(".water-temp-chart-wrap");
+      if (chartWrap) {
+        const svg = chartWrap.querySelector("svg");
+        const tip = document.createElement("div");
+        tip.className = "wt-tooltip";
+        tip.hidden = true;
+        chartWrap.appendChild(tip);
+        svg.addEventListener("mousemove", (e) => {
+          const points = [...svg.querySelectorAll(".wt-point")];
+          const rect = svg.getBoundingClientRect();
+          const scaleX = rect.width / 600;
+          const scaleY = rect.height / 150;
+          const mx = e.clientX - rect.left;
+          let nearest = null, minDist = Infinity;
+          points.forEach((p) => {
+            const dist = Math.abs(parseFloat(p.getAttribute("cx")) * scaleX - mx);
+            if (dist < minDist) { minDist = dist; nearest = p; }
+          });
+          if (nearest && minDist < 40) {
+            const temp = parseFloat(nearest.getAttribute("data-temp")).toFixed(1).replace(".", ",");
+            tip.textContent = `${nearest.getAttribute("data-date")} · ${temp}°C`;
+            tip.hidden = false;
+            tip.style.left = `${parseFloat(nearest.getAttribute("cx")) * scaleX}px`;
+            tip.style.top = `${Math.max(0, parseFloat(nearest.getAttribute("cy")) * scaleY - 40)}px`;
+          } else {
+            tip.hidden = true;
+          }
+        });
+        svg.addEventListener("mouseleave", () => { tip.hidden = true; });
+      }
     })
     .catch(() => {
       widget.innerHTML = '<p class="weather-status">Ekki tókst að sækja vatnshita.</p>';
