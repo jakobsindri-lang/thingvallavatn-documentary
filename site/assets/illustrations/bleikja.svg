@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="200" height="70"
+     fill="none" stroke="#3aa8c1" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+  <!--
+    Bleikja (Arctic char) — Salvelinus alpicola
+    Standalone reference file. Stroke colour matches site accent #3aa8c1.
+    Inline version in index.html uses currentColor so CSS can control hue/opacity.
+    PLACEHOLDER: replace path data with final naturalistic artwork.
+    Keep viewBox="0 0 200 70" and stroke="currentColor" in the inline copy.
+  -->
+
+  <!-- Body: clockwise from snout — dorsal edge, forked tail, ventral edge, close -->
+  <path d="
+    M 12,35
+    C 10,29 11,23 16,20
+    C 21,17 33,13 56,11
+    C 82,8 110,8 136,12
+    C 155,15 168,22 172,30
+    C 176,22 183,14 188,10
+    C 186,15 184,22 182,28
+    C 181,32 181,34 181,35
+    C 181,36 181,38 182,42
+    C 184,48 186,55 188,60
+    C 183,56 176,48 172,40
+    C 168,48 155,55 136,58
+    C 110,62 82,62 56,59
+    C 33,57 21,53 16,50
+    C 11,47 10,41 12,35 Z
+  "/>
+
+  <!-- Dorsal fin -->
+  <path d="M 76,8 C 80,1 96,-1 108,2 C 112,5 110,11 104,12"/>
+
+  <!-- Adipose fin (char / salmon family marker — small fleshy fin before tail) -->
+  <path d="M 148,12 C 151,7 157,7 159,12"/>
+
+  <!-- Pectoral fin (behind gill cover) -->
+  <path d="M 44,25 C 40,33 43,43 50,41 C 47,37 45,31 44,25"/>
+
+  <!-- Pelvic fin -->
+  <path d="M 80,59 C 79,66 84,69 88,67 C 85,64 82,62 80,59"/>
+
+  <!-- Anal fin -->
+  <path d="M 120,57 C 120,65 125,68 129,66 C 126,63 123,60 120,57"/>
+
+  <!-- Eye -->
+  <circle cx="25" cy="30" r="2.8"/>
+  <circle cx="25" cy="30" r="1" fill="#3aa8c1" stroke="none"/>
+
+  <!-- Gill cover (operculum) -->
+  <path d="M 36,21 C 34,28 34,42 36,49" stroke-width="1"/>
+
+  <!-- Lateral line (dashed) -->
+  <path d="M 48,33 C 86,30 132,31 174,34" stroke-dasharray="3,4" stroke-width="0.7"/>
+
+  <!-- Spots (arctic char: pale / orange spots on darker back) -->
+  <circle cx="72" cy="26" r="2"   fill="#3aa8c1" stroke="none"/>
+  <circle cx="90" cy="24" r="2"   fill="#3aa8c1" stroke="none"/>
+  <circle cx="108" cy="23" r="1.8" fill="#3aa8c1" stroke="none"/>
+  <circle cx="126" cy="25" r="1.8" fill="#3aa8c1" stroke="none"/>
+  <circle cx="76"  cy="39" r="2"   fill="#3aa8c1" stroke="none"/>
+  <circle cx="94"  cy="40" r="1.8" fill="#3aa8c1" stroke="none"/>
+  <circle cx="112" cy="39" r="1.8" fill="#3aa8c1" stroke="none"/>
+  <circle cx="140" cy="33" r="1.4" fill="#3aa8c1" stroke="none"/>
+</svg>

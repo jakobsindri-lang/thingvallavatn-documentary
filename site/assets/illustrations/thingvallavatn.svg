@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 192" width="120" height="192"
+     fill="none" stroke="#3aa8c1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!--
+    Þingvallavatn — simplified / stylised lake outline
+    Standalone reference file. Inline version uses currentColor.
+    PLACEHOLDER: not geographically precise.
+    For production, trace actual coastline from verified GIS/map data.
+    Orientation: north at top, lake roughly N–S.
+  -->
+  <path d="
+    M 60,8
+    C 72,8 86,12 94,20
+    C 102,28 104,40 100,50
+    C 108,56 114,64 116,76
+    C 118,90 112,102 102,110
+    C 96,114 88,116 80,118
+    C 88,126 96,138 96,150
+    C 96,164 88,175 78,180
+    C 72,183 66,184 60,184
+    C 54,184 48,183 42,180
+    C 32,175 24,164 24,150
+    C 24,138 32,126 40,118
+    C 32,116 24,114 18,110
+    C 8,102 2,90 4,76
+    C 6,64 12,56 20,50
+    C 16,40 18,28 26,20
+    C 34,12 48,8 60,8 Z
+  "/>
+</svg>
