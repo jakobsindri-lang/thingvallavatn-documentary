@@ -78,79 +78,24 @@
 
     <section class="section" id="themu">
       <h2>Þemu</h2>
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-thjodgardur.png" alt="Landslag við Þingvallavatn" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Þingvallavatn og þjóðgarðurinn</h3>
-            <p>Sérstaða vatnsins, sagan og staðurinn sem geymir bæði náttúru og menningararf þjóðarinnar.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-bleikja.png" alt="Bleikja úr Þingvallavatni" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Bleikjan og afbrigði hennar</h3>
-            <p>Eitt merkasta dæmi heimsins um hraða þróun: fjögur afbrigði bleikju sem hafa aðlagast sama vatninu á mismunandi hátt.</p>
+      <div class="theme-carousel" id="theme-carousel" tabindex="0">
+        <div class="theme-main-card" id="theme-main-card">
+          <img class="theme-card-img" id="theme-card-img"
+               src="assets/images/web/theme-thjodgardur.png"
+               alt="Landslag við Þingvallavatn">
+          <div class="theme-card-overlay" aria-hidden="true"></div>
+          <span class="theme-card-counter" id="theme-card-counter">01 / 08</span>
+          <div class="theme-card-content" id="theme-card-content">
+            <h3 class="theme-card-title" id="theme-card-title">Þingvallavatn og þjóðgarðurinn</h3>
+            <p class="theme-card-desc" id="theme-card-desc">Sérstaða vatnsins, sagan og staðurinn sem geymir bæði náttúru og menningararf þjóðarinnar.</p>
           </div>
         </div>
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-urridi.png" alt="Urriði á næturveiði í Þingvallavatni" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Urriðinn og næturveiðin</h3>
-            <p>Stærsti urriði landsins leynist í djúpinu og kemur fram þegar myrkrið skellur á.</p>
-          </div>
+        <div class="theme-nav">
+          <button class="theme-arrow" id="theme-prev" aria-label="Fyrra þema">&#8592;</button>
+          <div class="theme-dots" id="theme-dots"></div>
+          <button class="theme-arrow" id="theme-next" aria-label="Næsta þema">&#8594;</button>
         </div>
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-faedukedja.png" alt="Vatnabobbi úr Þingvallavatni" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Mýflugan, vatnabobbinn og vorflugan</h3>
-            <p>Smádýrin sem mynda undirstöðu fæðukeðjunnar og halda öllu vistkerfinu gangandi.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-hornsili-murta.png" alt="Murta úr Þingvallavatni" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Hornsíli, murta og fæðukeðjan</h3>
-            <p>Hvernig lítil dýr og smáfiskar tengja saman allt lífríki vatnsins, frá botni og upp.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-veidiadferdir.png" alt="Veiðimaður við Þingvallavatn" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Veiðiaðferðir og lestur vatnsins</h3>
-            <p>Hvernig á að lesa vatnið: birtu, vind, dýpi og hegðun bleikju og urriða.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-visindi.png" alt="Líffræðingur að störfum við Þingvallavatn" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Vísindi og sérfræðiþekking</h3>
-            <p>Rannsóknir á lífríki vatnsins og því sem vísindamenn hafa lært af einu merkasta stöðuvatni heims.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image">
-            <img src="assets/images/web/theme-framtid.png" alt="Alda í óveðri á Þingvallavatni" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Framtíð vatnsins</h3>
-            <p>Hvað bíður Þingvallavatns og hvernig getum við varðveitt þennan einstaka heim?</p>
-          </div>
-        </div>
+        <ul class="theme-name-list" id="theme-name-list"></ul>
       </div>
     </section>
 

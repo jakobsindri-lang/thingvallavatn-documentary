@@ -963,4 +963,115 @@ function initMoonWidget() {
     .catch(() => renderNote(null));
 }
 
+// ── Theme carousel ──────────────────────────────────────────────────────────
+(function () {
+  const themes = [
+    { src: 'assets/images/web/theme-thjodgardur.png',  alt: 'Landslag við Þingvallavatn',               title: 'Þingvallavatn og þjóðgarðurinn',     desc: 'Sérstaða vatnsins, sagan og staðurinn sem geymir bæði náttúru og menningararf þjóðarinnar.' },
+    { src: 'assets/images/web/theme-bleikja.png',        alt: 'Bleikja úr Þingvallavatni',                title: 'Bleikjan og afbrigði hennar',         desc: 'Eitt merkasta dæmi heimsins um hraða þróun: fjögur afbrigði bleikju sem hafa aðlagast sama vatninu á mismunandi hátt.' },
+    { src: 'assets/images/web/theme-urridi.png',         alt: 'Urriði á næturveiði í Þingvallavatni',     title: 'Urriðinn og næturveiðin',             desc: 'Stærsti urriði landsins leynist í djúpinu og kemur fram þegar myrkrið skellur á.' },
+    { src: 'assets/images/web/theme-faedukedja.png',     alt: 'Vatnabobbi úr Þingvallavatni',             title: 'Mýflugan, vatnabobbinn og vorflugan', desc: 'Smádýrin sem mynda undirstöðu fæðukeðjunnar og halda öllu vistkerfinu gangandi.' },
+    { src: 'assets/images/web/theme-hornsili-murta.png', alt: 'Murta úr Þingvallavatni',                  title: 'Hornsíli, murta og fæðukeðjan',       desc: 'Hvernig lítil dýr og smáfiskar tengja saman allt lífríki vatnsins, frá botni og upp.' },
+    { src: 'assets/images/web/theme-veidiadferdir.png',  alt: 'Veiðimaður við Þingvallavatn',             title: 'Veiðiaðferðir og lestur vatnsins',    desc: 'Hvernig á að lesa vatnið: birtu, vind, dýpi og hegðun bleikju og urriða.' },
+    { src: 'assets/images/web/theme-visindi.png',        alt: 'Líffræðingur að störfum við Þingvallavatn',title: 'Vísindi og sérfræðiþekking',          desc: 'Rannsóknir á lífríki vatnsins og því sem vísindamenn hafa lært af einu merkasta stöðuvatni heims.' },
+    { src: 'assets/images/web/theme-framtid.png',        alt: 'Alda í óveðri á Þingvallavatni',           title: 'Framtíð vatnsins',                    desc: 'Hvað bíður Þingvallavatns og hvernig getum við varðveitt þennan einstaka heim?' },
+  ];
+
+  const carousel  = document.getElementById('theme-carousel');
+  if (!carousel) return;
+
+  const imgEl     = document.getElementById('theme-card-img');
+  const counterEl = document.getElementById('theme-card-counter');
+  const titleEl   = document.getElementById('theme-card-title');
+  const descEl    = document.getElementById('theme-card-desc');
+  const contentEl = document.getElementById('theme-card-content');
+  const dotsWrap  = document.getElementById('theme-dots');
+  const nameList  = document.getElementById('theme-name-list');
+  const card      = document.getElementById('theme-main-card');
+  const total     = themes.length;
+  const totalStr  = String(total).padStart(2, '0');
+
+  let current = 0;
+  let busy    = false;
+
+  function fmt(n) { return String(n + 1).padStart(2, '0'); }
+
+  const dots = themes.map((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'theme-dot' + (i === 0 ? ' is-active' : '');
+    btn.setAttribute('aria-label', t.title);
+    btn.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(btn);
+    return btn;
+  });
+
+  const nameBtns = themes.map((t, i) => {
+    const li  = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className   = 'theme-name-btn' + (i === 0 ? ' is-active' : '');
+    btn.textContent = t.title;
+    btn.addEventListener('click', () => goTo(i));
+    li.appendChild(btn);
+    nameList.appendChild(li);
+    return btn;
+  });
+
+  function goTo(idx) {
+    if (busy) return;
+    idx = ((idx % total) + total) % total;
+    if (idx === current) return;
+    busy = true;
+
+    imgEl.classList.add('is-fading');
+    contentEl.classList.add('is-fading');
+
+    setTimeout(() => {
+      current = idx;
+      const t = themes[current];
+      imgEl.src             = t.src;
+      imgEl.alt             = t.alt;
+      titleEl.textContent   = t.title;
+      descEl.textContent    = t.desc;
+      counterEl.textContent = `${fmt(current)} / ${totalStr}`;
+
+      dots.forEach((d, i)     => d.classList.toggle('is-active', i === current));
+      nameBtns.forEach((b, i) => b.classList.toggle('is-active', i === current));
+
+      imgEl.classList.remove('is-fading');
+      contentEl.classList.remove('is-fading');
+      busy = false;
+    }, 280);
+  }
+
+  document.getElementById('theme-prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('theme-next').addEventListener('click', () => goTo(current + 1));
+
+  carousel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+  });
+
+  let txStart = 0;
+  card.addEventListener('touchstart', (e) => { txStart = e.touches[0].clientX; }, { passive: true });
+  card.addEventListener('touchend',   (e) => {
+    const delta = e.changedTouches[0].clientX - txStart;
+    if (Math.abs(delta) > 48) goTo(delta < 0 ? current + 1 : current - 1);
+  });
+
+  let mxStart  = 0;
+  let dragging = false;
+  card.addEventListener('mousedown', (e) => {
+    mxStart  = e.clientX;
+    dragging = true;
+    card.classList.add('is-dragging');
+  });
+  document.addEventListener('mouseup', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    card.classList.remove('is-dragging');
+    const delta = e.clientX - mxStart;
+    if (Math.abs(delta) > 48) goTo(delta < 0 ? current + 1 : current - 1);
+  });
+  card.addEventListener('dragstart', (e) => e.preventDefault());
+})();
+
 initMoonWidget();
