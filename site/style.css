@@ -1700,12 +1700,35 @@ body {
 
 /* Footer */
 .site-footer {
+  position: relative;
+  overflow: hidden;
   text-align: center;
   padding: 3rem 1.5rem;
   color: var(--color-text-muted);
   font-size: 0.9rem;
   border-top: 1px solid var(--border-soft);
   background-color: var(--color-bg-alt);
+}
+
+.footer-lake {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  color: var(--color-accent);
+  opacity: 0.07;
+  pointer-events: none;
+}
+.footer-lake svg {
+  display: block;
+  width: 170px;
+  height: auto;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 1;
 }
 
 .footer-title {
@@ -2123,26 +2146,10 @@ body {
   }
 }
 
-/* ── Illustrated accents (test / first draft) ── */
+/* ── Illustrated accents ── */
 
 @keyframes illus-fadein { from { opacity: 0; } to { opacity: 1; } }
 @keyframes illus-float  { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-/* Lake outline — decorative watermark in #um-myndina */
-.illus-lake {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem 0 2rem;
-  color: var(--color-accent);
-  opacity: 0;
-  animation: illus-fadein 2s 0.6s ease-out forwards;
-}
-.illus-lake svg {
-  display: block;
-  width: 72px;
-  height: auto;
-  opacity: 0.13;
-}
 
 /* Fish pair — decorative accent below theme name list */
 .illus-accent {
@@ -2153,16 +2160,31 @@ body {
   margin-top: 1.5rem;
   padding-top: 1.2rem;
   border-top: 1px solid var(--border-soft);
-  color: var(--color-accent);
   opacity: 0;
   animation: illus-fadein 1.6s 0.8s ease-out forwards;
 }
-.illus-accent svg {
+.illus-accent img {
   display: block;
-  opacity: 0.22;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
 }
-.illus-bleikja { width: 130px; height: 46px; }
-.illus-urridi  { width: 148px; height: 54px; transform: scaleX(-1); }
+.illus-bleikja { width: 190px; }
+.illus-urridi  { width: 215px; }
+
+/* Single illustration used as a divider between sections */
+.section-divider {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  opacity: 0;
+  animation: illus-fadein 1.8s 0.2s ease-out forwards;
+}
+.section-divider img {
+  display: block;
+  width: 230px;
+  max-width: 55%;
+  height: auto;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .illus-float-a { animation: illus-float 9s    ease-in-out infinite; }
@@ -2170,8 +2192,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .illus-lake,
-  .illus-accent {
+  .illus-accent,
+  .section-divider {
     opacity: 1;
     animation: none;
   }
@@ -2179,7 +2201,9 @@ body {
 
 @media (max-width: 600px) {
   .illus-accent { gap: 1.5rem; }
-  .illus-bleikja { width: 96px;  height: 34px; }
-  .illus-urridi  { width: 110px; height: 40px; }
-  .illus-lake svg { width: 54px; }
+  .illus-bleikja { width: 130px; }
+  .illus-urridi  { width: 148px; }
+  .section-divider { padding: 1.75rem 1.5rem; }
+  .section-divider img { width: 170px; }
+  .footer-lake svg { width: 130px; }
 }
