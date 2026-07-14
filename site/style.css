@@ -1895,17 +1895,6 @@ body {
   pointer-events: none;
 }
 
-.theme-card-counter {
-  position: absolute;
-  top: 1rem;
-  right: 1.2rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.45);
-  font-variant-numeric: tabular-nums;
-  pointer-events: none;
-}
-
 .theme-card-content {
   position: absolute;
   bottom: 0;

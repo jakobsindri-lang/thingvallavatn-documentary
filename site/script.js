@@ -38,67 +38,186 @@ const mapPlaceList = document.getElementById("map-place-list");
 
 const mapPlaces = {
   Vatnskot: {
-    kicker: "Veiðisvæði þjóðgarðsins",
+    kicker: "Gamalt býli",
     description:
-      "Miðpunktur veiðinnar í þessari fyrstu útgáfu kortsins. Héðan tengist sagan veiðiaðstæðum, aðgengi og lestri vatnsins.",
+      "Vatnskot er gamalt býli við norðanvert Þingvallavatn og var lengst af hjáleiga frá Þingvöllum. Búið var þar með hléum frá því um 1600 og fram til ársins 1966.",
     role: "Veiðistaður og viðmiðunarstaður",
-    theme: "Veiði, veður, aðgengi",
+    theme:
+      "Lífsafkoma heimilisfólksins byggðist að verulegu leyti á vatninu og veiðum. Í dag er Vatnskot vinsæll áningarstaður með bryggju og tjaldsvæði á gamla túninu.",
   },
   Garðsendavík: {
     kicker: "Víkur og grunnsævi",
     description:
-      "Ein af víkunum sem hjálpar til við að setja veiðina í samhengi við strandlínu, birtu og vind.",
+      "Garðsendavík er vík norðaustan við Lambhaga. Hún dregur nafn sitt af grjótgarðinum sem liggur yfir hagann og endar við víkina.",
     role: "Örnefni við veiðisvæði",
-    theme: "Lestur vatnsins, landslag",
+    theme:
+      "Sunnan víkurinnar er Garðsendasker. Þar mættust áður veiðimið sem tilheyrðu Þingvöllum og Vatnskoti.",
+  },
+  Breiðitangi: {
+    kicker: "Tangar og vogar",
+    description:
+      "Breiðitangi er breið og vogskorin landspilda rúmum 400 metrum vestan við Vatnskot. Tanginn er um 175 metra breiður og við hann eru margir smærri vogar og tangar.",
+    role: "Örnefni við veiðisvæði",
+    theme:
+      "Vestan tangans er Breiðavík og lítið ónefnt sker liggur skammt undan suðvesturhluta hans.",
   },
   Vörðuvík: {
     kicker: "Víkur og aðstæður",
-    description:
-      "Staður sem getur nýst vel í kortinu til að sýna hvernig smærri víkur og tangar móta aðstæður við vatnið.",
+    description: "Vörðuvík er vík á strandlengjunni austan Vatnskots og Tófta.",
     role: "Örnefni við veiðisvæði",
-    theme: "Veiðiaðferðir, aðstæður",
+    theme:
+      "Hægt er að komast niður að víkinni um afleggjara frá Vallavegi. Örnefnasíðan skráir nafnið en birtir takmarkaðar upplýsingar um uppruna þess.",
   },
   Öfugsnáði: {
     kicker: "Örnefni við vatnið",
     description:
-      "Sérkennilegt örnefni sem gefur kortinu staðbundinn karakter og minnir á hve náið fólk hefur lesið vatnið í gegnum tíðina.",
+      "Öfugsnáði er strand- og veiðisvæði á norðaustanverðu Þingvallavatni, milli Vörðuvíkur og Ness.",
     role: "Kennileiti",
-    theme: "Saga, staðarþekking",
+    theme:
+      "Afleggjari frá Vallavegi liggur niður að svæðinu. Öfugsnáðavík er skráð sem sérstakt örnefni innan sama strandsvæðis.",
+  },
+  Nautatangar: {
+    kicker: "Tangar við Nes",
+    description:
+      "Nautatangar, einnig nefndir Nautatangi, eru fremst á Nesi við norðaustanvert Þingvallavatn.",
+    role: "Örnefni við veiðisvæði",
+    theme: "Austan tanganna opnast Vatnsvik, stór og breið vík sem nær að Gjáarendum.",
+  },
+  Vatnsvik: {
+    kicker: "Vík og uppsprettur",
+    description:
+      "Vatnsvik er stór og breið vík í norðausturenda Þingvallavatns. Nes afmarkar víkina að vestan og Gjáarendar að austan.",
+    role: "Örnefni við veiðisvæði",
+    theme:
+      "Fjölmargar kaldar uppsprettur og vatnsfylltar gjár eru í víkinni. Vellankatla er þekktust þeirra en Davíðsgjá flytur einnig mikið grunnvatn út í vatnið.",
+  },
+  Vellankatla: {
+    kicker: "Uppsprettulind",
+    description:
+      "Vellankatla er uppsprettulind og vík innst í Vatnsviki. Nafnið er talið vísa til þess hvernig vatnið vellur upp úr lindinni líkt og úr katli.",
+    role: "Kennileiti",
+    theme:
+      "Vatnið kemur með grunnvatnsstraumum frá Langjökli og er aðeins um 2,8 gráður. Örnefnið er fornt og tengist meðal annars frásögnum af kristnitökunni árið 1000.",
   },
   Davíðsgjá: {
     kicker: "Gjásvæði",
     description:
-      "Gjáin tengir veiðikortið við jarðsögu Þingvalla og sjónrænan heim myndarinnar: hraun, dýpi og tæran vatnsheim.",
+      "Davíðsgjá er stór vatnsfyllt sprunga sem liggur meðfram austurbakka Vatnsviks og nær að Gjáarendum.",
     role: "Gjásvæði og kennileiti",
-    theme: "Jarðsaga, neðansjávarstemning",
+    theme:
+      "Stærsti samfelldi hluti gjárinnar er um 200 metra langur og allt að 15 metra breiður. Ekki er vitað með vissu við hvaða Davíð gjáin er kennd.",
   },
   Hallvik: {
     kicker: "Víkur og veiði",
     description:
-      "Víkin er góður punktur fyrir umfjöllun um hvernig form strandarinnar, vindur og birta breyta lestri vatnsins.",
+      "Hallvik er vík sunnan Gjáarenda í norðausturhorni Þingvallavatns. Nafnið er dregið af Halli, lægri barmi Hrafnagjár sem gengur þar niður að vatninu.",
     role: "Örnefni við veiðisvæði",
-    theme: "Veiði, birta, vindur",
+    theme:
+      "Örnefnið er skráð Hallvik, án broddstafs, til aðgreiningar frá Hallvík við Almannagjá. Tveir litlir hólmar, Gjáarendahólmar, eru rétt norðan við víkina.",
   },
   Gjáarendar: {
     kicker: "Gjásvæði",
     description:
-      "Staður sem getur brúað saman kortið, þjóðgarðinn og jarðfræðina sem gerir Þingvallavatn einstakt.",
+      "Gjáarendar eru hraunflatir við vatnsbakkann þar sem Hrafnagjá og tengdar sprungur ganga niður að Þingvallavatni.",
     role: "Kennileiti við gjár",
-    theme: "Þjóðgarðurinn, jarðsaga",
+    theme:
+      "Davíðsgjá er stærsta sprungan á svæðinu. Gamlar leiðir milli Þingvalla og byggðanna austan vatns lágu um Gjáarenda og enn má sjá ummerki þeirra.",
   },
   Ólafsdráttur: {
     kicker: "Veiðistaður",
     description:
-      "Örnefni sem hentar vel til að tengja kortið við hefðir, staðarþekkingu og sögur veiðimanna við vatnið.",
+      "Ólafsdráttur er vatnasvæðið undir Halli á Hrafnagjá, milli Hallviks og Arnarfellsenda. Nafnið er talið tengjast Ólafi helga Noregskonungi.",
     role: "Örnefni við veiðisvæði",
-    theme: "Veiðimenning, staðarþekking",
+    theme:
+      "Þar eru mikilvægustu hrygningarsvæði kuðungableikjunnar í Þingvallavatni. Veiðibann er samkvæmt upplýsingum þjóðgarðsins frá 1. júlí til og með 31. ágúst, frá Gjáarendahólmum að Einbúa.",
+  },
+  Búr: {
+    kicker: "Vík við Arnarfell",
+    description:
+      "Búr er um 100 metra breið vík við norðurenda Arnarfells. Brattir tangar afmarka víkina og Einbúi stendur á vestari tanganum.",
+    role: "Örnefni við veiðisvæði",
+    theme:
+      "Búr var áður þekktur veiðistaður en liggur innan hins viðkvæma hrygningarsvæðis kuðungableikjunnar í Ólafsdrætti.",
+  },
+  Einbúi: {
+    kicker: "Móbergsklettur",
+    description:
+      "Einbúi er um 22 metra hár móbergsklettur sem stendur á litlum tanga við norðurenda Arnarfells. Kletturinn er brattur á alla vegu en gróinn að ofan.",
+    role: "Kennileiti",
+    theme:
+      "Einbúi afmarkar suðurenda tímabundna veiðibannsvæðisins í Ólafsdrætti. Búr er austan við klettinn og Arnarsetur ofar í fjallinu.",
+  },
+  Fornasel: {
+    kicker: "Fornar tóftir",
+    description:
+      "Fornasel eru tóftir í lítilli gróinni laut við norðurenda Arnarfells, skammt frá vatnsbakkanum. Tóftirnar eru taldar vera af gömlu seli, líklega frá Þingvallabæ.",
+    role: "Kennileiti",
+    theme:
+      "Tóftirnar eru grónar og erfitt getur verið að greina þær. Djúpar gjár eru beggja vegna svæðisins og því þarf að fara varlega.",
+  },
+  Þvotta: {
+    kicker: "Vík undir Hrafnagjá",
+    description:
+      "Þvotta, einnig nefnd Þvottuvík eða Þvottá, er lítil og grunn vík undir Hallstíg á Hrafnagjá.",
+    role: "Örnefni við veiðisvæði",
+    theme:
+      "Nafnið tengist því að bændur frá Gjábakka þvoðu þar ull. Köld uppspretta rennur í víkina og mikill kjarrgróður er við bakkann.",
+  },
+  Arnarnes: {
+    kicker: "Gamalt sumarhús",
+    description:
+      "Arnarnes var sumarbústaður undir Arnarfelli. Læknirinn Matthías Einarsson og fjölskylda hans reistu húsið árið 1941 og dvöldu þar á sumrin.",
+    role: "Kennileiti",
+    theme:
+      "Húsið var fjarlægt fyrir aldamótin 2000. Trjálundur og leifar matjurtagarðs minna enn á dvöl fjölskyldunnar.",
+  },
+  Arnarsetur: {
+    kicker: "Klettabelti á Arnarfelli",
+    description:
+      "Arnarsetur er klettur eða klettabelti norðan í Arnarfelli, ofan við Einbúa. Nafnið tengist haförnum sem sagðir eru hafa orpið þar fram yfir aldamótin 1900.",
+    role: "Kennileiti",
+    theme:
+      "Nákvæm staðsetning örnefnisins er ekki fyllilega ljós. Á bandarísku herkorti frá 1949 kemur svipað örnefni fyrir sem Arnarþúfa.",
+  },
+  Klofhóll: {
+    kicker: "Hóll við Arnarfell",
+    description:
+      "Klofhóll er um 300 metrum suðvestan við Arnarfell. Sprungur Langatangagjáa kljúfa hólinn og þaðan er nafnið líklega dregið.",
+    role: "Kennileiti",
+    theme:
+      "Gamla reiðleiðin milli Arnarfellsbæjar og Mjóaness liggur austan við hólinn. Sauðasteinar og Sauðasteinavíkur eru skammt undan og voru þekktir veiðistaðir.",
+  },
+  Langatangagjár: {
+    kicker: "Sprungusveimur",
+    description:
+      "Langatangagjár eru um 1,5 kílómetra langur sprungusveimur sunnan Arnarfells. Gjárnar draga nafn sitt af Langatanga þar sem þær ganga niður að vatninu.",
+    role: "Gjásvæði og kennileiti",
+    theme:
+      "Sumar gjárnar eru vatnsfylltar og víða hefur land sigið milli sprungna. Svæðið getur verið varasamt yfirferðar, sérstaklega þar sem gróður hylur gjárnar.",
   },
   Langitangi: {
     kicker: "Tangi við vatnið",
     description:
-      "Tangi sem sýnir vel hvernig nes, víkur og opið vatn skapa ólíkar aðstæður eftir vindátt og árstíma.",
+      "Langitangi gengur út í Þingvallavatn um 1,5 kílómetra suðvestan við Arnarfell. Sauðanes kann að vera eldra heiti á sama svæði.",
     role: "Kennileiti og veiðisamhengi",
-    theme: "Vindur, dýpi, aðgengi",
+    theme:
+      "Tanginn markar gömul landamerki Arnarfells og Þingvalla gagnvart Mjóanesi. Langatangagjár liggja frá tanganum í átt að Arnarfelli.",
+  },
+  Sandskörð: {
+    kicker: "Sandvíkur",
+    description:
+      "Sandskörð eru tvær sandvíkur vestan Arnarfells, Innri-Sandskörð og Syðri-Sandskörð. Lítill klettatangi með helli skilur víkurnar að.",
+    role: "Örnefni við veiðisvæði",
+    theme:
+      "Áður fyrr myndaðist oft stór sprunga í ísinn frá Sandskörðum og þvert yfir vatnið að Rauðukusunesi. Hún var kölluð Sandskarðsbrestur.",
+  },
+  Sláttulág: {
+    kicker: "Brekka við Arnarfell",
+    description:
+      "Sláttulág er gróin brekka sunnan í Arnarfelli, vestan við Fjallshorn. Nafnið er dregið af því að bændur á Arnarfelli nýttu lágina til heyskapar.",
+    role: "Kennileiti",
+    theme:
+      "Nafnið hefur einnig verið notað um grunna vík neðan við brekkuna. Þar er lítil malarfjara við vatnsbakkann.",
   },
 };
 
@@ -1101,19 +1220,15 @@ function initMoonWidget() {
   if (!carousel) return;
 
   const imgEl     = document.getElementById('theme-card-img');
-  const counterEl = document.getElementById('theme-card-counter');
   const titleEl   = document.getElementById('theme-card-title');
   const descEl    = document.getElementById('theme-card-desc');
   const contentEl = document.getElementById('theme-card-content');
   const nameList  = document.getElementById('theme-name-list');
   const card      = document.getElementById('theme-main-card');
   const total     = themes.length;
-  const totalStr  = String(total).padStart(2, '0');
 
   let current = 0;
   let busy    = false;
-
-  function fmt(n) { return String(n + 1).padStart(2, '0'); }
 
   const nameBtns = themes.map((t, i) => {
     const li  = document.createElement('li');
@@ -1148,7 +1263,6 @@ function initMoonWidget() {
       imgEl.alt             = t.alt;
       titleEl.textContent   = t.title;
       descEl.textContent    = t.desc;
-      counterEl.textContent = `${fmt(current)} / ${totalStr}`;
 
       nameBtns.forEach((b, i) => b.classList.toggle('is-active', i === current));
 
