@@ -540,20 +540,6 @@ function initWaterTemp() {
 
 initWaterTemp();
 
-const originToggle = document.querySelector('.origin-toggle');
-const originPanel = document.getElementById('origin-panel');
-if (originToggle && originPanel) {
-  originToggle.addEventListener('click', () => {
-    const expanded = originToggle.getAttribute('aria-expanded') === 'true';
-    originToggle.setAttribute('aria-expanded', String(!expanded));
-    if (expanded) {
-      originPanel.hidden = true;
-    } else {
-      originPanel.hidden = false;
-    }
-  });
-}
-
 if (weatherGrid) {
   const weatherIcons = {
     clear:"☀️", partlycloudy:"🌤️", mostlycloudy:"⛅", cloudy:"☁️",
