@@ -104,7 +104,7 @@ const mapPlaces = {
 
 const MAP_GROUPS = [
   { label: "Lambhagi",     children: ["Garðsendavík", "Lambhagatá", "Leirutá", "Presthólmi"] },
-  { label: "Vatnskot",     children: ["Murtusker", "Veiðitangi"] },
+  { label: "Vatnskot",     children: ["Breiðitangi", "Murtusker", "Veiðitangi"] },
   { label: "Tóftir",      children: ["Murtutangi", "Vörðuvík"] },
   { label: "Öfugsnáði" },
   { label: "Nes",         children: ["Nautatangar", "Vatnsvik"] },
