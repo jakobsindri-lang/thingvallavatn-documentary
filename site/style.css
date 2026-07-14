@@ -1079,6 +1079,45 @@ body {
   border-top: 1px solid var(--border-soft);
 }
 
+.origin-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  background: none;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  color: var(--color-accent-light);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.origin-toggle:hover,
+.origin-toggle:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  outline: none;
+}
+.origin-chevron {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.origin-toggle[aria-expanded="true"] .origin-chevron {
+  transform: rotate(180deg);
+}
+.origin-panel {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border-soft);
+  padding-top: 1.5rem;
+}
+.origin-panel[hidden] {
+  display: none;
+}
+.origin-text {
+  margin-bottom: 1.2rem;
+}
+
 .partner-logo {
   background-color: #ffffff;
   border-radius: var(--radius);
