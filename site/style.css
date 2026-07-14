@@ -1718,13 +1718,13 @@ body {
 }
 
 .account-block {
-  display: inline-block;
-  margin-top: 1.2rem;
+  display: block;
+  margin: 1.2rem auto 0;
   background: var(--color-bg-card);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   padding: 1.2rem 1.5rem;
-  min-width: 260px;
+  max-width: 360px;
 }
 
 .account-dl {
@@ -1788,6 +1788,7 @@ body {
   margin-top: 1rem;
   font-size: 0.85rem;
   color: var(--color-text-muted);
+  text-align: center;
 }
 .support-contact-note a {
   color: var(--color-accent-light);
