@@ -291,8 +291,7 @@ if (mapSvgMount && mapInfo) {
 }
 
 const galleryScroll   = document.querySelector(".gallery-scroll");
-const galleryPrev     = document.getElementById("gallery-prev");
-const galleryNext     = document.getElementById("gallery-next");
+const galleryWrap     = document.getElementById("gallery-wrap");
 const galleryCounter  = document.getElementById("gallery-counter");
 const galleryProgressThumb = document.getElementById("gallery-progress-thumb");
 
@@ -376,8 +375,12 @@ if (galleryScroll) {
     transitionFallback = setTimeout(() => { transitioning = false; }, 600);
   };
 
-  if (galleryPrev) galleryPrev.addEventListener("click", () => goTo(currentIndex - 1));
-  if (galleryNext) galleryNext.addEventListener("click", () => goTo(currentIndex + 1));
+  if (galleryWrap) {
+    galleryWrap.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft")  { e.preventDefault(); goTo(currentIndex - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex + 1); }
+    });
+  }
 
   updatePosition(false);
   updateCounter();
@@ -1102,7 +1105,6 @@ function initMoonWidget() {
   const titleEl   = document.getElementById('theme-card-title');
   const descEl    = document.getElementById('theme-card-desc');
   const contentEl = document.getElementById('theme-card-content');
-  const dotsWrap  = document.getElementById('theme-dots');
   const nameList  = document.getElementById('theme-name-list');
   const card      = document.getElementById('theme-main-card');
   const total     = themes.length;
@@ -1112,15 +1114,6 @@ function initMoonWidget() {
   let busy    = false;
 
   function fmt(n) { return String(n + 1).padStart(2, '0'); }
-
-  const dots = themes.map((t, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'theme-dot' + (i === 0 ? ' is-active' : '');
-    btn.setAttribute('aria-label', t.title);
-    btn.addEventListener('click', () => goTo(i));
-    dotsWrap.appendChild(btn);
-    return btn;
-  });
 
   const nameBtns = themes.map((t, i) => {
     const li  = document.createElement('li');
@@ -1139,29 +1132,38 @@ function initMoonWidget() {
     if (idx === current) return;
     busy = true;
 
+    const t = themes[idx];
+    const preload = new Image();
+    preload.src = t.src;
+    let imageReady = preload.complete;
+    let fadeOutDone = false;
+
     imgEl.classList.add('is-fading');
     contentEl.classList.add('is-fading');
 
-    setTimeout(() => {
+    const reveal = () => {
+      if (!fadeOutDone || !imageReady) return;
       current = idx;
-      const t = themes[current];
       imgEl.src             = t.src;
       imgEl.alt             = t.alt;
       titleEl.textContent   = t.title;
       descEl.textContent    = t.desc;
       counterEl.textContent = `${fmt(current)} / ${totalStr}`;
 
-      dots.forEach((d, i)     => d.classList.toggle('is-active', i === current));
       nameBtns.forEach((b, i) => b.classList.toggle('is-active', i === current));
 
       imgEl.classList.remove('is-fading');
       contentEl.classList.remove('is-fading');
       busy = false;
-    }, 280);
-  }
+    };
 
-  document.getElementById('theme-prev').addEventListener('click', () => goTo(current - 1));
-  document.getElementById('theme-next').addEventListener('click', () => goTo(current + 1));
+    if (!imageReady) {
+      preload.onload  = () => { imageReady = true; reveal(); };
+      preload.onerror = () => { imageReady = true; reveal(); };
+    }
+
+    setTimeout(() => { fadeOutDone = true; reveal(); }, 280);
+  }
 
   carousel.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
