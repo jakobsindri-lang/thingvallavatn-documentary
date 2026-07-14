@@ -290,44 +290,43 @@ if (mapSvgMount && mapInfo) {
     });
 }
 
-const galleryScroll = document.querySelector(".gallery-scroll");
-const galleryPrev = document.getElementById("gallery-prev");
-const galleryNext = document.getElementById("gallery-next");
+const galleryScroll   = document.querySelector(".gallery-scroll");
+const galleryPrev     = document.getElementById("gallery-prev");
+const galleryNext     = document.getElementById("gallery-next");
+const galleryCounter  = document.getElementById("gallery-counter");
 
 if (galleryScroll) {
-  const items = Array.from(galleryScroll.children);
-  const firstIndex = items.findIndex((item) =>
-    item.querySelector("img").src.includes("stillur-ur-lofti-1.jpg")
-  );
-  const first = firstIndex >= 0 ? items.splice(firstIndex, 1)[0] : null;
-
-  for (let i = items.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [items[i], items[j]] = [items[j], items[i]];
-  }
-
-  if (first) items.unshift(first);
-
+  const items     = Array.from(galleryScroll.children);
   const totalReal = items.length;
-  const cloneCount = 3; // must match max items-per-view (desktop = 3)
+  const cloneCount = 3;
 
-  const prepend = items.slice(-cloneCount).map((el) => {
+  // Record image data for lightbox before cloning
+  const imageData = items.map((item, i) => {
+    const img = item.querySelector("img");
+    item.dataset.realIndex = i;
+    return { src: img.getAttribute("src"), alt: img.alt };
+  });
+
+  const makePrepend = items.slice(-cloneCount).map((el, i) => {
     const c = el.cloneNode(true);
     c.setAttribute("aria-hidden", "true");
+    c.dataset.realIndex = totalReal - cloneCount + i;
     return c;
   });
-  const append = items.slice(0, cloneCount).map((el) => {
+  const makeAppend = items.slice(0, cloneCount).map((el, i) => {
     const c = el.cloneNode(true);
     c.setAttribute("aria-hidden", "true");
+    c.dataset.realIndex = i;
     return c;
   });
 
   galleryScroll.innerHTML = "";
-  [...prepend, ...items, ...append].forEach((el) => galleryScroll.appendChild(el));
+  [...makePrepend, ...items, ...makeAppend].forEach((el) => galleryScroll.appendChild(el));
 
-  let currentIndex = cloneCount;
-  let transitioning = false;
+  let currentIndex   = cloneCount;
+  let transitioning  = false;
   let transitionFallback;
+  let resizeTimer;
 
   const getItemsPerView = () => {
     if (window.innerWidth >= 1800) return 3;
@@ -335,11 +334,18 @@ if (galleryScroll) {
     return 1;
   };
 
+  const updateCounter = () => {
+    if (!galleryCounter) return;
+    const real = ((currentIndex - cloneCount) % totalReal + totalReal) % totalReal;
+    galleryCounter.textContent =
+      `${String(real + 1).padStart(2, "0")} / ${String(totalReal).padStart(2, "0")}`;
+  };
+
   const updatePosition = (animate) => {
     const wrapWidth = galleryScroll.parentElement.offsetWidth;
     const itemWidth = wrapWidth / getItemsPerView();
     galleryScroll.style.transition = animate ? "transform 0.4s ease" : "none";
-    galleryScroll.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+    galleryScroll.style.transform  = `translateX(${-currentIndex * itemWidth}px)`;
   };
 
   galleryScroll.addEventListener("transitionend", (e) => {
@@ -347,16 +353,11 @@ if (galleryScroll) {
     clearTimeout(transitionFallback);
     let wrapped = false;
     if (currentIndex < cloneCount) {
-      currentIndex += totalReal;
-      wrapped = true;
+      currentIndex += totalReal; wrapped = true;
     } else if (currentIndex >= cloneCount + totalReal) {
-      currentIndex -= totalReal;
-      wrapped = true;
+      currentIndex -= totalReal; wrapped = true;
     }
-    if (wrapped) {
-      updatePosition(false);
-      void galleryScroll.offsetHeight;
-    }
+    if (wrapped) { updatePosition(false); void galleryScroll.offsetHeight; }
     transitioning = false;
   });
 
@@ -366,38 +367,127 @@ if (galleryScroll) {
     clearTimeout(transitionFallback);
     currentIndex = newIndex;
     updatePosition(true);
-    transitionFallback = setTimeout(() => {
-      transitioning = false;
-    }, 600);
+    updateCounter();
+    transitionFallback = setTimeout(() => { transitioning = false; }, 600);
   };
 
   if (galleryPrev) galleryPrev.addEventListener("click", () => goTo(currentIndex - 1));
   if (galleryNext) galleryNext.addEventListener("click", () => goTo(currentIndex + 1));
 
   updatePosition(false);
+  updateCounter();
 
-  let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => updatePosition(false), 100);
   });
 
-  let wheelLocked = false;
-  galleryScroll.addEventListener(
-    "wheel",
-    (event) => {
-      if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-        event.preventDefault();
-        if (wheelLocked) return;
-        wheelLocked = true;
-        goTo(currentIndex + (event.deltaY > 0 ? 1 : -1));
-        setTimeout(() => {
-          wheelLocked = false;
-        }, 500);
-      }
-    },
-    { passive: false }
-  );
+  // Touch swipe
+  let gTouchX = 0;
+  galleryScroll.addEventListener("touchstart", (e) => { gTouchX = e.touches[0].clientX; }, { passive: true });
+  galleryScroll.addEventListener("touchend", (e) => {
+    const delta = e.changedTouches[0].clientX - gTouchX;
+    if (Math.abs(delta) > 48) goTo(currentIndex + (delta < 0 ? 1 : -1));
+  });
+
+  // Mouse drag
+  let gDragX = 0, gDragging = false, gWasDrag = false;
+  galleryScroll.addEventListener("mousedown", (e) => {
+    gDragX = e.clientX; gDragging = true; gWasDrag = false;
+    galleryScroll.style.cursor = "grabbing";
+  });
+  document.addEventListener("mouseup", (e) => {
+    if (!gDragging) return;
+    gDragging = false;
+    galleryScroll.style.cursor = "";
+    const delta = e.clientX - gDragX;
+    if (Math.abs(delta) > 8) gWasDrag = true;
+    if (Math.abs(delta) > 48) goTo(currentIndex + (delta < 0 ? 1 : -1));
+  });
+  galleryScroll.addEventListener("dragstart", (e) => e.preventDefault());
+
+  // ── Lightbox ──────────────────────────────────────────────────────────────
+  const lb = document.createElement("div");
+  lb.className = "lightbox";
+  lb.setAttribute("role", "dialog");
+  lb.setAttribute("aria-modal", "true");
+  lb.setAttribute("aria-label", "Stækkuð mynd");
+  lb.hidden = true;
+  lb.innerHTML = `
+    <button class="lb-close" id="lb-close" aria-label="Loka">&#10005;</button>
+    <button class="lb-prev"  id="lb-prev"  aria-label="Fyrri mynd">&#8249;</button>
+    <figure class="lb-inner">
+      <img class="lb-img" id="lb-img" src="" alt="">
+      <figcaption class="lb-caption" id="lb-caption"></figcaption>
+      <p class="lb-counter" id="lb-counter"></p>
+    </figure>
+    <button class="lb-next" id="lb-next" aria-label="Næsta mynd">&#8250;</button>`;
+  document.body.appendChild(lb);
+
+  const lbImg     = document.getElementById("lb-img");
+  const lbCaption = document.getElementById("lb-caption");
+  const lbCounter = document.getElementById("lb-counter");
+  const lbClose   = document.getElementById("lb-close");
+  const lbPrevBtn = document.getElementById("lb-prev");
+  const lbNextBtn = document.getElementById("lb-next");
+  const lbFocusEls = [lbClose, lbPrevBtn, lbNextBtn];
+
+  let lbIdx = 0, lbLastFocused = null;
+
+  const lbSet = (idx) => {
+    lbIdx = ((idx % totalReal) + totalReal) % totalReal;
+    lbImg.src = imageData[lbIdx].src;
+    lbImg.alt = imageData[lbIdx].alt;
+    lbCaption.textContent = imageData[lbIdx].alt;
+    lbCounter.textContent =
+      `${String(lbIdx + 1).padStart(2, "0")} / ${String(totalReal).padStart(2, "0")}`;
+  };
+
+  const lbOpen = (idx) => {
+    lbLastFocused = document.activeElement;
+    lbSet(idx);
+    lb.hidden = false;
+    document.body.style.overflow = "hidden";
+    lbClose.focus();
+  };
+
+  const closeLb = () => {
+    lb.hidden = true;
+    document.body.style.overflow = "";
+    if (lbLastFocused) lbLastFocused.focus();
+  };
+
+  lbClose.addEventListener("click", closeLb);
+  lbPrevBtn.addEventListener("click", () => lbSet(lbIdx - 1));
+  lbNextBtn.addEventListener("click", () => lbSet(lbIdx + 1));
+  lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
+
+  lb.addEventListener("keydown", (e) => {
+    if (e.key === "Escape")     { closeLb(); return; }
+    if (e.key === "ArrowLeft")  { lbSet(lbIdx - 1); return; }
+    if (e.key === "ArrowRight") { lbSet(lbIdx + 1); return; }
+    if (e.key === "Tab") {
+      const first = lbFocusEls[0], last = lbFocusEls[lbFocusEls.length - 1];
+      if (e.shiftKey && document.activeElement === first)  { e.preventDefault(); last.focus(); }
+      if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  let lbTouchX = 0;
+  lb.addEventListener("touchstart", (e) => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", (e) => {
+    const delta = e.changedTouches[0].clientX - lbTouchX;
+    if (Math.abs(delta) > 48) lbSet(lbIdx + (delta < 0 ? 1 : -1));
+  });
+
+  // Click on gallery item → open lightbox (blocked if was a drag)
+  galleryScroll.addEventListener("click", (e) => {
+    if (gWasDrag) { gWasDrag = false; return; }
+    const item = e.target.closest(".gallery-item");
+    if (!item) return;
+    const idx = parseInt(item.dataset.realIndex, 10);
+    if (!isNaN(idx)) lbOpen(idx);
+  });
 }
 
 const weatherGrid = document.getElementById("weather-grid");
