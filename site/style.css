@@ -194,6 +194,12 @@ body {
   color: var(--color-accent-light);
 }
 
+.nav-crosslink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .nav-social {
   position: absolute;
   right: 1.5rem;
@@ -218,17 +224,6 @@ body {
   color: var(--color-accent-light);
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
-}
-
-.site-nav .nav-subpage {
-  border: 1px solid var(--color-accent);
-  border-radius: 999px;
-  padding: 0.25rem 0.85rem;
-  color: var(--color-accent-light);
-}
-
-.site-nav .nav-subpage:hover {
-  background-color: var(--color-accent-soft);
 }
 
 /* Sections */
@@ -651,13 +646,40 @@ body {
   }
 }
 
-.gallery-counter {
-  text-align: center;
-  margin-top: 0.8rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  font-variant-numeric: tabular-nums;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.gallery-progress {
+  max-width: 220px;
+  margin: 1rem auto 0;
+  padding: 0 0.5rem;
+}
+
+.gallery-progress-track {
+  position: relative;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+
+.gallery-progress-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-accent);
+  transition: left 0.4s ease, width 0.4s ease;
 }
 
 /* Lightbox */
@@ -747,12 +769,28 @@ body {
   text-align: center;
 }
 
-.lb-counter {
-  margin: 0.2rem 0 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.28);
-  font-variant-numeric: tabular-nums;
+.lb-progress {
+  width: 140px;
+  max-width: 40vw;
+  margin: 0.5rem auto 0;
+}
+
+.lb-progress-track {
+  position: relative;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.lb-progress-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  transition: left 0.25s ease;
 }
 
 @media (max-width: 700px) {
@@ -1398,6 +1436,12 @@ body {
   vertical-align: middle;
 }
 
+.vsp-row-icon {
+  display: block;
+  width: 68px;
+  height: auto;
+}
+
 .vsp-cell {
   text-align: center;
   padding: 0.5rem 0.4rem;
@@ -1463,6 +1507,7 @@ body {
 @media (max-width: 560px) {
   .vsp-th-label  { width: 5rem; }
   .vsp-row-label { font-size: 0.7rem; padding-right: 0.4rem; }
+  .vsp-row-icon  { width: 48px; }
   .fish          { font-size: 0.75rem; margin: 0 0.02rem; }
   .vsp-col-name  { font-size: 0.68rem; }
   .vsp-col-range { font-size: 0.58rem; }

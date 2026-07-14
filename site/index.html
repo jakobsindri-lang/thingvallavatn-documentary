@@ -39,6 +39,14 @@
     <a href="#vidtol">Viðtöl</a>
     <a href="#stillur">Stillur</a>
     <a href="#leggja-lid">Styrkja verkefnið</a>
+    <a href="./veidimenn/" class="nav-crosslink">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M3 12c2-3.2 6-5 10-5s7 1.8 8 5c-1 3.2-4 5-8 5s-8-1.8-10-5z"/>
+        <path d="M21 12l2.2-2.6M21 12l2.2 2.6"/>
+        <circle cx="8" cy="11" r="0.9" fill="currentColor" stroke="none"/>
+      </svg>
+      Fyrir veiðimenn
+    </a>
     <div class="nav-social">
       <a href="https://www.youtube.com/@jakobsindriorsson694" target="_blank" rel="noopener" aria-label="YouTube-rás verkefnisins" class="nav-social-link">
         <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -211,7 +219,12 @@
         </div>
         <button type="button" class="gallery-arrow gallery-next" id="gallery-next" aria-label="Næsta mynd">&#8250;</button>
       </div>
-      <p class="gallery-counter" id="gallery-counter" aria-live="polite">01 / 37</p>
+      <div class="gallery-progress" aria-hidden="true">
+        <div class="gallery-progress-track">
+          <div class="gallery-progress-thumb" id="gallery-progress-thumb"></div>
+        </div>
+      </div>
+      <p class="sr-only" id="gallery-counter" aria-live="polite"></p>
     </section>
 
     <section class="section" id="leggja-lid">

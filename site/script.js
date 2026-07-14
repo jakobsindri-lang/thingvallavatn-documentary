@@ -294,6 +294,7 @@ const galleryScroll   = document.querySelector(".gallery-scroll");
 const galleryPrev     = document.getElementById("gallery-prev");
 const galleryNext     = document.getElementById("gallery-next");
 const galleryCounter  = document.getElementById("gallery-counter");
+const galleryProgressThumb = document.getElementById("gallery-progress-thumb");
 
 if (galleryScroll) {
   const items     = Array.from(galleryScroll.children);
@@ -335,10 +336,14 @@ if (galleryScroll) {
   };
 
   const updateCounter = () => {
-    if (!galleryCounter) return;
     const real = ((currentIndex - cloneCount) % totalReal + totalReal) % totalReal;
-    galleryCounter.textContent =
-      `${String(real + 1).padStart(2, "0")} / ${String(totalReal).padStart(2, "0")}`;
+    if (galleryCounter) {
+      galleryCounter.textContent = `Mynd ${real + 1} af ${totalReal}`;
+    }
+    if (galleryProgressThumb) {
+      galleryProgressThumb.style.width = `${100 / totalReal}%`;
+      galleryProgressThumb.style.left  = `${(real / totalReal) * 100}%`;
+    }
   };
 
   const updatePosition = (animate) => {
@@ -419,7 +424,12 @@ if (galleryScroll) {
     <figure class="lb-inner">
       <img class="lb-img" id="lb-img" src="" alt="">
       <figcaption class="lb-caption" id="lb-caption"></figcaption>
-      <p class="lb-counter" id="lb-counter"></p>
+      <div class="lb-progress" aria-hidden="true">
+        <div class="lb-progress-track">
+          <div class="lb-progress-thumb" id="lb-progress-thumb"></div>
+        </div>
+      </div>
+      <p class="sr-only" id="lb-counter" aria-live="polite"></p>
     </figure>
     <button class="lb-next" id="lb-next" aria-label="Næsta mynd">&#8250;</button>`;
   document.body.appendChild(lb);
@@ -427,6 +437,7 @@ if (galleryScroll) {
   const lbImg     = document.getElementById("lb-img");
   const lbCaption = document.getElementById("lb-caption");
   const lbCounter = document.getElementById("lb-counter");
+  const lbProgressThumb = document.getElementById("lb-progress-thumb");
   const lbClose   = document.getElementById("lb-close");
   const lbPrevBtn = document.getElementById("lb-prev");
   const lbNextBtn = document.getElementById("lb-next");
@@ -439,8 +450,11 @@ if (galleryScroll) {
     lbImg.src = imageData[lbIdx].src;
     lbImg.alt = imageData[lbIdx].alt;
     lbCaption.textContent = imageData[lbIdx].alt;
-    lbCounter.textContent =
-      `${String(lbIdx + 1).padStart(2, "0")} / ${String(totalReal).padStart(2, "0")}`;
+    lbCounter.textContent = `Mynd ${lbIdx + 1} af ${totalReal}`;
+    if (lbProgressThumb) {
+      lbProgressThumb.style.width = `${100 / totalReal}%`;
+      lbProgressThumb.style.left  = `${(lbIdx / totalReal) * 100}%`;
+    }
   };
 
   const lbOpen = (idx) => {
