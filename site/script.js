@@ -1053,38 +1053,8 @@ function initMoonWidget() {
     .catch(() => renderNote(null));
 }
 
-// ── Support tabs ────────────────────────────────────────────────────────────
+// ── Support: copy-to-clipboard ──────────────────────────────────────────────
 (function () {
-  const tablist = document.querySelector('.support-tablist');
-  if (!tablist) return;
-
-  const tabs   = Array.from(tablist.querySelectorAll('.support-tab'));
-  const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
-
-  function activate(idx) {
-    tabs.forEach((t, i) => {
-      const active = i === idx;
-      t.setAttribute('aria-selected', String(active));
-      t.tabIndex = active ? 0 : -1;
-    });
-    panels.forEach((p, i) => {
-      if (i === idx) p.removeAttribute('hidden');
-      else p.setAttribute('hidden', '');
-    });
-  }
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => activate(i));
-    tab.addEventListener('keydown', (e) => {
-      let next = -1;
-      if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
-      if (e.key === 'ArrowLeft')  next = (i - 1 + tabs.length) % tabs.length;
-      if (e.key === 'Home')       next = 0;
-      if (e.key === 'End')        next = tabs.length - 1;
-      if (next >= 0) { e.preventDefault(); activate(next); tabs[next].focus(); }
-    });
-  });
-
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       navigator.clipboard.writeText(btn.dataset.copy).then(() => {
