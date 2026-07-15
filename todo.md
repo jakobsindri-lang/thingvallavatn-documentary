@@ -5,12 +5,20 @@
 - [x] Ákveða sjónrænan stíl
 - [x] Bæta við myndefni (39 myndir + sneak peek myndband)
 - [ ] Bæta við tökustöðum
-- [ ] Fínstilla gagnvirkt kort (punktastaðsetningar, texta og möguleg veiðisvæði/veiðibann)
+- [ ] Fínstilla gagnvirkt kort — sjá undirliði:
+  - [ ] Skrifa „Helstu veiðistaðir" fyrir öll örnefni (ekkert skrifað ennþá)
+  - [ ] Klára örnefnalýsingu fyrir Leirutá, Veiðitangi, Murtusker, Murtutangi, Presthólmi, Lambhagatá (sjá `ornefnalysingar.md`)
+  - [ ] Skrifa sérstakan (ekki ChatGPT-blandaðan) texta fyrir flokkunarhausana sjálfa: Lambhagi, Tóftir, Nes, Arnarfell
+  - [ ] Möguleg veiðisvæði/veiðibann á kortinu
 - [ ] Bæta við upplýsingum um lífríki, sögu og landslag
 - [x] Gera fyrstu útgáfu vefsíðunnar
 - [x] Prófa síðuna local í browser
-- [ ] Þjappa/minnka myndir í `site/assets/images/web/` fyrir endanlega birtingu
+- [ ] Þjappa/minnka fleiri myndir í `site/assets/images/web/` fyrir endanlega birtingu (nokkrar gerðar 2026-07-15: gæsarmynd, teiknimyndir)
 - [ ] Skrifa 60 sekúndna pitch texta fyrir styrktaraðila
 - [ ] Ákveða styrktarleið (Karolina Fund eða annað)
 - [x] Stofna GitHub repo (public) og pusha kóðanum
 - [x] Virkja GitHub Pages með sjálfvirkri deployment (GitHub Actions)
+- [x] Vatnslína Þingvallavatns byggð á raunverulegri strandlínu (ekki ágiskun)
+- [x] Alvöru teiknaðar myndir af fiskum/fuglum settar inn (bleikja, urriði, stórurriði, himbrimi, hornsíli, vatnabobbi)
+- [x] Tungl-kaflinn endurhannaður sem hringrásar-tunglkort með raunverulegum dagsetningum
+- [ ] Finna murtu.png nýjan stað (ónotuð eftir að hún var tekin úr veiðispár-töflunni)
