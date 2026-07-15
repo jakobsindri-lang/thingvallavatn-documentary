@@ -713,7 +713,7 @@ function waterTempChartSVG(history) {
 function initWaterTemp() {
   const widget = document.getElementById("water-temp-widget");
   if (!widget) return;
-  fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
+  fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json`, { cache: "no-cache" })
     .then((r) => r.json())
     .then((data) => {
       const tempLabel = data.temp.toFixed(1).replace(".", ",");
@@ -779,7 +779,7 @@ const BLIKA_CACHE_MAX_AGE_MS = 3 * 60 * 60 * 1000; // 3 klst
 
 async function fetchBlikaForecast() {
   try {
-    const res = await fetch(`${window.ASSET_BASE ?? ""}assets/data/vedurspa.json?v=${Date.now()}`, { cache: "no-store" });
+    const res = await fetch(`${window.ASSET_BASE ?? ""}assets/data/vedurspa.json`, { cache: "no-cache" });
     if (res.ok) {
       const cached = await res.json();
       const age = Date.now() - new Date(cached.fetched).getTime();
@@ -907,7 +907,7 @@ async function initForecast() {
   const [blikaRes, archiveRes, waterRes] = await Promise.allSettled([
     fetchBlikaForecast(),
     fetchHistoricalCloud(),
-    fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
+    fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json`, { cache: "no-cache" })
       .then((r) => r.json())
       .catch(() => null),
   ]);
