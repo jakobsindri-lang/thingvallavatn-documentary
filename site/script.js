@@ -1,4 +1,4 @@
-console.log("Þingvallavatn — kynningar- og stuðningssíða er keyrð.");
+console.log("Þingvallavatn: kynningar- og stuðningssíða er keyrð.");
 
 const heroVideo = document.querySelector(".hero-video");
 if (heroVideo) {
