@@ -229,7 +229,8 @@ const MAP_GROUPS = [
   { label: "Vatnsvik",    children: ["Davíðsgjá", "Nautatangar", "Vellankatla"] },
   { label: "Hallvik",     children: ["Gjáarendar", "Hallvik"] },
   { label: "Ólafsdráttur", children: ["Búr", "Einbúi", "Fornasel", "Þvotta"] },
-  { label: "Arnarfell",   children: ["Arnarnes", "Arnarsetur", "Klofhóll", "Langatangagjár", "Langitangi", "Sandskörð", "Sláttulág"] },
+  { label: "Arnarfell",   children: ["Arnarnes", "Arnarsetur", "Sandskörð", "Sláttulág"] },
+  { label: "Langitangi",  children: ["Klofhóll", "Langatangagjár", "Langitangi"] },
 ];
 
 if (mapSvgMount && mapInfo) {
