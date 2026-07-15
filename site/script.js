@@ -1089,11 +1089,11 @@ function moonWheelSVG(now, moonHref) {
   const fraction = illum.fraction;
   const refDates = moonCycleDates(now);
 
-  const SIZE = 400;
+  const SIZE = 500;
   const CX = SIZE / 2, CY = SIZE / 2;
-  const RING_R = 122;
-  const ICON_SIZE = 48;
-  const trackR = RING_R + ICON_SIZE / 2 + 12;
+  const RING_R = 153;
+  const ICON_SIZE = 60;
+  const trackR = RING_R + ICON_SIZE / 2 + 15;
   const pointerAngle = phase * 2 * Math.PI - Math.PI / 2;
 
   const cardinal = [0, 2, 4, 6];
@@ -1118,14 +1118,14 @@ function moonWheelSVG(now, moonHref) {
     ringIcons += `<g transform="translate(${x},${y})"><svg width="${ICON_SIZE}" height="${ICON_SIZE}" viewBox="0 0 ${ICON_SIZE} ${ICON_SIZE}">${moonIconMarkup("r" + i, ICON_SIZE, p, f, moonHref)}</svg></g>`;
   }
 
-  const glowFilter = `<filter id="moonWheelGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
-  const trackCircle = `<circle cx="${CX}" cy="${CY}" r="${trackR}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1"/>`;
+  const glowFilter = `<filter id="moonWheelGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+  const trackCircle = `<circle cx="${CX}" cy="${CY}" r="${trackR}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1.3"/>`;
 
   function chipGeom(text) {
-    const fontSize = 10.5;
+    const fontSize = 13.1;
     const charW = fontSize * 0.62;
-    const w = text.length * charW + 12;
-    const h = 17;
+    const w = text.length * charW + 15;
+    const h = 21;
     return { w, h, halfAngle: (w / 2) / trackR };
   }
 
@@ -1149,11 +1149,11 @@ function moonWheelSVG(now, moonHref) {
       </linearGradient>
       ${trackCircle}
       <path d="M ${tsx.toFixed(1)} ${tsy.toFixed(1)} A ${trackR} ${trackR} 0 0 1 ${tex.toFixed(1)} ${tey.toFixed(1)}"
-            fill="none" stroke="url(#moonTrailGrad)" stroke-width="2.5" stroke-linecap="round" filter="url(#moonWheelGlow)"/>
+            fill="none" stroke="url(#moonTrailGrad)" stroke-width="3.1" stroke-linecap="round" filter="url(#moonWheelGlow)"/>
       <rect x="${(cx0 - w/2).toFixed(1)}" y="${(cy0 - h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h}" rx="${h/2}"
-            fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2" filter="url(#moonWheelGlow)"/>
-      <text x="${cx0.toFixed(1)}" y="${(cy0+3.5).toFixed(1)}" text-anchor="middle" font-family="-apple-system, sans-serif"
-            font-size="10.5" font-weight="700" fill="var(--color-accent-light)">${text}</text>
+            fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2.5" filter="url(#moonWheelGlow)"/>
+      <text x="${cx0.toFixed(1)}" y="${(cy0+4.4).toFixed(1)}" text-anchor="middle" font-family="-apple-system, sans-serif"
+            font-size="13.1" font-weight="700" fill="var(--color-accent-light)">${text}</text>
     `;
 
     const nearestSignedAngle = nearestSigned * 2 * Math.PI;
@@ -1163,8 +1163,11 @@ function moonWheelSVG(now, moonHref) {
       const dex = CX + trackR * Math.cos(pointerAngle), dey = CY + trackR * Math.sin(pointerAngle);
       overlay += `
         <path d="M ${rex.toFixed(1)} ${rey.toFixed(1)} A ${trackR} ${trackR} 0 0 1 ${dex.toFixed(1)} ${dey.toFixed(1)}"
-              fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" opacity="0.85" filter="url(#moonWheelGlow)"/>
-        <circle cx="${dex.toFixed(1)}" cy="${dey.toFixed(1)}" r="3.5" fill="var(--color-accent)" filter="url(#moonWheelGlow)"/>
+              fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" opacity="0.85" filter="url(#moonWheelGlow)"/>
+        <g class="moon-today-dot" data-date="${formatDayMonth(now)}">
+          <circle cx="${dex.toFixed(1)}" cy="${dey.toFixed(1)}" r="16" fill="transparent"/>
+          <circle cx="${dex.toFixed(1)}" cy="${dey.toFixed(1)}" r="4.4" fill="var(--color-accent)" filter="url(#moonWheelGlow)"/>
+        </g>
       `;
     }
   } else {
@@ -1179,8 +1182,11 @@ function moonWheelSVG(now, moonHref) {
       </linearGradient>
       ${trackCircle}
       <path d="M ${sx.toFixed(1)} ${sy.toFixed(1)} A ${trackR} ${trackR} 0 0 1 ${ex.toFixed(1)} ${ey.toFixed(1)}"
-            fill="none" stroke="url(#moonTrailGrad)" stroke-width="2.5" stroke-linecap="round" filter="url(#moonWheelGlow)"/>
-      <circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="3.5" fill="var(--color-accent)" filter="url(#moonWheelGlow)"/>
+            fill="none" stroke="url(#moonTrailGrad)" stroke-width="3.1" stroke-linecap="round" filter="url(#moonWheelGlow)"/>
+      <g class="moon-today-dot" data-date="${formatDayMonth(now)}">
+        <circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="16" fill="transparent"/>
+        <circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="4.4" fill="var(--color-accent)" filter="url(#moonWheelGlow)"/>
+      </g>
     `;
   }
 
@@ -1193,9 +1199,9 @@ function moonWheelSVG(now, moonHref) {
     const { w, h } = chipGeom(text);
     labels += `
       <rect x="${(lx - w/2).toFixed(1)}" y="${(ly - h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h}" rx="${h/2}"
-            fill="var(--color-bg-card)" stroke="rgba(245,230,176,0.15)" stroke-width="1"/>
-      <text x="${lx.toFixed(1)}" y="${(ly+3.5).toFixed(1)}" text-anchor="middle" font-family="-apple-system, sans-serif"
-            font-size="10.5" font-weight="500" fill="var(--color-text)">${text}</text>`;
+            fill="var(--color-bg-card)" stroke="rgba(245,230,176,0.15)" stroke-width="1.3"/>
+      <text x="${lx.toFixed(1)}" y="${(ly+4.4).toFixed(1)}" text-anchor="middle" font-family="-apple-system, sans-serif"
+            font-size="13.1" font-weight="500" fill="var(--color-text)">${text}</text>`;
   }
 
   return `<svg viewBox="0 0 ${SIZE} ${SIZE}" width="${SIZE}" height="${SIZE}" xmlns="http://www.w3.org/2000/svg">
@@ -1203,6 +1209,41 @@ function moonWheelSVG(now, moonHref) {
     ${ringIcons}
     ${labels}
   </svg>`;
+}
+
+// Hover á "í dag"-punktinum á tunglhringnum sýnir dagsetningu dagsins í dag.
+function setupMoonTooltip(wheelContainer) {
+  const svg = wheelContainer.querySelector("svg");
+  const dot = wheelContainer.querySelector(".moon-today-dot");
+  if (!svg || !dot) return;
+
+  const wrap = wheelContainer.closest(".moon-wheel-inner");
+  if (!wrap) return;
+
+  let tip = wrap.querySelector(".moon-tooltip");
+  if (!tip) {
+    tip = document.createElement("div");
+    tip.className = "moon-tooltip";
+    tip.hidden = true;
+    wrap.appendChild(tip);
+  }
+
+  const point = dot.querySelector("circle:last-child");
+  const cx = parseFloat(point.getAttribute("cx"));
+  const cy = parseFloat(point.getAttribute("cy"));
+  const viewBoxSize = svg.viewBox.baseVal.width;
+
+  const showTip = () => {
+    const scale = svg.getBoundingClientRect().width / viewBoxSize;
+    tip.textContent = `Í dag · ${dot.dataset.date}`;
+    tip.style.left = `${cx * scale}px`;
+    tip.style.top = `${cy * scale}px`;
+    tip.hidden = false;
+  };
+  const hideTip = () => { tip.hidden = true; };
+
+  dot.addEventListener("mouseenter", showTip);
+  dot.addEventListener("mouseleave", hideTip);
 }
 
 function initMoonWidget() {
@@ -1231,6 +1272,7 @@ function initMoonWidget() {
   wheelContainer.innerHTML = moonWheelSVG(now, moonHref);
   phaseNameEl.textContent = moonPhaseName(phase);
   illumEl.textContent = `${Math.round(fraction * 100)}%`;
+  setupMoonTooltip(wheelContainer);
 
   const mt = SunCalc.getMoonTimes(now, LAT, LON);
   const parts = [];
