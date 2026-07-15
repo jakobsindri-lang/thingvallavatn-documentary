@@ -32,15 +32,27 @@
   <header class="hero" id="hero">
     <video
       class="hero-video"
-      autoplay
       muted
       loop
       playsinline
-      preload="metadata"
+      preload="none"
+      poster="assets/images/web/hero-video-poster.webp"
       aria-hidden="true"
     >
-      <source src="assets/video/herobleikjur.mp4" type="video/mp4">
+      <source data-src="assets/video/herobleikjur.mp4" type="video/mp4">
     </video>
+    <script>
+      (function () {
+        var v = document.currentScript.previousElementSibling;
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          var source = v.querySelector("source[data-src]");
+          source.src = source.dataset.src;
+          v.preload = "auto";
+          v.load();
+          v.play().catch(function () {});
+        }
+      })();
+    </script>
     <div class="hero-content">
       <p class="hero-eyebrow">Heimildamynd í þróun</p>
       <h1>Þingvallavatn</h1>
