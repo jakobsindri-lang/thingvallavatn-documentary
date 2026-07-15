@@ -226,7 +226,6 @@ const MAP_GROUPS = [
   { label: "Vatnskot",     children: ["Breiðitangi", "Murtusker", "Veiðitangi"] },
   { label: "Tóftir",      children: ["Murtutangi", "Vörðuvík"] },
   { label: "Öfugsnáði" },
-  { label: "Nes" },
   { label: "Vatnsvik",    children: ["Davíðsgjá", "Nautatangar", "Vellankatla"] },
   { label: "Hallvik",     children: ["Gjáarendar", "Hallvik"] },
   { label: "Ólafsdráttur", children: ["Búr", "Einbúi", "Fornasel", "Þvotta"] },
