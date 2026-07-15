@@ -13,7 +13,7 @@
 - [ ] Bæta við upplýsingum um lífríki, sögu og landslag
 - [x] Gera fyrstu útgáfu vefsíðunnar
 - [x] Prófa síðuna local í browser
-- [ ] Þjappa/minnka fleiri myndir í `site/assets/images/web/` fyrir endanlega birtingu (nokkrar gerðar 2026-07-15: gæsarmynd, teiknimyndir)
+- [x] Þjappa/minnka myndir í `site/assets/images/web/` fyrir endanlega birtingu — allar stórar bakgrunns-/borða-/þemumyndir og myndasafnið (stillur-*) breytt í WebP 2026-07-15
 - [ ] Skrifa 60 sekúndna pitch texta fyrir styrktaraðila
 - [ ] Ákveða styrktarleið (Karolina Fund eða annað)
 - [x] Stofna GitHub repo (public) og pusha kóðanum

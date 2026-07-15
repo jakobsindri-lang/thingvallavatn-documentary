@@ -44,7 +44,7 @@ body {
   background:
     radial-gradient(ellipse at 50% 20%, rgba(58, 168, 193, 0.3) 0%, transparent 60%),
     linear-gradient(180deg, rgba(3, 9, 15, 0.8) 0%, rgba(10, 35, 52, 0.6) 45%, rgba(18, 58, 82, 0.7) 100%),
-    url("assets/images/web/hero-sunset.png");
+    url("assets/images/web/hero-sunset.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -617,7 +617,7 @@ body {
   object-position: right center;
 }
 
-.card-image img[src$="theme-veidiadferdir.png"] {
+.card-image img[src$="theme-veidiadferdir.webp"] {
   object-position: right center;
 }
 

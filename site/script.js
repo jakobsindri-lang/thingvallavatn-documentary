@@ -1248,14 +1248,14 @@ function initMoonWidget() {
 // ── Theme carousel ──────────────────────────────────────────────────────────
 (function () {
   const themes = [
-    { src: 'assets/images/web/theme-thjodgardur.png',  alt: 'Landslag við Þingvallavatn',               title: 'Þingvallavatn og þjóðgarðurinn',     desc: 'Sérstaða vatnsins, sagan og staðurinn sem geymir bæði náttúru og menningararf þjóðarinnar.' },
-    { src: 'assets/images/web/theme-bleikja.png',        alt: 'Bleikja úr Þingvallavatni',                title: 'Bleikjan og afbrigði hennar',         desc: 'Eitt merkasta dæmi heimsins um hraða þróun: fjögur afbrigði bleikju sem hafa aðlagast sama vatninu á mismunandi hátt.' },
-    { src: 'assets/images/web/theme-urridi.png',         alt: 'Urriði á næturveiði í Þingvallavatni',     title: 'Urriðinn og næturveiðin',             desc: 'Stærsti urriði landsins leynist í djúpinu og kemur fram þegar myrkrið skellur á.' },
-    { src: 'assets/images/web/theme-faedukedja.png',     alt: 'Vatnabobbi úr Þingvallavatni',             title: 'Mýflugan, vatnabobbinn og vorflugan', desc: 'Smádýrin sem mynda undirstöðu fæðukeðjunnar og halda öllu vistkerfinu gangandi.' },
-    { src: 'assets/images/web/theme-hornsili-murta.png', alt: 'Murta úr Þingvallavatni',                  title: 'Hornsíli, murta og fæðukeðjan',       desc: 'Hvernig lítil dýr og smáfiskar tengja saman allt lífríki vatnsins, frá botni og upp.' },
-    { src: 'assets/images/web/theme-veidiadferdir.png',  alt: 'Veiðimaður við Þingvallavatn',             title: 'Veiðiaðferðir og lestur vatnsins',    desc: 'Hvernig á að lesa vatnið: birtu, vind, dýpi og hegðun bleikju og urriða.' },
-    { src: 'assets/images/web/theme-visindi.png',        alt: 'Líffræðingur að störfum við Þingvallavatn',title: 'Vísindi og sérfræðiþekking',          desc: 'Rannsóknir á lífríki vatnsins og því sem vísindamenn hafa lært af einu merkasta stöðuvatni heims.' },
-    { src: 'assets/images/web/theme-framtid.png',        alt: 'Alda í óveðri á Þingvallavatni',           title: 'Framtíð vatnsins',                    desc: 'Hvað bíður Þingvallavatns og hvernig getum við varðveitt þennan einstaka heim?' },
+    { src: 'assets/images/web/theme-thjodgardur.webp',  alt: 'Landslag við Þingvallavatn',               title: 'Þingvallavatn og þjóðgarðurinn',     desc: 'Sérstaða vatnsins, sagan og staðurinn sem geymir bæði náttúru og menningararf þjóðarinnar.' },
+    { src: 'assets/images/web/theme-bleikja.webp',        alt: 'Bleikja úr Þingvallavatni',                title: 'Bleikjan og afbrigði hennar',         desc: 'Eitt merkasta dæmi heimsins um hraða þróun: fjögur afbrigði bleikju sem hafa aðlagast sama vatninu á mismunandi hátt.' },
+    { src: 'assets/images/web/theme-urridi.webp',         alt: 'Urriði á næturveiði í Þingvallavatni',     title: 'Urriðinn og næturveiðin',             desc: 'Stærsti urriði landsins leynist í djúpinu og kemur fram þegar myrkrið skellur á.' },
+    { src: 'assets/images/web/theme-faedukedja.webp',     alt: 'Vatnabobbi úr Þingvallavatni',             title: 'Mýflugan, vatnabobbinn og vorflugan', desc: 'Smádýrin sem mynda undirstöðu fæðukeðjunnar og halda öllu vistkerfinu gangandi.' },
+    { src: 'assets/images/web/theme-hornsili-murta.webp', alt: 'Murta úr Þingvallavatni',                  title: 'Hornsíli, murta og fæðukeðjan',       desc: 'Hvernig lítil dýr og smáfiskar tengja saman allt lífríki vatnsins, frá botni og upp.' },
+    { src: 'assets/images/web/theme-veidiadferdir.webp',  alt: 'Veiðimaður við Þingvallavatn',             title: 'Veiðiaðferðir og lestur vatnsins',    desc: 'Hvernig á að lesa vatnið: birtu, vind, dýpi og hegðun bleikju og urriða.' },
+    { src: 'assets/images/web/theme-visindi.webp',        alt: 'Líffræðingur að störfum við Þingvallavatn',title: 'Vísindi og sérfræðiþekking',          desc: 'Rannsóknir á lífríki vatnsins og því sem vísindamenn hafa lært af einu merkasta stöðuvatni heims.' },
+    { src: 'assets/images/web/theme-framtid.webp',        alt: 'Alda í óveðri á Þingvallavatni',           title: 'Framtíð vatnsins',                    desc: 'Hvað bíður Þingvallavatns og hvernig getum við varðveitt þennan einstaka heim?' },
   ];
 
   const carousel  = document.getElementById('theme-carousel');
