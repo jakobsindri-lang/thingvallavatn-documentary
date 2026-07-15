@@ -970,116 +970,8 @@ if (typeof runForecast === "function") {
 
 // --- Moon widget ---
 
-function moonPhaseSVG(phase, fraction, cloudCover) {
-  const size = 160;
-  const r    = 72;
-  const cx   = size / 2;
-  const cy   = size / 2;
-  const ix   = cx - r;
-  const iy   = cy - r;
-  const id   = r * 2;
-  const top  = `${cx} ${cy - r}`;
-  const bot  = `${cx} ${cy + r}`;
-
-  let litClip = "";
-  if (fraction > 0.995) {
-    litClip = `<clipPath id="moonLit"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>`;
-  } else if (fraction > 0.005) {
-    let rx, outerSweep;
-    if (phase < 0.5) {
-      rx = r * Math.cos(2 * Math.PI * phase);
-      outerSweep = 1;
-    } else {
-      rx = r * Math.cos(2 * Math.PI * (phase - 0.5));
-      outerSweep = 0;
-    }
-    const absRx = Math.abs(rx);
-    const tSweep = rx >= 0 ? 0 : 1;
-    const d = absRx < 0.5
-      ? `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} L ${top} Z`
-      : `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} A ${absRx} ${r} 0 0 ${tSweep} ${top} Z`;
-    litClip = `<clipPath id="moonLit"><path d="${d}"/></clipPath>`;
-  }
-
-  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <clipPath id="moonCircle"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
-      ${litClip}
-      <radialGradient id="limbDark" cx="50%" cy="50%" r="50%">
-        <stop offset="65%" stop-color="rgba(0,0,0,0)"/>
-        <stop offset="100%" stop-color="rgba(0,0,0,0.60)"/>
-      </radialGradient>
-    </defs>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#06080c"/>
-    <image href="assets/images/web/moon.jpg" x="${ix}" y="${iy}" width="${id}" height="${id}"
-           clip-path="url(#moonCircle)" opacity="0.09" preserveAspectRatio="xMidYMid slice"/>
-    ${fraction > 0.005 ? `
-    <image href="assets/images/web/moon.jpg" x="${ix}" y="${iy}" width="${id}" height="${id}"
-           clip-path="url(#moonLit)" preserveAspectRatio="xMidYMid slice"/>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#limbDark)" clip-path="url(#moonLit)"/>` : ""}
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1"/>
-  </svg>`;
-}
-
-function cloudCoverSVG(pct) {
-  const size = 160;
-  const r    = 68;
-  const cx   = size / 2;
-  const cy   = size / 2;
-  const p    = pct ?? 0;
-
-  const starOp = Math.max(0, (35 - p) / 35);
-  const stars = starOp > 0 ? [
-    [55,38],[95,32],[112,55],[38,62],[68,28],[105,78],[42,95],[118,92]
-  ].map(([x,y]) =>
-    `<circle cx="${x}" cy="${y}" r="1.4" fill="rgba(255,248,220,${(starOp * 0.65).toFixed(2)})"/>`
-  ).join("") : "";
-
-  const c1Op = Math.max(0, Math.min(1, (p -  5) / 25)).toFixed(2);
-  const c2Op = Math.max(0, Math.min(1, (p - 30) / 25)).toFixed(2);
-  const c3Op = Math.max(0, Math.min(1, (p - 60) / 25)).toFixed(2);
-  const ovOp = Math.max(0, Math.min(0.45, (p - 80) / 40)).toFixed(2);
-
-  const cloud1 = +c1Op > 0 ? `<g opacity="${c1Op}">
-      <ellipse cx="96" cy="52" rx="22" ry="11" fill="#c8d4e0"/>
-      <ellipse cx="80" cy="57" rx="17" ry="10" fill="#ccd7e3"/>
-      <ellipse cx="110" cy="56" rx="15" ry="9"  fill="#c4d0dc"/>
-      <ellipse cx="96" cy="63" rx="24" ry="8"   fill="#d0dbe7"/>
-    </g>` : "";
-
-  const cloud2 = +c2Op > 0 ? `<g opacity="${c2Op}">
-      <ellipse cx="56" cy="78" rx="20" ry="11" fill="#bcc8d4"/>
-      <ellipse cx="40" cy="83" rx="15" ry="9"  fill="#c0ccd8"/>
-      <ellipse cx="70" cy="82" rx="17" ry="9"  fill="#b9c5d1"/>
-      <ellipse cx="56" cy="88" rx="22" ry="7"  fill="#c4d0dc"/>
-    </g>` : "";
-
-  const cloud3 = +c3Op > 0 ? `<g opacity="${c3Op}">
-      <ellipse cx="82" cy="108" rx="28" ry="13" fill="#b0bcc8"/>
-      <ellipse cx="60" cy="105" rx="20" ry="12" fill="#b8c4d0"/>
-      <ellipse cx="104" cy="104" rx="21" ry="11" fill="#aebac6"/>
-      <ellipse cx="82" cy="96"  rx="30" ry="10" fill="#bcc8d4"/>
-    </g>` : "";
-
-  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <clipPath id="skyCircle"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
-      <radialGradient id="skyGrad" cx="50%" cy="40%" r="65%">
-        <stop offset="0%"   stop-color="#0d1520"/>
-        <stop offset="100%" stop-color="#060a10"/>
-      </radialGradient>
-    </defs>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#skyGrad)"/>
-    <g clip-path="url(#skyCircle)">
-      ${stars}
-      ${cloud1}
-      ${cloud2}
-      ${cloud3}
-      ${+ovOp > 0 ? `<rect x="0" y="0" width="${size}" height="${size}" fill="rgba(145,160,175,${ovOp})"/>` : ""}
-    </g>
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1"/>
-  </svg>`;
-}
+const MOON_WHEEL_N = 8;
+const MOON_SYN_MONTH = 29.530588853;
 
 function moonPhaseName(phase) {
   if (phase < 0.03 || phase > 0.97) return "Nýmáni";
@@ -1092,38 +984,6 @@ function moonPhaseName(phase) {
   return "Minnkandi gormáni";
 }
 
-function cloudCoverLabel(pct) {
-  if (pct < 15) return "skýlaust";
-  if (pct < 35) return "lítil ský";
-  if (pct < 65) return "nokkur ský";
-  if (pct < 85) return "að mestu skýjað";
-  return "alskýjað";
-}
-
-function moonFishingNote(phase, fraction, cloudCover) {
-  const isWaxing = phase < 0.5;
-  const dirLabel = isWaxing ? "Vaxandi" : "Minnkandi";
-  const pct = Math.round(fraction * 100);
-  const effective = cloudCover != null ? fraction * (1 - cloudCover / 100) : fraction;
-
-  if (cloudCover != null && cloudCover > 85) {
-    return `Þykk skýjahula (${cloudCover}%) dregur verulega úr birtu tungls — næturnar líkjast nýmána aðstæðum.`;
-  }
-  if (fraction > 0.9) {
-    return "Fullt tungl. Urriðar eru oft virkir við yfirborð í kvöldroðanum, en björtu næturnar geta gert þá varfærnari.";
-  }
-  if (fraction < 0.1) {
-    return "Nýmáni — myrkrar nætur. Stórir urriðar þora frekar að koma upp við yfirborð þegar myrkt er.";
-  }
-  if (effective > 0.55) {
-    return `${dirLabel} tungl, ${pct}% birt. Gott að nota ljósar flugur snemma á kvöldið.`;
-  }
-  if (effective < 0.15) {
-    return `${dirLabel} tungl, ${pct}% birt${cloudCover != null ? ` en skýjahula ${cloudCover}%` : ""}. Dökkar aðstæður — henta vel fyrir stórar flugur.`;
-  }
-  return `${dirLabel} tungl, ${pct}% birt.`;
-}
-
 function formatMoonTime(date) {
   return date.toLocaleTimeString("is-IS", {
     hour: "2-digit",
@@ -1132,16 +992,206 @@ function formatMoonTime(date) {
   });
 }
 
-function initMoonWidget() {
-  const svgContainer   = document.getElementById("moon-svg-container");
-  const cloudContainer = document.getElementById("moon-cloud-container");
-  const phaseNameEl    = document.getElementById("moon-phase-name");
-  const cloudLabelEl   = document.getElementById("moon-cloud-label");
-  const illuminationEl = document.getElementById("moon-illumination");
-  const timesEl        = document.getElementById("moon-times");
-  const noteEl         = document.getElementById("moon-note");
+function formatDayMonth(date) {
+  return `${date.getUTCDate()}/${date.getUTCMonth() + 1}`;
+}
 
-  if (!svgContainer) return;
+function noonUTC(date) {
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 12, 0, 0));
+}
+
+// Most recent new moon on/before `now`, then the 4 cardinal + 4 intermediate
+// phase dates for the rest of that cycle, in forward chronological order.
+function moonCycleDates(now) {
+  const today = noonUTC(now);
+  let newMoonDate = today;
+  let bestDiff = Infinity;
+  for (let i = 0; i < 40; i++) {
+    const d = new Date(today.getTime() - i * 86400000);
+    const ph = SunCalc.getMoonIllumination(d).phase;
+    const diff = Math.min(ph, 1 - ph);
+    if (diff < bestDiff) { bestDiff = diff; newMoonDate = d; }
+  }
+
+  const dates = [];
+  for (let i = 0; i < MOON_WHEEL_N; i++) {
+    const guess = new Date(newMoonDate.getTime() + i * (MOON_SYN_MONTH / MOON_WHEEL_N) * 86400000);
+    let refined = guess;
+    let refDiff = Infinity;
+    for (let off = -2; off <= 2; off += 0.5) {
+      const d = new Date(guess.getTime() + off * 86400000);
+      const ph = SunCalc.getMoonIllumination(d).phase;
+      let diff = Math.abs(ph - i / MOON_WHEEL_N);
+      diff = Math.min(diff, Math.abs(diff - 1));
+      if (diff < refDiff) { refDiff = diff; refined = d; }
+    }
+    dates.push(noonUTC(refined));
+  }
+  return dates;
+}
+
+function moonLitPathD(size, r, phase, fraction) {
+  const cx = size / 2, cy = size / 2;
+  const top = `${cx} ${cy - r}`;
+  const bot = `${cx} ${cy + r}`;
+  if (fraction > 0.995) return `M ${cx} ${cy} m ${-r} 0 a ${r} ${r} 0 1 0 ${r*2} 0 a ${r} ${r} 0 1 0 ${-r*2} 0`;
+  if (fraction <= 0.005) return null;
+  let rx, outerSweep;
+  if (phase < 0.5) { rx = r * Math.cos(2 * Math.PI * phase); outerSweep = 1; }
+  else { rx = r * Math.cos(2 * Math.PI * (phase - 0.5)); outerSweep = 0; }
+  const absRx = Math.abs(rx);
+  const tSweep = rx >= 0 ? 0 : 1;
+  return absRx < 0.5
+    ? `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} L ${top} Z`
+    : `M ${top} A ${r} ${r} 0 0 ${outerSweep} ${bot} A ${absRx} ${r} 0 0 ${tSweep} ${top} Z`;
+}
+
+function moonIconMarkup(id, size, phase, fraction, moonHref) {
+  const r = size / 2 - 1.5;
+  const cx = size / 2, cy = size / 2;
+  const d = moonLitPathD(size, r, phase, fraction);
+  return `
+    <clipPath id="mc-${id}"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath>
+    ${d ? `<clipPath id="ml-${id}"><path d="${d}"/></clipPath>` : ""}
+    <g>
+      <image href="${moonHref}" x="${cx-r}" y="${cy-r}" width="${r*2}" height="${r*2}" clip-path="url(#mc-${id})" opacity="0.12" preserveAspectRatio="xMidYMid slice"/>
+      ${d ? `<image href="${moonHref}" x="${cx-r}" y="${cy-r}" width="${r*2}" height="${r*2}" clip-path="url(#ml-${id})" preserveAspectRatio="xMidYMid slice"/>` : ""}
+    </g>`;
+}
+
+// Ring of the 8 cycle phases with the 4 cardinal ones (new/Q1/full/Q3) shown
+// as date bubbles on the ring track, and a glowing "comet" trail leading from
+// today's true position to (and around) the nearest cardinal bubble.
+function moonWheelSVG(now, moonHref) {
+  const illum = SunCalc.getMoonIllumination(now);
+  const phase = illum.phase;
+  const fraction = illum.fraction;
+  const refDates = moonCycleDates(now);
+
+  const SIZE = 400;
+  const CX = SIZE / 2, CY = SIZE / 2;
+  const RING_R = 122;
+  const ICON_SIZE = 48;
+  const trackR = RING_R + ICON_SIZE / 2 + 12;
+  const pointerAngle = phase * 2 * Math.PI - Math.PI / 2;
+
+  const cardinal = [0, 2, 4, 6];
+  const MERGE_THRESH = 1.5 / MOON_SYN_MONTH;
+  let nearestCardinal = null, nearestDiff = Infinity, nearestSigned = 0;
+  for (const i of cardinal) {
+    const target = i / MOON_WHEEL_N;
+    let diff = phase - target;
+    if (diff > 0.5) diff -= 1;
+    if (diff < -0.5) diff += 1;
+    if (Math.abs(diff) < nearestDiff) { nearestDiff = Math.abs(diff); nearestCardinal = i; nearestSigned = diff; }
+  }
+  const merged = nearestDiff <= MERGE_THRESH;
+
+  let ringIcons = "";
+  for (let i = 0; i < MOON_WHEEL_N; i++) {
+    const p = i / MOON_WHEEL_N;
+    const f = (1 - Math.cos(2 * Math.PI * p)) / 2;
+    const angle = (i / MOON_WHEEL_N) * 2 * Math.PI - Math.PI / 2;
+    const x = CX + RING_R * Math.cos(angle) - ICON_SIZE / 2;
+    const y = CY + RING_R * Math.sin(angle) - ICON_SIZE / 2;
+    ringIcons += `<g transform="translate(${x},${y})"><svg width="${ICON_SIZE}" height="${ICON_SIZE}" viewBox="0 0 ${ICON_SIZE} ${ICON_SIZE}">${moonIconMarkup("r" + i, ICON_SIZE, p, f, moonHref)}</svg></g>`;
+  }
+
+  const glowFilter = `<filter id="moonWheelGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+  const trackCircle = `<circle cx="${CX}" cy="${CY}" r="${trackR}" fill="none" stroke="rgba(245,230,176,0.07)" stroke-width="1"/>`;
+
+  function chipGeom(text) {
+    const fontSize = 10.5;
+    const charW = fontSize * 0.62;
+    const w = text.length * charW + 12;
+    const h = 17;
+    return { w, h, halfAngle: (w / 2) / trackR };
+  }
+
+  let overlay = `<defs>${glowFilter}</defs>`;
+
+  if (merged) {
+    const cardAngle = (nearestCardinal / MOON_WHEEL_N) * 2 * Math.PI - Math.PI / 2;
+    const text = formatDayMonth(refDates[nearestCardinal]);
+    const { w, h, halfAngle } = chipGeom(text);
+    const cx0 = CX + trackR * Math.cos(cardAngle), cy0 = CY + trackR * Math.sin(cardAngle);
+
+    const leftEdgeAngle = cardAngle - halfAngle;
+    const tailStart = leftEdgeAngle - 0.42;
+    const tsx = CX + trackR * Math.cos(tailStart), tsy = CY + trackR * Math.sin(tailStart);
+    const tex = CX + trackR * Math.cos(leftEdgeAngle), tey = CY + trackR * Math.sin(leftEdgeAngle);
+
+    overlay += `
+      <linearGradient id="moonTrailGrad" gradientUnits="userSpaceOnUse" x1="${tsx.toFixed(1)}" y1="${tsy.toFixed(1)}" x2="${tex.toFixed(1)}" y2="${tey.toFixed(1)}">
+        <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0"/>
+        <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.95"/>
+      </linearGradient>
+      ${trackCircle}
+      <path d="M ${tsx.toFixed(1)} ${tsy.toFixed(1)} A ${trackR} ${trackR} 0 0 1 ${tex.toFixed(1)} ${tey.toFixed(1)}"
+            fill="none" stroke="url(#moonTrailGrad)" stroke-width="2.5" stroke-linecap="round" filter="url(#moonWheelGlow)"/>
+      <rect x="${(cx0 - w/2).toFixed(1)}" y="${(cy0 - h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h}" rx="${h/2}"
+            fill="var(--color-bg-card)" stroke="var(--color-accent)" stroke-width="2" filter="url(#moonWheelGlow)"/>
+      <text x="${cx0.toFixed(1)}" y="${(cy0+3.5).toFixed(1)}" text-anchor="middle" font-family="-apple-system, sans-serif"
+            font-size="10.5" font-weight="700" fill="var(--color-accent-light)">${text}</text>
+    `;
+
+    const nearestSignedAngle = nearestSigned * 2 * Math.PI;
+    if (Math.abs(nearestSignedAngle) > halfAngle) {
+      const rightEdgeAngle = cardAngle + halfAngle;
+      const rex = CX + trackR * Math.cos(rightEdgeAngle), rey = CY + trackR * Math.sin(rightEdgeAngle);
+      const dex = CX + trackR * Math.cos(pointerAngle), dey = CY + trackR * Math.sin(pointerAngle);
+      overlay += `
+        <path d="M ${rex.toFixed(1)} ${rey.toFixed(1)} A ${trackR} ${trackR} 0 0 1 ${dex.toFixed(1)} ${dey.toFixed(1)}"
+              fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" opacity="0.85" filter="url(#moonWheelGlow)"/>
+        <circle cx="${dex.toFixed(1)}" cy="${dey.toFixed(1)}" r="3.5" fill="var(--color-accent)" filter="url(#moonWheelGlow)"/>
+      `;
+    }
+  } else {
+    const arcLen = 0.5;
+    const startA = pointerAngle - arcLen;
+    const sx = CX + trackR * Math.cos(startA), sy = CY + trackR * Math.sin(startA);
+    const ex = CX + trackR * Math.cos(pointerAngle), ey = CY + trackR * Math.sin(pointerAngle);
+    overlay += `
+      <linearGradient id="moonTrailGrad" gradientUnits="userSpaceOnUse" x1="${sx.toFixed(1)}" y1="${sy.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}">
+        <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0"/>
+        <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.95"/>
+      </linearGradient>
+      ${trackCircle}
+      <path d="M ${sx.toFixed(1)} ${sy.toFixed(1)} A ${trackR} ${trackR} 0 0 1 ${ex.toFixed(1)} ${ey.toFixed(1)}"
+            fill="none" stroke="url(#moonTrailGrad)" stroke-width="2.5" stroke-linecap="round" filter="url(#moonWheelGlow)"/>
+      <circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="3.5" fill="var(--color-accent)" filter="url(#moonWheelGlow)"/>
+    `;
+  }
+
+  let labels = "";
+  for (const i of cardinal) {
+    if (merged && i === nearestCardinal) continue;
+    const angle = (i / MOON_WHEEL_N) * 2 * Math.PI - Math.PI / 2;
+    const lx = CX + trackR * Math.cos(angle), ly = CY + trackR * Math.sin(angle);
+    const text = formatDayMonth(refDates[i]);
+    const { w, h } = chipGeom(text);
+    labels += `
+      <rect x="${(lx - w/2).toFixed(1)}" y="${(ly - h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h}" rx="${h/2}"
+            fill="var(--color-bg-card)" stroke="rgba(245,230,176,0.15)" stroke-width="1"/>
+      <text x="${lx.toFixed(1)}" y="${(ly+3.5).toFixed(1)}" text-anchor="middle" font-family="-apple-system, sans-serif"
+            font-size="10.5" font-weight="500" fill="var(--color-text)">${text}</text>`;
+  }
+
+  return `<svg viewBox="0 0 ${SIZE} ${SIZE}" width="${SIZE}" height="${SIZE}" xmlns="http://www.w3.org/2000/svg">
+    ${overlay}
+    ${ringIcons}
+    ${labels}
+  </svg>`;
+}
+
+function initMoonWidget() {
+  const wheelContainer = document.getElementById("moon-wheel-svg");
+  const phaseNameEl     = document.getElementById("moon-phase-name");
+  const illumEl         = document.getElementById("moon-illum-pct");
+  const timesEl         = document.getElementById("moon-times");
+  const cloudEl         = document.getElementById("moon-cloud-pct");
+
+  if (!wheelContainer) return;
 
   if (typeof SunCalc === "undefined") {
     phaseNameEl.textContent = "Ekki tókst að hlaða tunglagögnum.";
@@ -1151,22 +1201,15 @@ function initMoonWidget() {
   const now = new Date();
   const LAT = 64.2559;
   const LON = -21.1179;
+  const moonHref = `${window.ASSET_BASE ?? ""}assets/images/web/moon-tight.jpg`;
 
   const illum = SunCalc.getMoonIllumination(now);
   const phase = illum.phase;
   const fraction = illum.fraction;
 
-  svgContainer.innerHTML = moonPhaseSVG(phase, fraction);
-  if (cloudContainer) cloudContainer.innerHTML = cloudCoverSVG(null);
+  wheelContainer.innerHTML = moonWheelSVG(now, moonHref);
   phaseNameEl.textContent = moonPhaseName(phase);
-
-  const pct = Math.round(fraction * 100);
-  illuminationEl.innerHTML = `
-    <span>${pct}% birt</span>
-    <span class="moon-illum-bar" role="presentation">
-      <span class="moon-illum-fill" style="width:${pct}%"></span>
-    </span>
-  `;
+  illumEl.textContent = `${Math.round(fraction * 100)}%`;
 
   const mt = SunCalc.getMoonTimes(now, LAT, LON);
   const parts = [];
@@ -1174,22 +1217,15 @@ function initMoonWidget() {
   if (mt.set) parts.push(`Sest ${formatMoonTime(mt.set)}`);
   timesEl.textContent = parts.length ? parts.join(" · ") : "Gengur ekki niður í nótt";
 
-  const renderNote = (cc) => {
-    if (cloudContainer) cloudContainer.innerHTML = cloudCoverSVG(cc);
-    if (cloudLabelEl) {
-      cloudLabelEl.textContent = cc != null
-        ? `${cc}% — ${cloudCoverLabel(cc)}`
-        : "Óþekkt";
-    }
-    noteEl.textContent = moonFishingNote(phase, fraction, cc);
-  };
-
   fetch(
     `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=cloud_cover&timezone=Atlantic%2FReykjavik`
   )
     .then((r) => r.json())
-    .then((data) => renderNote(data?.current?.cloud_cover ?? null))
-    .catch(() => renderNote(null));
+    .then((data) => {
+      const cc = data?.current?.cloud_cover;
+      cloudEl.textContent = cc != null ? `${cc}%` : "Óþekkt";
+    })
+    .catch(() => { cloudEl.textContent = "Óþekkt"; });
 }
 
 // ── Support: copy-to-clipboard ──────────────────────────────────────────────
