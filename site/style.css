@@ -1865,6 +1865,7 @@ body {
 .support-card-fill {
   display: block;
   width: 130px;
+  height: auto;
   margin: 1.4rem auto 0;
   opacity: 0.85;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
