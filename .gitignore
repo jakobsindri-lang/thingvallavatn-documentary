@@ -1,8 +1,6 @@
-# Upprunalegar háupplausnarmyndir (myndavélaskrár) - of stórar fyrir git
-# og ekki notaðar beint á síðunni. Vefvænar útgáfur eru í site/assets/images/web/
-site/assets/images/*
-!site/assets/images/web/
-!site/assets/images/web/**
+# Upprunalegar háupplausnarmyndir (myndavélaskrár) - of stórar fyrir git.
+# Vefvænar útgáfur eru í site/assets/images/web/
+raw-media/
 
 # OS/editor junk
 .DS_Store

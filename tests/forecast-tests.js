@@ -1,6 +1,8 @@
 // forecast-tests.js
-// Prófanir á forecast-engine.js — keyra í vafra console: runForecastTests()
-// eða nota í Node.js með: node -e "require('./forecast-config'); require('./forecast-engine'); require('./forecast-tests').runForecastTests()"
+// Prófanir á forecast-engine.js — keyra í vafra console (eftir að hafa hlaðið
+// inn ../site/forecast-config.js og ../site/forecast-engine.js): runForecastTests()
+// eða nota í Node.js frá verkefnisrótinni með:
+// node -e "require('./site/forecast-config'); require('./site/forecast-engine'); require('./tests/forecast-tests').runForecastTests()"
 
 'use strict';
 
