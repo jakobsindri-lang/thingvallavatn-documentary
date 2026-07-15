@@ -772,6 +772,28 @@ function initWaterTemp() {
 
 initWaterTemp();
 
+// Sækir Bliku-veðurspá: staðbundna vedurspa.json (uppfærð reglulega af GitHub
+// Action) fyrst ef hún er til og innan við 3 klst gömul, annars beint kall í
+// óopinbera api.blika.is sem fallback (CORS/framboð þess API er ótryggt).
+const BLIKA_CACHE_MAX_AGE_MS = 3 * 60 * 60 * 1000; // 3 klst
+
+async function fetchBlikaForecast() {
+  try {
+    const res = await fetch(`${window.ASSET_BASE ?? ""}assets/data/vedurspa.json?v=${Date.now()}`, { cache: "no-store" });
+    if (res.ok) {
+      const cached = await res.json();
+      const age = Date.now() - new Date(cached.fetched).getTime();
+      if (Array.isArray(cached.days) && cached.days.length && age <= BLIKA_CACHE_MAX_AGE_MS) {
+        return cached.days;
+      }
+    }
+  } catch {
+    // Staðbundna skráin ekki tiltæk — reynum beina kallið hér að neðan.
+  }
+  const res = await fetch(FORECAST_CONFIG.api.blikaForecast);
+  return res.json();
+}
+
 if (weatherGrid) {
   const weatherIcons = {
     clear:"☀️", partlycloudy:"🌤️", mostlycloudy:"⛅", cloudy:"☁️",
@@ -781,8 +803,7 @@ if (weatherGrid) {
   };
   const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://www.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
 
-  fetch(FORECAST_CONFIG.api.blikaForecast)
-    .then((r) => r.json())
+  fetchBlikaForecast()
     .then((days) => {
       const first7 = days.slice(0, 7);
       if (!first7.length) { weatherGrid.innerHTML = blikaError; return; }
@@ -884,7 +905,7 @@ async function initForecast() {
   const dataWarnings = [];
 
   const [blikaRes, archiveRes, waterRes] = await Promise.allSettled([
-    fetch(FORECAST_CONFIG.api.blikaForecast).then((r) => r.json()),
+    fetchBlikaForecast(),
     fetchHistoricalCloud(),
     fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json?v=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
