@@ -87,3 +87,19 @@
 - **Kort-hópar með undirliði kalla líka `updateMapInfo()` þegar smellt er á
   þá**, ekki bara víxla `aria-expanded`, svo hópar án eigin kortpunkts eru
   samt aðgengilegir úr hliðarlistanum.
+
+## 2026-07-15 — Íslensk dagsetninga-/tímasnið eru byggð handvirkt, ekki með `is-IS` locale
+
+- **Aldrei nota `toLocaleDateString`/`toLocaleString("is-IS", ...)` fyrir
+  dagur/mánuður-röðun eða 12/24 klst val.** Vatnshita-línuritið, „mælt {tími}"
+  merkið, tunglrás-/sest-tímar og veðurspárkortin sýndu öll mánuð á undan degi
+  og AM/PM fyrir notandann þrátt fyrir að nota `"is-IS"` — ófullkomin ICU-gögn
+  fyrir is-IS í sumum vöfrum/Node-útgáfum falla hljóðlaust til baka í
+  sjálfgefið (amerískt) snið, án villu.
+- **Lagað með handvirkum föllum** (`formatDayMonthDot`, `formatDayMonthNameLong`,
+  `formatWeekdayDayMonth` í `script.js`) sem byggja strenginn úr
+  `getUTCDate()`/`getUTCMonth()+1`/`getUTCDay()` milliliðalaust, og
+  `hour12: false` explicit alls staðar sem tími er birtur.
+- **Almenn regla (á við um öll verkefni, ekki bara þetta), sjá
+  `Learnings/islensk-dagsetninga-og-timasnid-i-kodi.md` í vaultinu** fyrir
+  fulla útskýringu og kóðadæmi.

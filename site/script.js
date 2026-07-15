@@ -668,7 +668,7 @@ function waterTempChartSVG(history) {
   const xLabels = history.map((d, i) => {
     if (i % step !== 0 && i !== n - 1) return "";
     const dt = new Date(d.date + "T12:00:00Z");
-    const lbl = dt.toLocaleDateString("is-IS", { day: "numeric", month: "numeric" });
+    const lbl = formatDayMonthDot(dt);
     return `<text x="${toX(i).toFixed(1)}" y="${H - 5}" text-anchor="middle" font-size="9.5" fill="rgba(200,215,220,0.55)">${lbl}</text>`;
   }).join("");
   const yMin = `${minT.toFixed(1)}°`;
@@ -678,12 +678,12 @@ function waterTempChartSVG(history) {
   const lastX = toX(lastIdx);
   const lastY = toY(history[lastIdx].temp);
   const lastDt = new Date(history[lastIdx].date + "T12:00:00Z");
-  const lastDateLabel = lastDt.toLocaleDateString("is-IS", { day: "numeric", month: "long" });
+  const lastDateLabel = formatDayMonthNameLong(lastDt);
 
   const regularPoints = history.map((d, i) => {
     if (i === lastIdx) return "";
     const dt = new Date(d.date + "T12:00:00Z");
-    const dl = dt.toLocaleDateString("is-IS", { day: "numeric", month: "long" });
+    const dl = formatDayMonthNameLong(dt);
     return `<circle class="wt-point" cx="${toX(i).toFixed(1)}" cy="${toY(d.temp).toFixed(1)}" r="2.8" fill="#8fd9e8" data-temp="${d.temp}" data-date="${dl}"/>`;
   }).join("");
 
@@ -718,11 +718,12 @@ function initWaterTemp() {
     .then((data) => {
       const tempLabel = data.temp.toFixed(1).replace(".", ",");
       const updated = new Date(data.updated);
-      const timeLabel = updated.toLocaleString("is-IS", {
-        day: "numeric", month: "numeric",
-        hour: "2-digit", minute: "2-digit",
+      // Ísland er alltaf UTC+0 (ekkert sumartími), svo getUTCDate/-Month gefa
+      // réttan almanaksdag án tímabeltisumbreytingar.
+      const timeLabel = `${formatDayMonthDot(updated)}, ${updated.toLocaleTimeString("is-IS", {
+        hour: "2-digit", minute: "2-digit", hour12: false,
         timeZone: "Atlantic/Reykjavik",
-      });
+      })}`;
       const history = data.history ? [...data.history] : [];
       if (history.length > 0) history[history.length - 1] = { ...history[history.length - 1], temp: data.temp };
       const chart = waterTempChartSVG(history);
@@ -810,7 +811,7 @@ if (weatherGrid) {
       weatherGrid.innerHTML = "";
       first7.forEach((day) => {
         const date      = new Date(day.dags_spar.slice(0, 10) + "T12:00:00Z");
-        const dateLabel = date.toLocaleDateString("is-IS", { weekday: "short", day: "numeric", month: "numeric" });
+        const dateLabel = formatWeekdayDayMonth(date);
         const item = document.createElement("div");
         item.className = "weather-day";
         item.innerHTML = `
@@ -1009,12 +1010,33 @@ function formatMoonTime(date) {
   return date.toLocaleTimeString("is-IS", {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
     timeZone: "Atlantic/Reykjavik",
   });
 }
 
 function formatDayMonth(date) {
   return `${date.getUTCDate()}/${date.getUTCMonth() + 1}`;
+}
+
+// Handvirk íslensk dagsetningasnið. EKKI nota toLocaleDateString/toLocaleString
+// með "is-IS" fyrir tölustafaraðir dags/mánaðar — ófullkomin is-IS gögn í sumum
+// vöfrum/Node-útgáfum raða þá mánuði á undan degi (t.d. "7.15." í stað "15.7.").
+// Sjá grunnleiðbeiningar í Obsidian: reference_icelandic_date_formatting.md
+const IS_MONTHS_LONG = [
+  "janúar", "febrúar", "mars", "apríl", "maí", "júní",
+  "júlí", "ágúst", "september", "október", "nóvember", "desember",
+];
+const IS_WEEKDAYS_SHORT = ["sun.", "mán.", "þri.", "mið.", "fim.", "fös.", "lau."];
+
+function formatDayMonthDot(date) {
+  return `${date.getUTCDate()}.${date.getUTCMonth() + 1}.`;
+}
+function formatDayMonthNameLong(date) {
+  return `${date.getUTCDate()}. ${IS_MONTHS_LONG[date.getUTCMonth()]}`;
+}
+function formatWeekdayDayMonth(date) {
+  return `${IS_WEEKDAYS_SHORT[date.getUTCDay()]} ${formatDayMonthDot(date)}`;
 }
 
 function noonUTC(date) {
