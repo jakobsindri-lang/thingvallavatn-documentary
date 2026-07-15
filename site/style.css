@@ -128,8 +128,9 @@ body {
   margin-top: 2.5rem;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1rem 1.6rem;
 }
 
 /* Buttons */
@@ -146,6 +147,11 @@ body {
   font-family: inherit;
 }
 
+.button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 .button-primary {
   background-color: var(--color-accent);
   color: var(--color-bg);
@@ -155,6 +161,31 @@ body {
 .button-primary:hover {
   background-color: var(--color-accent-light);
   border-color: var(--color-accent-light);
+}
+
+/* Þriðja stigs hlekkur: minna áberandi en .button-secondary, t.d. "Fyrir veiðimenn" í hero */
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border-soft);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.hero-link:hover {
+  color: var(--color-accent-light);
+  text-decoration-color: var(--color-accent-light);
+}
+
+.hero-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .button-secondary {
@@ -1815,6 +1846,10 @@ body {
 
   .hero-buttons .button {
     text-align: center;
+  }
+
+  .hero-buttons .hero-link {
+    align-self: center;
   }
 }
 
