@@ -1677,7 +1677,7 @@ body {
 
 .moon-wheel-inner {
   position: relative;
-  width: 475px;
+  width: 513px;
   max-width: 100%;
 }
 
@@ -1739,7 +1739,7 @@ body {
   }
 
   .moon-wheel-inner {
-    width: 375px;
+    width: 405px;
   }
 
   .moon-wheel-center {

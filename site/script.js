@@ -1111,11 +1111,15 @@ function moonWheelSVG(now, moonHref) {
   const fraction = illum.fraction;
   const refDates = moonCycleDates(now);
 
-  const SIZE = 500;
+  const SIZE = 540;
   const CX = SIZE / 2, CY = SIZE / 2;
   const RING_R = 153;
   const ICON_SIZE = 60;
-  const trackR = RING_R + ICON_SIZE / 2 + 15;
+  // Dagsetningaflipar eru ósnúnir rétthyrningar, svo radíus-plássið sem þeir
+  // taka fer eftir breidd þeirra (vinstri/hægri staða) frekar en hæð
+  // (efst/neðst staða) — bilið hér þarf að rúma breiðasta mögulega dagsetningu
+  // (t.d. "31/12") án þess að skarast við tunglmyndirnar.
+  const trackR = RING_R + ICON_SIZE / 2 + 39;
   const pointerAngle = phase * 2 * Math.PI - Math.PI / 2;
 
   const cardinal = [0, 2, 4, 6];
