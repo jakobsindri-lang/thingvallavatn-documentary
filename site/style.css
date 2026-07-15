@@ -422,6 +422,64 @@ body {
   }
 }
 
+/* Um höfundinn */
+.author-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.author-text p {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+}
+
+.author-photos {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.author-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+
+.author-photo-main {
+  aspect-ratio: 6 / 5;
+  object-position: 48% 38%;
+}
+
+.author-photo-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.author-photo-pair .author-photo {
+  aspect-ratio: 4 / 3;
+}
+
+.author-photo-pair .author-photo:nth-child(1) {
+  object-position: 50% 42%;
+}
+
+.author-photo-pair .author-photo:nth-child(2) {
+  object-position: 40% 60%;
+}
+
+@media (max-width: 860px) {
+  .author-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Interactive map */
 .map-section {
   max-width: 1280px;
