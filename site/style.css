@@ -858,7 +858,8 @@ body {
 .gallery-progress {
   max-width: 220px;
   margin: 1rem auto 0;
-  padding: 0 0.5rem;
+  padding: 10px 0.5rem;
+  cursor: pointer;
 }
 
 .gallery-progress-track {
@@ -867,6 +868,11 @@ body {
   border-radius: 999px;
   background: var(--border-soft);
   overflow: hidden;
+  transition: height 0.15s ease;
+}
+
+.gallery-progress:hover .gallery-progress-track {
+  height: 6px;
 }
 
 .gallery-progress-thumb {

@@ -507,6 +507,17 @@ if (galleryScroll) {
     });
   }
 
+  const galleryProgress      = document.querySelector(".gallery-progress");
+  const galleryProgressTrack = document.querySelector(".gallery-progress-track");
+  if (galleryProgress && galleryProgressTrack) {
+    galleryProgress.addEventListener("click", (e) => {
+      const rect = galleryProgressTrack.getBoundingClientRect();
+      const frac = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+      const targetReal = Math.min(totalReal - 1, Math.floor(frac * totalReal));
+      goTo(cloneCount + targetReal);
+    });
+  }
+
   updatePosition(false);
   updateCounter();
 
