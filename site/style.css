@@ -375,14 +375,14 @@ body {
   .progress-timeline {
     grid-template-columns: 1fr;
     gap: 1.6rem;
-    max-width: 380px;
-    padding: 0 0 0 1.7rem;
+    max-width: 340px;
+    padding: 0 0.5rem 0 3.25rem;
   }
 
   .progress-timeline::before,
   .progress-timeline::after {
     top: 0;
-    left: 0;
+    left: 1.25rem;
     width: 3px;
     height: auto;
   }
@@ -405,7 +405,7 @@ body {
 
   .progress-current-icon {
     top: 50%;
-    left: -1.7rem;
+    left: -2rem;
   }
 }
 
