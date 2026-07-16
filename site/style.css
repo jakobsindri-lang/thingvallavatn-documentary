@@ -1581,7 +1581,6 @@ body {
 }
 
 .vsp-table {
-  min-width: 360px;
   width: 100%;
   border-collapse: collapse;
 }
@@ -1704,14 +1703,22 @@ body {
 }
 
 @media (max-width: 560px) {
-  .vsp-th-label  { width: 5rem; }
-  .vsp-row-label { font-size: 0.7rem; padding-right: 0.4rem; }
-  .vsp-row-icon  { width: 48px; }
-  .fish          { font-size: 0.75rem; margin: 0 0.02rem; }
-  .vsp-col-name  { font-size: 0.68rem; }
-  .vsp-col-range { font-size: 0.58rem; }
-  .vsp-cell-cond { font-size: 0.7rem; }
-  .vsp-th, .vsp-cell { padding-left: 0.2rem; padding-right: 0.2rem; }
+  .vsp-th-label  { width: 4rem; }
+  .vsp-row-label { font-size: 0.7rem; padding-right: 0.3rem; }
+  .vsp-row-icon  { width: 40px; }
+  .fish          { font-size: 0.5rem; margin: 0 0.01rem; }
+  .vsp-col-name  { font-size: 0.66rem; }
+  .vsp-col-range { font-size: 0.56rem; }
+  .vsp-cell-cond { font-size: 0.62rem; }
+  .vsp-th, .vsp-cell { padding-left: 0.15rem; padding-right: 0.15rem; }
+}
+
+@media (max-width: 360px) {
+  .vsp-th-label  { width: 3.2rem; }
+  .vsp-row-icon  { width: 32px; }
+  .fish          { font-size: 0.42rem; }
+  .vsp-col-name  { font-size: 0.6rem; }
+  .vsp-cell-cond { font-size: 0.56rem; }
 }
 
 /* Moon widget */

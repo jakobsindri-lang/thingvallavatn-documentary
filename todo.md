@@ -27,4 +27,4 @@
 - [x] Bæta „Um höfundinn" kafla við forsíðuna
 - [x] Fyrsta aðgengisyfirferð: löt hleðsla á iframe, `:focus-visible` stílar, `prefers-reduced-motion` fyrir myndband og þemu-hringekju
 - [ ] Skoða hvort frekari aðgengisprófun (t.d. alvöru skjálesari) er þörf
-- [ ] Laga framsetningu á veiðispánni í síma, kemur ekki vel út eins og er
+- [x] Laga framsetningu á veiðispánni í síma, kemur ekki vel út eins og er
