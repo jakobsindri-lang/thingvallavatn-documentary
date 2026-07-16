@@ -615,6 +615,16 @@ if (galleryScroll) {
   lbNextBtn.addEventListener("click", () => lbSet(lbIdx + 1));
   lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
 
+  const lbProgress      = lb.querySelector(".lb-progress");
+  const lbProgressTrack = lb.querySelector(".lb-progress-track");
+  if (lbProgress && lbProgressTrack) {
+    lbProgress.addEventListener("click", (e) => {
+      const rect = lbProgressTrack.getBoundingClientRect();
+      const frac = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+      lbSet(Math.min(totalReal - 1, Math.floor(frac * totalReal)));
+    });
+  }
+
   lb.addEventListener("keydown", (e) => {
     if (e.key === "Escape")     { closeLb(); return; }
     if (e.key === "ArrowLeft")  { lbSet(lbIdx - 1); return; }

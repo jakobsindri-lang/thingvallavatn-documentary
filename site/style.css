@@ -976,6 +976,8 @@ body {
   width: 140px;
   max-width: 40vw;
   margin: 0.5rem auto 0;
+  padding: 10px 0;
+  cursor: pointer;
 }
 
 .lb-progress-track {
@@ -984,6 +986,11 @@ body {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.18);
   overflow: hidden;
+  transition: height 0.15s ease;
+}
+
+.lb-progress:hover .lb-progress-track {
+  height: 6px;
 }
 
 .lb-progress-thumb {
