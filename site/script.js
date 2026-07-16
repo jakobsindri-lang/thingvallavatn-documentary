@@ -882,8 +882,10 @@ function getCurrentSlotKey() {
 
 // Finnur besta urriðamat á tilteknum tímagluggum (30 mín skref).
 // toH getur verið > 23 (t.d. 28 = 04:00 næsta dag) — Date() meðhöndlar yfirfall.
-function bestTroutScoreInSlot(rawInputs, fromH, toH) {
+// dayOffset: 0 = í dag, 1 = á morgun, 2 = eftir tvo daga o.s.frv.
+function bestTroutScoreInSlot(rawInputs, fromH, toH, dayOffset = 0) {
   const base = new Date();
+  base.setUTCDate(base.getUTCDate() + dayOffset);
   base.setUTCHours(0, 0, 0, 0);
   let best = null;
   for (let mins = fromH * 60; mins <= toH * 60; mins += 30) {
@@ -895,8 +897,9 @@ function bestTroutScoreInSlot(rawInputs, fromH, toH) {
   return best;
 }
 
-function slotNow(repHour) {
+function slotNow(repHour, dayOffset = 0) {
   const d = new Date();
+  d.setUTCDate(d.getUTCDate() + dayOffset);
   d.setUTCHours(repHour, 0, 0, 0);
   return d;
 }
@@ -923,6 +926,9 @@ const merkiToCloud = {
   chanceflurries: 70, thunder: 95, hail: 90,
 };
 
+// Hversu marga daga fram í tímann (0 = í dag) veiðispá-dagavelan býður upp á.
+const VSP_DAY_OFFSETS = [0, 1, 2];
+
 async function initForecast() {
   const dataWarnings = [];
 
@@ -941,33 +947,67 @@ async function initForecast() {
   const archiveData = archiveRes.value ?? null;
   const waterData   = waterRes.value   ?? null;
 
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const today    = Array.isArray(blikaData)
-    ? (blikaData.find(d => d.dags_spar.slice(0, 10) === todayStr) ?? blikaData[0] ?? null)
-    : null;
+  const dayBundles = VSP_DAY_OFFSETS.map((offset) => {
+    const date = new Date();
+    date.setUTCDate(date.getUTCDate() + offset);
+    const dayStr = date.toISOString().slice(0, 10);
+    const dayWeather = Array.isArray(blikaData)
+      ? (blikaData.find((d) => d.dags_spar.slice(0, 10) === dayStr) ?? null)
+      : null;
 
-  const rawInputs = {
-    cloudCover:            today ? (merkiToCloud[today.merki] ?? 50) : null,
-    windSpeedMs:           today?.f10  ?? null,
-    windDirDeg:            null,
-    windDirText:           today?.dtexti ?? null,
-    waterTemp:             waterData?.temp ?? null,
-    historicalHourlyCloud: archiveData,
-    dataWarnings,
-  };
+    const rawInputs = {
+      cloudCover:            dayWeather ? (merkiToCloud[dayWeather.merki] ?? 50) : null,
+      windSpeedMs:           dayWeather?.f10  ?? null,
+      windDirDeg:            null,
+      windDirText:           dayWeather?.dtexti ?? null,
+      waterTemp:             waterData?.temp ?? null,
+      historicalHourlyCloud: archiveData,
+      dataWarnings,
+    };
 
-  const currentSlotKey = getCurrentSlotKey();
-  const slotResults = VSP_SLOTS.map((s) => {
-    const r = runForecast(rawInputs, slotNow(s.repHour));
-    const bestTrout = bestTroutScoreInSlot(rawInputs, s.fromH, s.toH);
-    if (bestTrout) r.trout = bestTrout;
-    return r;
+    const slotResults = VSP_SLOTS.map((s) => {
+      const r = runForecast(rawInputs, slotNow(s.repHour, offset));
+      const bestTrout = bestTroutScoreInSlot(rawInputs, s.fromH, s.toH, offset);
+      if (bestTrout) r.trout = bestTrout;
+      return r;
+    });
+
+    return { offset, date, slotResults };
   });
 
-  renderForecast(slotResults, currentSlotKey);
+  setupDayTabs(dayBundles);
 }
 
-function renderForecast(slotResults, currentSlotKey) {
+function setupDayTabs(dayBundles) {
+  const tabsEl = document.getElementById("vsp-day-tabs");
+  if (!tabsEl) { renderForecast(dayBundles[0]); return; }
+
+  const buttons = Array.from(tabsEl.querySelectorAll(".vsp-day-tab"));
+  buttons.forEach((btn) => {
+    const bundle = dayBundles[parseInt(btn.dataset.dayOffset, 10)];
+    if (!bundle) return;
+    btn.textContent = formatDayMonthDot(bundle.date);
+    if (bundle.offset === 0) {
+      const srSpan = document.createElement("span");
+      srSpan.className = "sr-only";
+      srSpan.textContent = " (í dag)";
+      btn.appendChild(srSpan);
+    }
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => { b.classList.remove("is-active"); b.setAttribute("aria-selected", "false"); });
+      btn.classList.add("is-active");
+      btn.setAttribute("aria-selected", "true");
+      renderForecast(bundle);
+    });
+  });
+
+  tabsEl.hidden = false;
+  if (buttons[0]) buttons[0].classList.add("is-active");
+  renderForecast(dayBundles[0]);
+}
+
+function renderForecast(bundle) {
+  const { slotResults, offset } = bundle;
   const loadingEl = document.getElementById("forecast-loading");
   const closedEl  = document.getElementById("forecast-closed");
   const resultEl  = document.getElementById("forecast-result");
@@ -976,9 +1016,13 @@ function renderForecast(slotResults, currentSlotKey) {
 
   if (!slotResults[0].inSeason) {
     if (closedEl) closedEl.hidden = false;
+    if (resultEl) resultEl.hidden = true;
     return;
   }
+  if (closedEl) closedEl.hidden = true;
   if (resultEl) resultEl.hidden = false;
+
+  const currentSlotKey = offset === 0 ? getCurrentSlotKey() : null;
 
   VSP_SLOTS.forEach((s) => {
     const th = document.getElementById(`th-${s.key}`);
