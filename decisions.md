@@ -103,3 +103,61 @@
 - **Almenn regla (á við um öll verkefni, ekki bara þetta), sjá
   `Learnings/islensk-dagsetninga-og-timasnid-i-kodi.md` í vaultinu** fyrir
   fulla útskýringu og kóðadæmi.
+
+## 2026-07-16 — Frammistaða, aðgengi, efnisfrágangur og endurskipulagning
+
+- **Allar stórar myndir (bakgrunnur, borðar, þemu, myndasafn) breyttar í
+  WebP með `<picture>`/JPG-PNG fallback.** Minnkaði heildarstærð
+  `assets/images/` um u.þ.b. 78%. Notaðar `<source srcset type="image/webp">`
+  innan `<picture>`, ekki bara skipt út `src`, svo eldri vafrar fái samt mynd.
+- **Veðurspá frá `api.blika.is` er ekki lengur sótt beint úr vafra.** Óopinbert
+  API sem gæti breyst/horfið hvenær sem er án viðvörunar, svo GitHub Action
+  (`vedurspa.yml` + `scripts/fetch_vedurspa.py`) sækir og cachear spána á
+  fasta tímafresti í staðinn. Vefsíðan reynir cache-skrána fyrst, svo beina
+  API-kallið sem varaleið, svo núverandi villuskilaboð ef hvorugt virkar.
+- **CLS-lagfæring (`width`/`height` á `<img>`) var eingöngu bætt við þar sem
+  CSS hafði enga fasta `aspect-ratio`.** Almenn breyting á öllum myndum var
+  ekki gerð, bara þar sem hún hafði raunveruleg áhrif. Þar sem þetta var gert
+  án skýrs `height` í CSS (bara `width`) toguðust myndir úr lagi (sjá
+  `.support-card-fill`/`.author-photo` atvikin) — þarf alltaf `height: auto`
+  eða `aspect-ratio` samhliða.
+- **Bakgrunnsmyndbandið í hero er algjörlega óvirkt fyrir notendur með
+  `prefers-reduced-motion: reduce`** — engin `data-src` er sett virk, núll
+  bæti eru sótt, ekki bara falið eftir á. Sama hugsun almennt: markmiðið er
+  núll-óþarfa-hreyfing, ekki bara falin hreyfing.
+- **„Staða verkefnisins" tímalínan notar eina framvindurák og eitt tákn
+  (himbrimi) við núverandi skref, ekki punkt við hvert skref.** Táknið er
+  `position: absolute` svo nærvera/fjarvera þess haggar ekki röðun textans í
+  hinum skrefunum.
+- **Undirsíðutenglar milli `index.html` og `veidimenn/index.html` („Fyrir
+  veiðimenn" / „← Heimildamyndin") eru afgerandi óáberandi textatenglar, ekki
+  hnappar** — þeir eru sigling milli tveggja hluta sömu herferðar, ekki
+  aðalaðgerð síðunnar.
+- **„Um myndina" og „Af hverju þetta skiptir máli" voru sameinuð í einn kafla**
+  (undirfyrirsögn í stað eigin `<section>`) eftir að textinn skaraðist of
+  mikið efnislega. Sami háttur ef fleiri kaflar skarast: sameina frekar en
+  að reyna endalaust að aðgreina skörun.
+- **Skrautfiskarnir (urriði/bleikja) enduðu í footernum, ekki í neinum
+  banner.** Fyrsta tilraun setti þá neðst í „Um myndina" bannerinn, en það
+  small illa við mynd sem þegar sýndi alvöru fisk í hendi (of mikið sjónrænt
+  áreiti á sama fleti). Í staðinn standa þeir nú sitt hvorum megin við
+  footer-innihaldið á báðum síðum, bundnir sama `var(--max-width)` ramma og
+  restin af meginefninu (`.footer-frame`) svo þeir reki ekki út í horn á
+  mjög breiðum skjám.
+- **Verkefnistímalínan var leiðrétt til að endurspegla raunverulegt
+  tímaferli** — drög að handriti skrifuð 2024, tökur hófust 2025, eftirvinnsla
+  (klipping/hljóðvinnsla) áætluð 2027, frumsýning í lok 2027 eða byrjun 2028.
+  Upprunalega orðalagið („í tökum frá sumrinu 2024") gaf ranglega til kynna
+  að tökur einar hefðu staðið yfir í mörg ár.
+- **Höfundarlýsingin notar „kvikmyndaáhugamaður", ekki „kvikmyndagerðarmaður".**
+  Notandinn er ekki fagmaður í kvikmyndagerð, heldur veiðimaður og áhugamaður
+  sem hefur haft myndavél við höndina frá barnæsku.
+- **Sjálfvirkar aðgengisbætur gerðar eftir ábendingalista frá notanda:**
+  `loading="lazy"` á YouTube-iframeið, `:focus-visible` stílar á
+  `.site-nav a`/`.partner-logo`, og þemu-hringekjan (crossfade) virðir
+  `prefers-reduced-motion` bæði í CSS (`transition: none`) og JS
+  (tímastilling samstillt við 0ms í stað 280ms).
+- **Git-commit skilaboð í þessu (og öllum) verkefnum eiga ekki að innihalda
+  „Co-Authored-By: Claude"-línu.** Notandinn lítur á commitin sem sína eigin
+  vinnu. Sjá `Learnings/verklagsreglur-fyrir-claude.md` fyrir varanlegu
+  regluna, nú framfylgt með `includeCoAuthoredBy: false` í Claude-stillingum.

@@ -21,4 +21,9 @@
 - [x] Vatnslína Þingvallavatns byggð á raunverulegri strandlínu (ekki ágiskun)
 - [x] Alvöru teiknaðar myndir af fiskum/fuglum settar inn (bleikja, urriði, stórurriði, himbrimi, hornsíli, vatnabobbi)
 - [x] Tungl-kaflinn endurhannaður sem hringrásar-tunglkort með raunverulegum dagsetningum
-- [ ] Finna murtu.png nýjan stað (ónotuð eftir að hún var tekin úr veiðispár-töflunni)
+- [x] Finna murtu.png nýjan stað (kaflaskil milli Þemu og Staða verkefnisins)
+- [x] Vedurspá sótt server-side og cacheuð í stað beins kalls á api.blika.is
+- [x] Bæta „Staða verkefnisins" tímalínu við forsíðuna, dagsetningar leiðréttar (handrit 2024, tökur 2025, eftirvinnsla 2027, frumsýning 2027/2028)
+- [x] Bæta „Um höfundinn" kafla við forsíðuna
+- [x] Fyrsta aðgengisyfirferð: löt hleðsla á iframe, `:focus-visible` stílar, `prefers-reduced-motion` fyrir myndband og þemu-hringekju
+- [ ] Skoða hvort frekari aðgengisprófun (t.d. alvöru skjálesari) er þörf
