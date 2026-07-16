@@ -1843,6 +1843,14 @@ body {
   z-index: 1;
 }
 
+/* Sama breidd og restin af meginefninu (.section), svo skrautfiskarnir
+   fylgi þeim ramma í stað þess að reka út í horn á mjög breiðum skjám. */
+.footer-frame {
+  position: relative;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
 /* Bleikja/storurriði: vísa hvor að annarri sitt hvorum megin við
    footer-innihaldið. Aðeins á stærri skjám, of þröngt á síma. */
 .footer-fish {
@@ -1862,11 +1870,11 @@ body {
   }
 
   .footer-fish-left {
-    left: 4%;
+    left: 0;
   }
 
   .footer-fish-right {
-    right: 4%;
+    right: 0;
   }
 }
 
