@@ -224,6 +224,11 @@ body {
 .site-nav a:hover {
   color: var(--color-accent-light);
 }
+.site-nav a:focus-visible {
+  color: var(--color-accent-light);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
 
 .nav-crosslink {
   display: inline-flex;
@@ -1422,6 +1427,11 @@ body {
   transform: scale(1.05);
 }
 
+.partner-logo:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 .partner-person {
   flex-direction: column;
   gap: 0.6rem;
@@ -2217,6 +2227,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .theme-card-img,
+  .theme-card-content {
+    transition: none;
+  }
+
   .section-divider {
     opacity: 1;
     animation: none;

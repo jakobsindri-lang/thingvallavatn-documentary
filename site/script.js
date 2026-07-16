@@ -1350,6 +1350,8 @@ function initMoonWidget() {
   const carousel  = document.getElementById('theme-carousel');
   if (!carousel) return;
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const imgEl     = document.getElementById('theme-card-img');
   const titleEl   = document.getElementById('theme-card-title');
   const descEl    = document.getElementById('theme-card-desc');
@@ -1407,7 +1409,7 @@ function initMoonWidget() {
       preload.onerror = () => { imageReady = true; reveal(); };
     }
 
-    setTimeout(() => { fadeOutDone = true; reveal(); }, 280);
+    setTimeout(() => { fadeOutDone = true; reveal(); }, reducedMotion ? 0 : 280);
   }
 
   carousel.addEventListener('keydown', (e) => {
