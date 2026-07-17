@@ -2069,6 +2069,24 @@ body {
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
 }
 
+/* Hagnýtt: regluupptalning les betur vinstrijafnað en miðjað */
+#hagnytt .support-card {
+  text-align: left;
+}
+
+#hagnytt .support-card ul {
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+#hagnytt .support-card li {
+  margin-bottom: 0.4rem;
+}
+
+#hagnytt .support-card li:last-child {
+  margin-bottom: 0;
+}
+
 .account-block {
   display: block;
   margin: 0.4rem auto 0;
