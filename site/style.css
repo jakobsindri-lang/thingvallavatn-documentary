@@ -1675,6 +1675,23 @@ body {
   max-width: none;
 }
 
+.vsp-explainer {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.vsp-explainer summary {
+  cursor: pointer;
+  color: var(--color-accent-light);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.vsp-explainer p {
+  margin-top: 0.75rem;
+  text-align: left;
+}
+
 /* ── Veiðispá tafla ────────────────────────────────────────────────────── */
 
 .vsp-wrap {

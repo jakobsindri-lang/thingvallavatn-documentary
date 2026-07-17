@@ -185,7 +185,13 @@
         </div>
         <p class="forecast-data-note" id="forecast-data-note"></p>
       </div>
+      <details class="vsp-explainer">
+        <summary>Hvernig er spáin reiknuð?</summary>
+        <p>Spáin vegur saman veðurspá frá Bliku, vatnshita frá Landsvirkjun, skýjahulu og stöðu tunglsins. Vægi þessara þátta byggja ekki á almennri formúlu heldur á reynslu og þekkingu sem hefur safnast við veiðar í Þingvallavatni sjálfu. Líkurnar á töku birtast sem 1 til 5 upplýstir fiskar, því fleiri því betra, en fluguveiðiaðstæður eru metnar slæmar, fínar eða mjög fínar. Urriði og bleikja fá hvor sína spá, enda hafa veður og birta ólík áhrif á tegundirnar tvær.</p>
+        <p>Spáin er leiðbeinandi og kemur ekki í stað eigin mats við vatnið, aðstæður geta breyst hratt.</p>
+      </details>
       <p class="weather-source">Spáin byggir á veðurspá, vatnshita, tunglskeiði, skýjahulu og þekkingu sem hefur verið aflað við veiðar í Þingvallavatni.</p>
+      <p class="weather-source" id="vsp-fetched-note" hidden></p>
       <p class="weather-source">Spáin er þróuð samhliða <a href="../">heimildamynd um Þingvallavatn</a>.</p>
 
     </section>
@@ -198,6 +204,7 @@
       <p class="weather-source">
         Veðurgögn frá <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Bliku ↗</a>.
       </p>
+      <p class="weather-source" id="spa-fetched-note" hidden></p>
     </section>
 
     <section class="section weather" id="vatnshiti">

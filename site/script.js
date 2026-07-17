@@ -848,14 +848,15 @@ async function fetchBlikaForecast() {
       const cached = await res.json();
       const age = Date.now() - new Date(cached.fetched).getTime();
       if (Array.isArray(cached.days) && cached.days.length && age <= BLIKA_CACHE_MAX_AGE_MS) {
-        return cached.days;
+        return { days: cached.days, fetched: cached.fetched };
       }
     }
   } catch {
     // Staðbundna skráin ekki tiltæk — reynum beina kallið hér að neðan.
   }
   const res = await fetch(FORECAST_CONFIG.api.blikaForecast);
-  return res.json();
+  // Beina API-kallið hefur engan fetched-tímastimpil — "Gögn sótt"-línan er þá sleppt.
+  return { days: await res.json(), fetched: null };
 }
 
 if (weatherGrid) {
@@ -866,9 +867,10 @@ if (weatherGrid) {
     chanceflurries:"🌨️", thunder:"⛈️", hail:"🌨️",
   };
   const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://www.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
+  const spaFetchedNote = document.getElementById("spa-fetched-note");
 
   fetchBlikaForecast()
-    .then((days) => {
+    .then(({ days, fetched }) => {
       const first7 = days.slice(0, 7);
       if (!first7.length) { weatherGrid.innerHTML = blikaError; return; }
       weatherGrid.innerHTML = "";
@@ -885,6 +887,12 @@ if (weatherGrid) {
         `;
         weatherGrid.appendChild(item);
       });
+
+      if (spaFetchedNote) {
+        const note = formatFetchedNote(fetched);
+        spaFetchedNote.textContent = note ?? "";
+        spaFetchedNote.hidden = !note;
+      }
     })
     .catch(() => { weatherGrid.innerHTML = blikaError; });
 }
@@ -985,9 +993,16 @@ async function initForecast() {
   if (blikaRes.status   === "rejected") dataWarnings.push("Veðurgögn ekki tiltæk");
   if (archiveRes.status === "rejected") dataWarnings.push("Söguleg skýjahulugögn ekki tiltæk — áhrif fyrri bjartra nátta ekki reiknuð");
 
-  const blikaData   = blikaRes.value   ?? null;
+  const blikaData   = blikaRes.value?.days ?? null;
   const archiveData = archiveRes.value ?? null;
   const waterData   = waterRes.value   ?? null;
+
+  const vspFetchedNote = document.getElementById("vsp-fetched-note");
+  if (vspFetchedNote) {
+    const note = formatFetchedNote(blikaRes.value?.fetched);
+    vspFetchedNote.textContent = note ?? "";
+    vspFetchedNote.hidden = !note;
+  }
 
   const dayBundles = VSP_DAY_OFFSETS.map((offset) => {
     const date = new Date();
@@ -1144,6 +1159,27 @@ function formatDayMonthNameLong(date) {
 }
 function formatWeekdayDayMonth(date) {
   return `${IS_WEEKDAYS_SHORT[date.getUTCDay()]} ${formatDayMonthDot(date)}`;
+}
+
+// Byggir "Gögn sótt [dagur]. [mánuður] kl. [HH:MM]." úr fetched-tímastimplinum
+// í vedurspa.json. Skilar null ef tímastimpillinn vantar eða er ógildur, svo
+// kallandinn geti sleppt línunni alveg í stað þess að sýna "Invalid Date".
+function formatFetchedNote(fetchedIso) {
+  if (!fetchedIso) return null;
+  const fetchedDate = new Date(fetchedIso);
+  if (isNaN(fetchedDate.getTime())) return null;
+
+  const timeStr = fetchedDate.toLocaleTimeString("is-IS", {
+    hour: "2-digit", minute: "2-digit", hour12: false,
+    timeZone: "Atlantic/Reykjavik",
+  });
+  let note = `Gögn sótt ${formatDayMonthNameLong(fetchedDate)} kl. ${timeStr}.`;
+
+  const ageHours = (Date.now() - fetchedDate.getTime()) / (60 * 60 * 1000);
+  if (ageHours > 48) {
+    note += " Athugið að gögnin gætu verið úrelt.";
+  }
+  return note;
 }
 
 function noonUTC(date) {

@@ -16,11 +16,6 @@ const FORECAST_CONFIG = {
     closeMonth: 8,  closeDay: 15,   // September
   },
 
-  scoreLabels: {
-    take: ['Mjög litlar', 'Litlar', 'Sæmilegar', 'Góðar', 'Mjög góðar'],
-    fly:  ['Mjög erfiðar', 'Erfiðar', 'Sæmilegar', 'Góðar', 'Mjög góðar'],
-  },
-
   // ── URRIÐI ──────────────────────────────────────────────────────────────
   trout: {
 
