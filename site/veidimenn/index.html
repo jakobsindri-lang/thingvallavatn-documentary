@@ -46,7 +46,6 @@
 
   <nav class="site-nav">
     <a href="#kort">Þjóðgarðurinn</a>
-    <a href="#hagnytt">Hagnýtt</a>
     <a href="#veidispa">Veiðispá</a>
     <a href="#spa">Veðurspá</a>
     <a href="#vatnshiti">Vatnshiti</a>
@@ -87,13 +86,18 @@
           </div>
         </div>
         <aside class="map-info" id="map-info" aria-live="polite">
+          <div class="map-topics-row" id="map-topics-row">
+            <button type="button" class="map-place-button" data-map-place="Veiðileyfi">Veiðileyfi</button>
+            <button type="button" class="map-place-button" data-map-place="Tímabil og reglur">Tímabil og reglur</button>
+            <button type="button" class="map-place-button" data-map-place="Merktir urriðar">Merktir urriðar</button>
+          </div>
           <p class="map-kicker" id="map-kicker">Veiðisvæði</p>
           <h3 id="map-title">Vatnskot</h3>
           <p id="map-description">
             Miðpunktur veiðinnar í þessari fyrstu útgáfu kortsins. Héðan tengist
             sagan veiðiaðstæðum, aðgengi og lestri vatnsins.
           </p>
-          <dl class="map-meta">
+          <dl class="map-meta" id="map-meta">
             <div>
               <dt>Helstu veiðistaðir</dt>
               <dd id="map-role">Veiðistaður og viðmiðunarstaður</dd>
@@ -106,68 +110,6 @@
           <div class="map-place-list" id="map-place-list"></div>
         </aside>
       </div>
-    </section>
-
-    <section class="section" id="hagnytt">
-      <h2>Hagnýtt</h2>
-      <p class="section-intro">
-        Leyfi, reglur og aðstaða við veiðar fyrir landi þjóðgarðsins.
-      </p>
-
-      <div class="support-grid">
-        <div class="support-card">
-          <h3>Veiðileyfi</h3>
-          <p>
-            Veiðikortið gildir fyrir landi þjóðgarðsins, frá Langatanga til og
-            með Leirutá (land Kárastaða er undanskilið).
-          </p>
-          <p>
-            Dagsleyfi er keypt í
-            <a href="https://vefverslun.veidikortid.is/product/thingvallavatn/" target="_blank" rel="noopener">vefverslun Veiðikortsins ↗</a>.
-            Börn yngri en 14 ára veiða frítt í fylgd með korthafa.
-          </p>
-          <p>
-            <a href="https://veidikortid.is/veidisvaedi/thingvallavatn/" target="_blank" rel="noopener">Veiðikortið – upplýsingasíða um Þingvallavatn ↗</a>
-          </p>
-          <p>
-            <a href="https://veidikortid.is/wp-content/uploads/2021/11/ThingvellirBaeklingur.pdf" target="_blank" rel="noopener">Bæklingur um veiðar í Þingvallavatni (PDF) ↗</a>
-          </p>
-        </div>
-
-        <div class="support-card">
-          <h3>Tímabil og reglur</h3>
-          <p>
-            Fluguveiðitímabil er frá 20. apríl til 31. maí. Þá má eingöngu
-            veiða á flugu með flugustöng og öllum urriða skal sleppt.
-            Almenna veiðitímabilið er frá 1. júní til 15. september, og þá er
-            leyfilegt agn fluga, spónn og maðkur.
-          </p>
-          <ul>
-            <li>Veiðibann er í Ólafsdrætti frá 1. júlí til 31. ágúst vegna hrygningar kuðungableikjunnar.</li>
-            <li>Öll veiði í Öxarárósi er bönnuð.</li>
-            <li>Veiði úr bátum er bönnuð korthöfum Veiðikortsins.</li>
-            <li>Heimilt er að veiða allan sólarhringinn.</li>
-          </ul>
-        </div>
-
-        <div class="support-card">
-          <h3>Merktir urriðar</h3>
-          <p>
-            Vegna rannsókna eru sumir urriðar merktir neðan við bakugga með
-            slöngumerki eða rafeindamerki. Veiðimenn eru beðnir að skrá
-            númer merkis áður en fiski er sleppt og koma upplýsingunum til
-            þjónustumiðstöðvarinnar á Þingvöllum eða
-            <a href="https://laxfiskar.is/index.php?option=com_content&amp;view=article&amp;id=64&amp;Itemid=133&amp;lang=is" target="_blank" rel="noopener">Laxfiska ↗</a>.
-            Þessar upplýsingar nýtast beint í rannsóknum á fiskistofnum
-            vatnsins.
-          </p>
-        </div>
-      </div>
-
-      <p class="weather-source">
-        Reglur geta breyst. Upplýsingar hér eru teknar saman í júlí 2026 af vef
-        <a href="https://veidikortid.is/veidisvaedi/thingvallavatn/" target="_blank" rel="noopener">Veiðikortsins ↗</a>.
-      </p>
     </section>
 
     <section class="section weather" id="veidispa">

@@ -34,7 +34,31 @@ const mapTitle = document.getElementById("map-title");
 const mapDescription = document.getElementById("map-description");
 const mapRole = document.getElementById("map-role");
 const mapTheme = document.getElementById("map-theme");
+const mapMeta = document.getElementById("map-meta");
 const mapPlaceList = document.getElementById("map-place-list");
+
+// Hagnýtar upplýsingar (veiðileyfi, reglur, merktir urriðar) birtast í sama
+// upplýsingaspjaldi og staðirnir, valdar með hnöppunum í #map-topics-row.
+const mapTopics = {
+  "Veiðileyfi": `
+    <p>Veiðikortið gildir fyrir landi þjóðgarðsins, frá Langatanga til og með Leirutá (land Kárastaða er undanskilið).</p>
+    <p>Dagsleyfi er keypt í <a href="https://vefverslun.veidikortid.is/product/thingvallavatn/" target="_blank" rel="noopener">vefverslun Veiðikortsins ↗</a>. Börn yngri en 14 ára veiða frítt í fylgd með korthafa.</p>
+    <p><a href="https://veidikortid.is/veidisvaedi/thingvallavatn/" target="_blank" rel="noopener">Veiðikortið – upplýsingasíða um Þingvallavatn ↗</a></p>
+    <p><a href="https://veidikortid.is/wp-content/uploads/2021/11/ThingvellirBaeklingur.pdf" target="_blank" rel="noopener">Bæklingur um veiðar í Þingvallavatni (PDF) ↗</a></p>
+  `,
+  "Tímabil og reglur": `
+    <p>Fluguveiðitímabil er frá 20. apríl til 31. maí. Þá má eingöngu veiða á flugu með flugustöng og öllum urriða skal sleppt. Almenna veiðitímabilið er frá 1. júní til 15. september, og þá er leyfilegt agn fluga, spónn og maðkur.</p>
+    <ul>
+      <li>Veiðibann er í <button type="button" class="map-inline-link" data-map-jump="Ólafsdráttur">Ólafsdrætti</button> frá 1. júlí til 31. ágúst vegna hrygningar kuðungableikjunnar.</li>
+      <li>Öll veiði í Öxarárósi er bönnuð.</li>
+      <li>Veiði úr bátum er bönnuð korthöfum Veiðikortsins.</li>
+      <li>Heimilt er að veiða allan sólarhringinn.</li>
+    </ul>
+  `,
+  "Merktir urriðar": `
+    <p>Vegna rannsókna eru sumir urriðar merktir neðan við bakugga með slöngumerki eða rafeindamerki. Veiðimenn eru beðnir að skrá númer merkis áður en fiski er sleppt og koma upplýsingunum til þjónustumiðstöðvarinnar á Þingvöllum eða <a href="https://laxfiskar.is/index.php?option=com_content&amp;view=article&amp;id=64&amp;Itemid=133&amp;lang=is" target="_blank" rel="noopener">Laxfiska ↗</a>. Þessar upplýsingar nýtast beint í rannsóknum á fiskistofnum vatnsins.</p>
+  `,
+};
 
 const mapPlaces = {
   Vatnskot: {
@@ -249,19 +273,28 @@ if (mapSvgMount && mapInfo) {
 
   const updateMapInfo = (rawName) => {
     const name = normalizeMapName(rawName);
-    const place = mapPlaces[name] || {
-      kicker: "Örnefni við Þingvallavatn",
-      description:
-        "Þessi staður er hluti af veiðisvæðinu og verður hægt að tengja við nánari upplýsingar síðar.",
-      role: "Örnefni",
-      theme: "Veiði, landslag",
-    };
+    const topic = mapTopics[name];
 
-    mapKicker.textContent = "Veiðisvæði";
-    mapTitle.textContent = name;
-    mapDescription.textContent = place.description;
-    mapRole.textContent = place.role;
-    mapTheme.textContent = place.theme;
+    if (topic) {
+      mapKicker.textContent = "Hagnýtt";
+      mapTitle.textContent = name;
+      mapDescription.innerHTML = topic;
+      if (mapMeta) mapMeta.hidden = true;
+    } else {
+      const place = mapPlaces[name] || {
+        description:
+          "Þessi staður er hluti af veiðisvæðinu og verður hægt að tengja við nánari upplýsingar síðar.",
+        role: "Örnefni",
+        theme: "Veiði, landslag",
+      };
+
+      mapKicker.textContent = "Veiðisvæði";
+      mapTitle.textContent = name;
+      mapDescription.innerHTML = place.description;
+      mapRole.textContent = place.role;
+      mapTheme.textContent = place.theme;
+      if (mapMeta) mapMeta.hidden = false;
+    }
 
     if (activeMapElement) activeMapElement.classList.remove("is-active");
     activeMapElement = mapSvgMount.querySelector(
@@ -270,11 +303,20 @@ if (mapSvgMount && mapInfo) {
     if (activeMapElement) activeMapElement.classList.add("is-active");
 
     if (activeMapButton) activeMapButton.classList.remove("is-active");
-    activeMapButton = mapPlaceList?.querySelector(
+    activeMapButton = mapInfo.querySelector(
       `[data-map-place="${escapeSelectorValue(name)}"]`
     );
     if (activeMapButton) activeMapButton.classList.add("is-active");
   };
+
+  document.querySelectorAll("#map-topics-row .map-place-button").forEach((btn) => {
+    btn.addEventListener("click", () => updateMapInfo(btn.dataset.mapPlace));
+  });
+
+  mapDescription.addEventListener("click", (event) => {
+    const jumpBtn = event.target.closest("[data-map-jump]");
+    if (jumpBtn) updateMapInfo(jumpBtn.dataset.mapJump);
+  });
 
   fetch(`${window.ASSET_BASE ?? ""}assets/Map/veidisvaedi_thingvallavatni.svg`)
     .then((response) => {

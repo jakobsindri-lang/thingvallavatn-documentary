@@ -582,6 +582,56 @@ body {
   margin: 0 0 1rem;
 }
 
+.map-info #map-description a {
+  color: var(--color-accent-light);
+  text-decoration: none;
+}
+
+.map-info #map-description a:hover {
+  text-decoration: underline;
+}
+
+.map-info #map-description ul {
+  padding-left: 1.2rem;
+  margin: 0 0 1rem;
+}
+
+.map-info #map-description li {
+  margin-bottom: 0.4rem;
+}
+
+.map-info #map-description li:last-child {
+  margin-bottom: 0;
+}
+
+.map-inline-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--color-accent-light);
+  text-decoration: underline;
+  text-decoration-color: var(--border-soft);
+  cursor: pointer;
+}
+
+.map-inline-link:hover {
+  text-decoration-color: var(--color-accent-light);
+}
+
+.map-topics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.map-meta[hidden] {
+  display: none;
+}
+
 .map-meta {
   display: grid;
   gap: 0.8rem;
@@ -2067,33 +2117,6 @@ body {
   margin: 1.4rem auto 0;
   opacity: 0.85;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
-}
-
-/* Hagnýtt: regluupptalning les betur vinstrijafnað en miðjað */
-#hagnytt .support-card {
-  text-align: left;
-}
-
-#hagnytt .support-card a {
-  color: var(--color-accent-light);
-  text-decoration: none;
-}
-
-#hagnytt .support-card a:hover {
-  text-decoration: underline;
-}
-
-#hagnytt .support-card ul {
-  padding-left: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-#hagnytt .support-card li {
-  margin-bottom: 0.4rem;
-}
-
-#hagnytt .support-card li:last-child {
-  margin-bottom: 0;
 }
 
 .account-block {
