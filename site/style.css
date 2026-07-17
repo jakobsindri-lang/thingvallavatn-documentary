@@ -27,7 +27,8 @@ html {
 }
 
 body {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: 'Newsreader', Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.7;
@@ -94,6 +95,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 0.8rem;
+  font-weight: 600;
   color: var(--color-accent-light);
   margin-bottom: 1.5rem;
   opacity: 0.85;
@@ -102,7 +104,7 @@ body {
 .hero-content h1 {
   font-size: clamp(2.5rem, 12vw, 7rem);
   letter-spacing: 0.06em;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--color-accent-light);
   text-shadow: 0 0 40px rgba(143, 217, 232, 0.35);
   overflow-wrap: anywhere;
@@ -273,7 +275,7 @@ body {
   font-size: clamp(1.7rem, 4vw, 2.6rem);
   color: var(--color-accent-light);
   margin-bottom: 1.5rem;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.03em;
   text-align: center;
 }
@@ -2208,6 +2210,7 @@ body {
 .theme-card-title {
   margin: 0 0 0.45rem;
   font-size: 1.35rem;
+  font-weight: 700;
   color: #fff;
   line-height: 1.25;
 }
