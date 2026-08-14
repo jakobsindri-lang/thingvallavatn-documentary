@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-08-14T04:15:58.643408Z",
+  "fetched": "2026-08-14T07:25:08.174803Z",
   "source": "https://api.blika.is/GetCorrdiffForecast24klst/8553/",
   "days": [
     {
@@ -14,7 +14,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "n",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -28,7 +28,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "sv",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -42,7 +42,7 @@
       "r": 3.0,
       "merki": "mostlycloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -56,7 +56,7 @@
       "r": 12.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -70,7 +70,7 @@
       "r": 8.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -84,7 +84,7 @@
       "r": 4.0,
       "merki": "chanceflurries",
       "dtexti": "v",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -98,7 +98,7 @@
       "r": 2.0,
       "merki": "clear",
       "dtexti": "sv",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -112,7 +112,7 @@
       "r": 1.0,
       "merki": "partlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -126,7 +126,7 @@
       "r": 2.0,
       "merki": "cloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -140,7 +140,7 @@
       "r": 5.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -154,7 +154,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "sv",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -168,7 +168,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -182,7 +182,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -196,7 +196,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -210,7 +210,7 @@
       "r": 4.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     },
     {
       "dags_keyrsla": "2026-08-13T18:00:00.000",
@@ -224,7 +224,7 @@
       "r": 2.0,
       "merki": "cloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-14T03:22:18.556"
+      "inserted_at": "2026-08-14T05:25:35.318"
     }
   ]
 }
