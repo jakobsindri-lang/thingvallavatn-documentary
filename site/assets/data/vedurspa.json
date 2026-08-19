@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-08-19T02:57:34.147981Z",
+  "fetched": "2026-08-19T04:37:16.049772Z",
   "source": "https://api.blika.is/GetCorrdiffForecast24klst/8553/",
   "days": [
     {
@@ -14,7 +14,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -28,7 +28,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -42,7 +42,7 @@
       "r": 4.0,
       "merki": "chanceflurries",
       "dtexti": "sv",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -56,7 +56,7 @@
       "r": 25.0,
       "merki": "rain",
       "dtexti": "s",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -70,7 +70,7 @@
       "r": 9.0,
       "merki": "chanceflurries",
       "dtexti": "s",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -84,7 +84,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "n",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -98,7 +98,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -112,7 +112,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "s",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -126,7 +126,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -140,7 +140,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -154,7 +154,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -168,7 +168,7 @@
       "r": 3.0,
       "merki": "cloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -182,7 +182,7 @@
       "r": 0.0,
       "merki": "cloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -196,7 +196,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "na",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -210,7 +210,7 @@
       "r": 0.0,
       "merki": "cloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     },
     {
       "dags_keyrsla": "2026-08-18T18:00:00.000",
@@ -224,7 +224,7 @@
       "r": 4.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T02:23:40.733"
+      "inserted_at": "2026-08-19T04:19:03.881"
     }
   ]
 }
