@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-08-19T16:31:55.765260Z",
+  "fetched": "2026-08-19T18:35:51.481515Z",
   "source": "https://api.blika.is/GetCorrdiffForecast24klst/8553/",
   "days": [
     {
@@ -14,7 +14,7 @@
       "r": 0.0,
       "merki": "partlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -28,7 +28,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -42,7 +42,7 @@
       "r": 4.0,
       "merki": "chanceflurries",
       "dtexti": "sv",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -56,7 +56,7 @@
       "r": 23.0,
       "merki": "chanceflurries",
       "dtexti": "s",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -70,7 +70,7 @@
       "r": 18.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -84,7 +84,7 @@
       "r": 7.0,
       "merki": "cloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -98,7 +98,7 @@
       "r": 16.0,
       "merki": "cloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -112,7 +112,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -126,7 +126,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -140,7 +140,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "sa",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -154,7 +154,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -168,7 +168,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -182,7 +182,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "na",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -196,7 +196,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "a",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -210,7 +210,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -224,7 +224,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     },
     {
       "dags_keyrsla": "2026-08-19T06:00:00.000",
@@ -238,7 +238,7 @@
       "r": 0.0,
       "merki": "cloudy",
       "dtexti": "v",
-      "inserted_at": "2026-08-19T16:22:50.801"
+      "inserted_at": "2026-08-19T17:28:33.515"
     }
   ]
 }
