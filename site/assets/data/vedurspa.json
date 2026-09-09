@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-09-09T08:43:37.772817Z",
+  "fetched": "2026-09-09T14:12:40.785752Z",
   "source": "https://api.blika.is/GetCorrdiffForecast24klst/8553/",
   "days": [
     {
@@ -11,10 +11,10 @@
       "t2": 11.0,
       "slp": 999.0,
       "f10": 4.0,
-      "r": 12.0,
+      "r": 6.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -25,10 +25,10 @@
       "t2": 12.0,
       "slp": 982.0,
       "f10": 3.0,
-      "r": 28.0,
+      "r": 14.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -39,10 +39,10 @@
       "t2": 8.0,
       "slp": 990.0,
       "f10": 4.0,
-      "r": 5.0,
+      "r": 2.0,
       "merki": "chanceflurries",
       "dtexti": "sv",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -53,10 +53,10 @@
       "t2": 8.0,
       "slp": 1005.0,
       "f10": 3.0,
-      "r": 1.0,
+      "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "n",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -67,10 +67,10 @@
       "t2": 9.0,
       "slp": 1007.0,
       "f10": 5.0,
-      "r": 37.0,
+      "r": 18.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -81,10 +81,10 @@
       "t2": 12.0,
       "slp": 997.0,
       "f10": 1.0,
-      "r": 20.0,
+      "r": 10.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -95,10 +95,10 @@
       "t2": 12.0,
       "slp": 1009.0,
       "f10": 2.0,
-      "r": 1.0,
+      "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "n",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -109,10 +109,10 @@
       "t2": 8.0,
       "slp": 1012.0,
       "f10": 4.0,
-      "r": 47.0,
+      "r": 23.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -123,10 +123,10 @@
       "t2": 12.0,
       "slp": 994.0,
       "f10": 8.0,
-      "r": 24.0,
+      "r": 12.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -137,10 +137,10 @@
       "t2": 10.0,
       "slp": 989.0,
       "f10": 3.0,
-      "r": 23.0,
+      "r": 12.0,
       "merki": "chanceflurries",
       "dtexti": "s",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -151,10 +151,10 @@
       "t2": 11.0,
       "slp": 987.0,
       "f10": 6.0,
-      "r": 23.0,
+      "r": 12.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -165,10 +165,10 @@
       "t2": 10.0,
       "slp": 992.0,
       "f10": 4.0,
-      "r": 16.0,
+      "r": 8.0,
       "merki": "chanceflurries",
       "dtexti": "s",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -182,7 +182,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "a",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -196,7 +196,7 @@
       "r": 3.0,
       "merki": "cloudy",
       "dtexti": "na",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -210,7 +210,7 @@
       "r": 3.0,
       "merki": "cloudy",
       "dtexti": "a",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -224,7 +224,7 @@
       "r": 5.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     },
     {
       "dags_keyrsla": "2026-09-09T00:00:00.000",
@@ -238,7 +238,7 @@
       "r": 1.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-09-09T08:24:52.618"
+      "inserted_at": "2026-09-09T11:29:29.857"
     }
   ]
 }
