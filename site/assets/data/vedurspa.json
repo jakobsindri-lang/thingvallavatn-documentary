@@ -1,21 +1,7 @@
 {
-  "fetched": "2026-09-21T21:46:00.360280Z",
+  "fetched": "2026-09-22T00:37:25.484534Z",
   "source": "https://api.blika.is/GetCorrdiffForecast24klst/8553/",
   "days": [
-    {
-      "dags_keyrsla": "2026-09-21T06:00:00.000",
-      "klasi": "C00",
-      "dags_spar": "2026-09-21T06:00:00.000",
-      "stodid": 8553,
-      "nafn": "Vatnskot",
-      "t2": 11.0,
-      "slp": 995.0,
-      "f10": 8.0,
-      "r": 13.0,
-      "merki": "chanceflurries",
-      "dtexti": "s",
-      "inserted_at": "2026-09-21T18:29:07.138"
-    },
     {
       "dags_keyrsla": "2026-09-21T06:00:00.000",
       "klasi": "C00",
