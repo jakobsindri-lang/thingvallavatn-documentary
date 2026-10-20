@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-10-20T19:51:25.344774Z",
+  "fetched": "2026-10-20T22:57:32.353010Z",
   "source": "https://api.blika.is/GetCorrdiffForecast24klst/8553/",
   "days": [
     {
@@ -14,7 +14,7 @@
       "r": 2.0,
       "merki": "chanceflurries",
       "dtexti": "s",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -28,7 +28,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "na",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -42,7 +42,7 @@
       "r": 4.0,
       "merki": "chancesnow",
       "dtexti": "a",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -56,7 +56,7 @@
       "r": 1.0,
       "merki": "mostlycloudy",
       "dtexti": "na",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -70,7 +70,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "n",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -84,7 +84,7 @@
       "r": 0.0,
       "merki": "mostlycloudy",
       "dtexti": "n",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -98,7 +98,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "nv",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -112,7 +112,7 @@
       "r": 1.0,
       "merki": "cloudy",
       "dtexti": "nv",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -126,7 +126,7 @@
       "r": 16.0,
       "merki": "chanceflurries",
       "dtexti": "a",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -140,7 +140,7 @@
       "r": 7.0,
       "merki": "cloudy",
       "dtexti": "a",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -154,7 +154,7 @@
       "r": 5.0,
       "merki": "chanceflurries",
       "dtexti": "sa",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -168,7 +168,7 @@
       "r": 7.0,
       "merki": "chanceflurries",
       "dtexti": "n",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
     },
     {
       "dags_keyrsla": "2026-10-20T12:00:00.000",
@@ -177,12 +177,68 @@
       "stodid": 8553,
       "nafn": "Vatnskot",
       "t2": 4.0,
-      "slp": 979.0,
-      "f10": 7.0,
-      "r": 3.0,
+      "slp": 1004.0,
+      "f10": 10.0,
+      "r": 7.0,
       "merki": "chanceflurries",
       "dtexti": "s",
-      "inserted_at": "2026-10-20T19:45:12.930"
+      "inserted_at": "2026-10-20T22:22:37.341"
+    },
+    {
+      "dags_keyrsla": "2026-10-20T12:00:00.000",
+      "klasi": "C00",
+      "dags_spar": "2026-11-02T00:00:00.000",
+      "stodid": 8553,
+      "nafn": "Vatnskot",
+      "t2": 2.0,
+      "slp": 1027.0,
+      "f10": 4.0,
+      "r": 1.0,
+      "merki": "mostlycloudy",
+      "dtexti": "nv",
+      "inserted_at": "2026-10-20T22:22:37.341"
+    },
+    {
+      "dags_keyrsla": "2026-10-20T12:00:00.000",
+      "klasi": "C00",
+      "dags_spar": "2026-11-03T00:00:00.000",
+      "stodid": 8553,
+      "nafn": "Vatnskot",
+      "t2": 3.0,
+      "slp": 1026.0,
+      "f10": 2.0,
+      "r": 0.0,
+      "merki": "mostlycloudy",
+      "dtexti": "n",
+      "inserted_at": "2026-10-20T22:22:37.341"
+    },
+    {
+      "dags_keyrsla": "2026-10-20T12:00:00.000",
+      "klasi": "C00",
+      "dags_spar": "2026-11-04T00:00:00.000",
+      "stodid": 8553,
+      "nafn": "Vatnskot",
+      "t2": 2.0,
+      "slp": 1021.0,
+      "f10": 2.0,
+      "r": 0.0,
+      "merki": "mostlycloudy",
+      "dtexti": "na",
+      "inserted_at": "2026-10-20T22:22:37.341"
+    },
+    {
+      "dags_keyrsla": "2026-10-20T12:00:00.000",
+      "klasi": "C00",
+      "dags_spar": "2026-11-05T00:00:00.000",
+      "stodid": 8553,
+      "nafn": "Vatnskot",
+      "t2": 1.0,
+      "slp": 1023.0,
+      "f10": 2.0,
+      "r": 0.0,
+      "merki": "mostlycloudy",
+      "dtexti": "na",
+      "inserted_at": "2026-10-20T22:22:37.341"
     }
   ]
 }
