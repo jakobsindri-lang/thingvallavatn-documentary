@@ -1,12 +1,8 @@
 {
-  "temp": 5.38,
-  "updated": "2026-11-15T20:00:00Z",
+  "temp": 5.34,
+  "updated": "2026-11-16T05:00:00Z",
   "source": "https://www.landsvirkjun.is/rauntimavoktun/vatnshiti-thingvallavatns",
   "history": [
-    {
-      "date": "2026-11-02",
-      "temp": 6.7
-    },
     {
       "date": "2026-11-03",
       "temp": 6.7
@@ -57,6 +53,10 @@
     },
     {
       "date": "2026-11-15",
+      "temp": 5.3
+    },
+    {
+      "date": "2026-11-16",
       "temp": 5.3
     }
   ]
