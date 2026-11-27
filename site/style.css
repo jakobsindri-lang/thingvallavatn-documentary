@@ -2162,6 +2162,16 @@ button {
   text-align: center;
 }
 
+/* Fjárstuðningur er aðalmarkmið síðunnar: spjaldið fær áherslulit svo það lesist fyrst */
+.support-card-primary {
+  border-color: var(--color-accent);
+  background: linear-gradient(160deg, rgba(58, 168, 193, 0.14), var(--color-bg-alt) 70%);
+}
+
+.support-card-primary .support-contact-note + .support-contact-note {
+  margin-top: 0.4rem;
+}
+
 .support-card h3 {
   color: var(--color-accent-light);
   font-weight: 400;
