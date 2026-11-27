@@ -860,11 +860,46 @@ async function fetchBlikaForecast() {
 }
 
 if (weatherGrid) {
+  // Teiknuð línutákn í sama stíl og táknin í valmyndinni (24×24, strik í currentColor).
+  // Emoji litu ólíkt út eftir stýrikerfi og stungu í stúf við restina af síðunni.
+  const CLOUD = "M7 18a3.5 3.5 0 0 1-.4-6.98A5 5 0 0 1 16.4 9.5a4.25 4.25 0 0 1 .6 8.5z";
+  // Skýið er fyllt með lit spjaldsins svo það skyggi á sólina fyrir aftan
+  const cloud = (dx = 0, dy = 0) =>
+    `<path d="${CLOUD}" transform="translate(${dx} ${dy})" fill="var(--color-bg-card)"/>`;
+  const sun = '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>';
+  const smallSun = '<circle cx="8" cy="8" r="3"/><path d="M8 2.5v1M2.5 8h1M4.1 4.1l.7.7M11.9 4.1l-.7.7M4.1 11.9l.7-.7"/>';
+  const drops = (n) => ["M8.5 16.5 7.5 19.5", "M12.5 16.5l-1 3", "M16.5 16.5l-1 3"].slice(0, n).map((d) => `<path d="${d}"/>`).join("");
+  const flakes = (n) => [[8, 18], [16, 18], [12, 20.5]].slice(0, n)
+    .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.1" fill="currentColor" stroke="none"/>`).join("");
+  const svgIcon = (body, label) =>
+    `<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="${label}" focusable="false"><title>${label}</title>${body}</svg>`;
+
+  const iconKinds = {
+    clear:        svgIcon(sun, "Heiðskírt"),
+    partlycloudy: svgIcon(smallSun + cloud(2, 2), "Léttskýjað"),
+    mostlycloudy: svgIcon('<circle cx="9" cy="8" r="3"/>' + cloud(1, 1.5), "Skýjað að mestu"),
+    cloudy:       svgIcon(cloud(0, 1), "Skýjað"),
+    fog:          svgIcon('<path d="M4 8h16M6 12h14M4 16h12M9 20h9"/>', "Þoka"),
+    showers:      svgIcon(cloud(0, -3) + drops(2), "Skúrir"),
+    rain:         svgIcon(cloud(0, -3) + drops(3), "Rigning"),
+    sleet:        svgIcon(cloud(0, -3) + '<path d="M8.5 16.5l-1 3"/>' + '<circle cx="15" cy="18.5" r="1.1" fill="currentColor" stroke="none"/>', "Slydda"),
+    flurries:     svgIcon(cloud(0, -3) + flakes(2), "Él"),
+    snow:         svgIcon(cloud(0, -3) + flakes(3), "Snjókoma"),
+    thunder:      svgIcon(cloud(0, -3) + '<path d="M12.5 15.5 10 19.5h3.5L11 23"/>', "Þrumuveður"),
+  };
+  // Veðurkóðar Bliku (`merki`) → tákn. Óþekktur kóði fær hlutlaust ský.
   const weatherIcons = {
-    clear:"☀️", partlycloudy:"🌤️", mostlycloudy:"⛅", cloudy:"☁️",
-    fog:"🌫️", drizzle:"🌦️",
-    rain:"🌧️", showers:"🌦️", sleet:"🌨️", snow:"❄️",
-    chanceflurries:"🌨️", thunder:"⛈️", hail:"🌨️",
+    clear: iconKinds.clear, sunny: iconKinds.clear,
+    partlycloudy: iconKinds.partlycloudy, mostlysunny: iconKinds.partlycloudy,
+    mostlycloudy: iconKinds.mostlycloudy, partlysunny: iconKinds.mostlycloudy,
+    cloudy: iconKinds.cloudy,
+    fog: iconKinds.fog, hazy: iconKinds.fog,
+    drizzle: iconKinds.showers, showers: iconKinds.showers, chancerain: iconKinds.showers,
+    rain: iconKinds.rain,
+    sleet: iconKinds.sleet, chancesleet: iconKinds.sleet, hail: iconKinds.sleet,
+    chanceflurries: iconKinds.flurries, flurries: iconKinds.flurries, chancesnow: iconKinds.flurries,
+    snow: iconKinds.snow,
+    thunder: iconKinds.thunder, tstorms: iconKinds.thunder, chancetstorms: iconKinds.thunder,
   };
   const blikaError = '<p class="weather-status">Ekki tókst að sækja veðurspá núna. <a href="https://www.blika.is/spa/8553" target="_blank" rel="noopener">Skoða spá á Bliku</a>.</p>';
   const spaFetchedNote = document.getElementById("spa-fetched-note");
@@ -881,7 +916,7 @@ if (weatherGrid) {
         item.className = "weather-day";
         item.innerHTML = `
           <div class="weather-date">${dateLabel}</div>
-          <div class="weather-icon">${weatherIcons[day.merki] || "🌡️"}</div>
+          <div class="weather-icon">${weatherIcons[day.merki] || iconKinds.cloudy}</div>
           <div class="weather-temp">${Math.round(day.t2)}°</div>
           <div class="weather-wind">${Math.round(day.f10)} m/s ${(day.dtexti || "").toUpperCase()}</div>
         `;

@@ -34,6 +34,11 @@ body {
   line-height: 1.7;
 }
 
+/* Hnappar erfa ekki letur sjálfkrafa — án þessa birtast þeir í kerfisletri */
+button {
+  font-family: inherit;
+}
+
 /* Hero */
 .hero {
   position: relative;
@@ -1141,8 +1146,14 @@ body {
 }
 
 .weather-icon {
-  font-size: 1.8rem;
-  line-height: 1;
+  line-height: 0;
+  color: var(--color-text);
+}
+
+.weather-icon svg {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .weather-temp {
@@ -2050,15 +2061,51 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
+  /* Ein lína sem má fletta til hliðar, í stað 2–3 lína sem sátu fastar efst
+     (á síma um fimmtungur skjásins). Undir ~1000px rákust samfélagsmiðlatáknin
+     (position: absolute) líka á valmyndartenglana. */
   .site-nav {
-    gap: 1rem;
-    font-size: 0.85rem;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    justify-content: safe center; /* miðjað ef það kemst fyrir, annars byrjað vinstra megin */
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.8rem 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .site-nav a {
+    flex: none;
+    white-space: nowrap;
   }
 
   .nav-social {
     position: static;
     transform: none;
+    flex: none;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Samstarfsmerkin í einni röð í stað þriggja stórra, staflaðra reita */
+  .partner-logos {
+    gap: 0.75rem;
+  }
+  .partner-logo {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 120px;
+    padding: 0.7rem;
+  }
+  .partner-person {
+    flex: 0 0 100%;
+    max-width: none;
   }
 
   .section {
@@ -2282,7 +2329,8 @@ body {
   line-height: 1.25;
 }
 
-.theme-card-desc {
+/* Tvöfaldur klasi svo `.section p` (margin: auto) miðjusetji ekki textann undir titlinum */
+.theme-card-content .theme-card-desc {
   margin: 0;
   font-size: 0.9rem;
   color: rgba(255,255,255,0.82);
