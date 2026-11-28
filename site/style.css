@@ -1582,24 +1582,25 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1rem;
 }
 
+/* Samstarfsaðilar: hljóðlát lína undir styrkjaspjaldinu, ekki annar kassi sem keppir við það */
 .partners-band {
   text-align: center;
-  margin: 2.2rem 0 2.8rem;
-  padding: 1.8rem 1.5rem;
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--border-soft);
+  margin: 3rem auto 0;
+  padding: 0;
+  background: none;
+  border: none;
   border-radius: var(--radius);
 }
 
-.partners-eyebrow {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+.section .partners-eyebrow {
+  font-size: 0.95rem;
+  font-style: italic;
   color: var(--color-text-muted);
-  margin-bottom: 1.3rem;
+  margin-bottom: 1rem;
 }
 
 /* Millifyrirsögn í lesmáli: skáletur í stað smárra hástafa, svo hún lesist sem fyrirsögn en ekki merkimiði */
@@ -1621,14 +1622,16 @@ button {
   margin-bottom: 1.2rem;
 }
 
+/* Minni merkjareitir: merkin eru inneign, ekki aðalatriði hlutans */
 .partner-logo {
   background-color: #ffffff;
-  border-radius: var(--radius);
-  padding: 1.2rem 1.6rem;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 220px;
+  width: 104px;
+  height: 104px;
   overflow: hidden;
 }
 
@@ -1663,8 +1666,8 @@ button {
 }
 
 .partner-person img {
-  width: 90px;
-  height: 90px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
   transition: transform 0.3s ease;
@@ -1674,8 +1677,15 @@ button {
   transform: scale(1.05);
 }
 
+.partner-person {
+  width: auto;
+  height: 104px;
+  padding: 0.6rem 1rem;
+  gap: 0.35rem;
+}
+
 .partner-person span {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 #styrktaradilar .button {
@@ -2376,17 +2386,23 @@ button {
 @media (max-width: 600px) {
   /* Samstarfsmerkin í einni röð í stað þriggja stórra, staflaðra reita */
   .partner-logos {
-    gap: 0.75rem;
+    gap: 0.6rem;
   }
   .partner-logo {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 120px;
-    padding: 0.7rem;
+    width: 76px;
+    height: 76px;
+    padding: 0.45rem;
   }
   .partner-person {
-    flex: 0 0 100%;
-    max-width: none;
+    width: auto;
+    height: 76px;
+    flex-direction: row;
+    gap: 0.6rem;
+    padding: 0.45rem 0.9rem 0.45rem 0.45rem;
+  }
+  .partner-person img {
+    width: 44px;
+    height: 44px;
   }
 
   .section {
@@ -2428,85 +2444,142 @@ button {
 }
 
 /* ── Support cards ── */
-/* Styrkja verkefnið: ein miðjuð eining. Stutt saga og í hvað styrkurinn fer, síðan greiðsluspjaldið. */
-.support-layout {
+/* ── Styrkja verkefnið: eitt spjald ──────────────────────────────────────────
+   Af hverju (vinstri) og hvernig (hægri), aðskilin með einni línu. Ein leturrödd á hvorri hlið,
+   ein aðalaðgerð (PayPal) og millifærslan sem hljóðlát aukaleið. Í síma staflast í sömu röð. */
+.fund-panel {
   display: grid;
-  justify-items: center;
-  gap: 2.5rem;
-  text-align: center;
-}
-
-.support-story {
-  max-width: 40rem;
-}
-
-.support-story p {
-  max-width: 34em;
-  font-size: 1.125rem;
-}
-
-.support-layout .support-card-primary {
-  width: 100%;
-  max-width: 34rem;
-}
-
-.support-story .support-lead {
-  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-}
-
-.support-uses-title {
-  margin-top: 1.75rem;
-  margin-bottom: 0.6rem;
-  font-size: 1.15rem;
-  font-style: italic;
-  font-weight: 400;
-  color: var(--color-accent-light);
-}
-
-.support-uses {
-  list-style: none;
-  padding: 0;
+  grid-template-columns: 1.15fr 1fr;
+  max-width: 980px;
   margin: 0 auto;
-  max-width: 22rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--color-bg-card), var(--color-bg-alt));
+  overflow: hidden;
 }
 
-.support-uses li {
-  padding: 0.55rem 0;
-  border-bottom: 1px solid var(--border-soft);
+.fund-why,
+.fund-how {
+  padding: 2.75rem 2.5rem;
+}
+
+.fund-why {
+  display: flex;
+  flex-direction: column;
+}
+
+.fund-how {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid var(--border-soft);
+  background: rgba(5, 13, 20, 0.28);
+}
+
+.section .fund-lead {
+  margin: 0 0 1rem;
+  max-width: none;
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  line-height: 1.35;
+  color: var(--color-text);
+}
+
+.section .fund-text {
+  margin: 0;
+  max-width: 34em;
   font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
 }
 
-.support-uses li:first-child {
-  border-top: 1px solid var(--border-soft);
-}
-
-/* Vatnabobbinn: handteiknaða teikningin sem fylgdi áður spjaldinu „Deila sögu“ */
-.support-story-art {
-  display: block;
-  width: 150px;
+.fund-art {
+  width: 120px;
   height: auto;
-  margin: 2rem auto 0;
+  margin-top: auto;      /* sest neðst í vinstri hlutanum */
+  padding-top: 2rem;
   opacity: 0.9;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
 }
 
-.support-layout .support-card-primary {
-  padding: 2.2rem 2rem;
+.fund-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 1.05rem;
+  padding: 1rem 1.5rem;
 }
 
-.support-layout .support-card-primary h3 {
-  font-size: 1.35rem;
+.section .fund-note {
+  margin: 0.75rem 0 0;
+  max-width: none;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.section .fund-note + .fund-note {
+  margin-top: 0.25rem;
+}
+
+.fund-note a {
+  color: var(--color-accent-light);
+}
+
+.fund-transfer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.section .fund-transfer-title {
+  margin: 0 0 0.75rem;
+  max-width: none;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.fund-account {
+  margin: 0;
+}
+
+/* Merking og gildi á sömu línu: les eins og millifærsluform í heimabanka */
+.fund-account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0;
+}
+
+.fund-account-row dt {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.fund-account-row dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent-light);
 }
 
 @media (max-width: 800px) {
-  .support-layout {
-    gap: 2rem;
+  .fund-panel {
+    grid-template-columns: 1fr;
   }
-  .support-story-art {
-    width: 100px;
-    margin-top: 1.5rem;
+  .fund-why,
+  .fund-how {
+    padding: 2rem 1.5rem;
+  }
+  .fund-how {
+    border-left: none;
+    border-top: 1px solid var(--border-soft);
+  }
+  .fund-art {
+    display: none; /* í síma fer greiðslan beint á eftir textanum; teikningin birtist í tölvu */
   }
 }
 
