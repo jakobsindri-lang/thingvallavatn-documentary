@@ -352,6 +352,16 @@ if (mapSvgMount && mapInfo) {
 
         if (!cx || !cy) return;
 
+        // Ósýnilegur, stærri hringur undir punktinum svo auðveldara sé að hitta hann með fingri
+        const hit = document.createElementNS(svgNamespace, "circle");
+        hit.classList.add("map-hit");
+        hit.setAttribute("cx", cx);
+        hit.setAttribute("cy", cy);
+        hit.setAttribute("r", "11");
+        hit.setAttribute("aria-hidden", "true");
+        hit.addEventListener("click", () => updateMapInfo(name));
+        pointLayer.appendChild(hit);
+
         const point = document.createElementNS(svgNamespace, "circle");
         point.classList.add("map-point");
         if (mapPlaces[name]) point.classList.add("map-point-featured");
@@ -359,17 +369,36 @@ if (mapSvgMount && mapInfo) {
         point.setAttribute("cx", cx);
         point.setAttribute("cy", cy);
         point.setAttribute("r", "3.5");
-        point.setAttribute("tabindex", "0");
+        point.setAttribute("tabindex", "-1");
         point.setAttribute("role", "button");
         point.setAttribute("aria-label", name);
         point.addEventListener("click", () => updateMapInfo(name));
+        pointLayer.appendChild(point);
+      });
+
+      // Eitt tab-stopp fyrir allt kortið: örvatakkar færa á milli punkta, Enter/bil velur.
+      // Annars þyrfti að tabba í gegnum alla punktana til að komast framhjá kortinu.
+      const points = Array.from(pointLayer.querySelectorAll(".map-point"));
+      if (points.length) points[0].setAttribute("tabindex", "0");
+      points.forEach((point, i) => {
         point.addEventListener("keydown", (event) => {
+          let next = null;
+          if (event.key === "ArrowRight" || event.key === "ArrowDown") next = points[(i + 1) % points.length];
+          if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = points[(i - 1 + points.length) % points.length];
+          if (event.key === "Home") next = points[0];
+          if (event.key === "End") next = points[points.length - 1];
+          if (next) {
+            event.preventDefault();
+            point.setAttribute("tabindex", "-1");
+            next.setAttribute("tabindex", "0");
+            next.focus();
+            return;
+          }
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
-            updateMapInfo(name);
+            updateMapInfo(point.dataset.nafn);
           }
         });
-        pointLayer.appendChild(point);
       });
 
       const ornefniGroup = inlineSvg.querySelector("#ornefni-group");
@@ -542,11 +571,32 @@ if (galleryScroll) {
     transitionFallback = setTimeout(() => { transitioning = false; }, 600);
   };
 
+  // Raunverulegt númer myndarinnar sem er fremst (afrit í byrjun/enda eru ekki talin)
+  const currentRealIndex = () => (((currentIndex - cloneCount) % totalReal) + totalReal) % totalReal;
+
   if (galleryWrap) {
+    galleryWrap.setAttribute("role", "region");
+    galleryWrap.setAttribute("aria-label", "Stillur. Örvatakkar fletta, Enter opnar mynd.");
     galleryWrap.addEventListener("keydown", (e) => {
+      if (e.target !== galleryWrap) return;
       if (e.key === "ArrowLeft")  { e.preventDefault(); goTo(currentIndex - 1); }
       if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex + 1); }
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); lbOpen(currentRealIndex()); }
     });
+
+    // Sýnilegir fletti-hnappar: án þeirra vissu notendur ekki að myndaröðin hreyfist
+    const navBtn = (cls, label, glyphPath, step) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = `gallery-nav ${cls}`;
+      b.setAttribute("aria-label", label);
+      b.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="${glyphPath}"/></svg>`;
+      b.addEventListener("click", (e) => { e.stopPropagation(); goTo(currentIndex + step); });
+      b.addEventListener("mousedown", (e) => e.stopPropagation());
+      galleryWrap.appendChild(b);
+    };
+    navBtn("gallery-prev", "Fyrri myndir", "M15 5l-7 7 7 7", -1);
+    navBtn("gallery-next", "Næstu myndir", "M9 5l7 7-7 7", 1);
   }
 
   const galleryProgress      = document.querySelector(".gallery-progress");
@@ -1564,6 +1614,8 @@ function initMoonWidget() {
     const li  = document.createElement('li');
     const btn = document.createElement('button');
     btn.className   = 'theme-name-btn' + (i === 0 ? ' is-active' : '');
+    btn.type        = 'button';
+    btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
     btn.textContent = t.title;
     btn.addEventListener('click', () => goTo(i));
     li.appendChild(btn);
@@ -1594,7 +1646,10 @@ function initMoonWidget() {
       titleEl.textContent   = t.title;
       descEl.textContent    = t.desc;
 
-      nameBtns.forEach((b, i) => b.classList.toggle('is-active', i === current));
+      nameBtns.forEach((b, i) => {
+        b.classList.toggle('is-active', i === current);
+        b.setAttribute('aria-pressed', i === current ? 'true' : 'false');
+      });
 
       imgEl.classList.remove('is-fading');
       contentEl.classList.remove('is-fading');
