@@ -2439,6 +2439,26 @@ button {
   margin: 0 auto;
 }
 
+/* Millifærsla er aukaleið undir PayPal: aðskilin með línu og hljóðlátari */
+.support-transfer {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.support-card .support-transfer-title {
+  margin: 0 auto 0.6rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* Reikningsreiturinn er ekki „spjald í spjaldi“ lengur: enginn rammi, bara upplýsingarnar */
+.support-transfer .account-block {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 .support-card h3 {
   color: var(--color-accent-light);
   font-weight: 400;
