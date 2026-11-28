@@ -31,7 +31,16 @@ body {
   font-optical-sizing: auto;
   background-color: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.7;
+  line-height: 1.65;
+}
+
+/* Fyrirsagnir brotna jafnt; meginmál forðast stök orð í síðustu línu */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 /* `hidden` á alltaf að fela, líka þegar klasi setur display: flex (t.d. dagahnappar veiðispár) */
@@ -53,7 +62,6 @@ button {
   justify-content: center;
   text-align: center;
   background:
-    radial-gradient(ellipse at 50% 20%, rgba(58, 168, 193, 0.3) 0%, transparent 60%),
     linear-gradient(180deg, rgba(3, 9, 15, 0.8) 0%, rgba(10, 35, 52, 0.6) 45%, rgba(18, 58, 82, 0.7) 100%),
     url("assets/images/web/hero-sunset.webp");
   background-size: cover;
@@ -77,9 +85,7 @@ button {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 20%, rgba(58, 168, 193, 0.18) 0%, transparent 60%),
-    linear-gradient(to bottom, rgba(4, 15, 24, 0.28) 0%, rgba(4, 15, 24, 0.76) 100%);
+  background: linear-gradient(to bottom, rgba(4, 15, 24, 0.32) 0%, rgba(4, 15, 24, 0.78) 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -108,27 +114,33 @@ button {
   margin: 0 auto;
 }
 
-.hero-eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-accent-light);
-  margin-bottom: 1.5rem;
-  opacity: 0.85;
-}
-
+/* Titill eins og á upphafsskilti kvikmyndar: hástafir, vítt bil, ljós texti, enginn ljómi.
+   Skuggi með hliðrun heldur titlinum læsilegum yfir myndbandinu. */
 .hero-content h1 {
-  font-size: clamp(2.5rem, 12vw, 7rem);
-  letter-spacing: 0.06em;
-  font-weight: 700;
-  color: var(--color-accent-light);
-  text-shadow: 0 0 40px rgba(143, 217, 232, 0.35);
+  font-size: clamp(1.9rem, 7vw, 5.5rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-right: -0.16em; /* vega upp bilið eftir síðasta staf svo titillinn sé sjónrænt miðjaður */
+  font-weight: 400;
+  color: var(--color-text);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
   overflow-wrap: anywhere;
 }
 
+/* „Heimildamynd í þróun“ undir titlinum, eins og lína á kvikmyndaplakati */
+.hero-billing {
+  margin-top: 1.1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--color-text);
+  opacity: 0.88;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
 .hero-content .subtitle {
-  margin-top: 1rem;
+  margin-top: 1.6rem;
   font-size: clamp(1.1rem, 3vw, 1.5rem);
   color: var(--color-text);
   font-style: italic;
@@ -288,12 +300,20 @@ button {
   padding: 3.5rem 1.5rem;
 }
 
+/* Hver hluti opnar eins og atriði í mynd: stór, vinstrijöfnuð fyrirsögn í ljósum texta.
+   Blágræni liturinn er geymdur fyrir tengla, hnappa og millifyrirsagnir í spjöldum. */
 .section h2 {
-  font-size: clamp(1.7rem, 4vw, 2.6rem);
-  color: var(--color-accent-light);
-  margin-bottom: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  color: var(--color-text);
+  margin-bottom: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+/* Fyrirsagnir inni í spjöldum haldast miðjaðar eins og efnið í kring */
+.support-card h2 {
   text-align: center;
 }
 
@@ -305,11 +325,35 @@ button {
   margin-right: auto;
 }
 
+/* Lesmál: stærra letur og vinstrijafnað undir fyrirsögninni, um 65 stafir á línu.
+   Myndatextar og heimildalínur undir græjum haldast miðjaðar. */
+.section > p:not([class]),
+.section > .origin-text,
+.section > .section-intro {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  max-width: 65ch;
+  margin-left: 0;
+  text-align: left;
+}
+
+/* Fyrsta málsgrein um myndina er inngangur, eins og opnunarorð í mynd: stærri og víðari */
+#um-myndina > h2 + p {
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  line-height: 1.55;
+  max-width: 34em;
+  margin-bottom: 2.5rem;
+}
+
 .section-intro {
   text-align: center;
   color: var(--color-text-muted);
   max-width: 60ch;
   margin: 0 auto 2.5rem;
+}
+
+.section > .section-intro {
+  margin-bottom: 2.5rem;
 }
 
 /* Staða verkefnisins: framvindulína */
@@ -1455,14 +1499,16 @@ button {
   margin-bottom: 1.3rem;
 }
 
+/* Millifyrirsögn í lesmáli: skáletur í stað smárra hástafa, svo hún lesist sem fyrirsögn en ekki merkimiði */
 .origin-heading {
-  margin-top: 2rem;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  font-weight: 600;
-  text-align: center;
+  margin-top: 2.75rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--color-accent-light);
+  text-align: left;
 }
 .origin-text {
   margin-bottom: 1.2rem;
