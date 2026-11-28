@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-  <a class="skip-link" href="#veidispa">Fara beint í veiðispá</a>
+  <a class="skip-link" href="#nuna">Fara beint í efni</a>
 
   <header class="hero hero-compact" id="hero">
     <div class="hero-content">
@@ -71,6 +71,28 @@
   </nav>
 
   <main>
+
+    <!-- Yfirlit sem svarar „hvernig er við vatnið núna?“ í einni sjónhendingu. Fyllt úr sömu gögnum og hlutarnir fyrir neðan. -->
+    <section class="section now-strip" id="nuna" aria-labelledby="nuna-title">
+      <h2 id="nuna-title" class="now-title">Núna við vatnið</h2>
+      <dl class="now-grid">
+        <div class="now-item">
+          <dt><a href="#vatnshiti">Vatnshiti</a></dt>
+          <dd class="now-value" id="now-water">&hellip;</dd>
+          <dd class="now-sub" id="now-water-sub"></dd>
+        </div>
+        <div class="now-item">
+          <dt><a href="#spa">Veður í dag</a></dt>
+          <dd class="now-value" id="now-weather">&hellip;</dd>
+          <dd class="now-sub" id="now-weather-sub"></dd>
+        </div>
+        <div class="now-item">
+          <dt><a href="#tungl">Tungl</a></dt>
+          <dd class="now-value" id="now-moon">&hellip;</dd>
+          <dd class="now-sub" id="now-moon-sub"></dd>
+        </div>
+      </dl>
+    </section>
 
     <section class="section weather" id="veidispa">
       <h2>Veiðispá</h2>
@@ -211,7 +233,7 @@
           </p>
           <dl class="map-meta" id="map-meta">
             <div>
-              <dt>Helstu veiðistaðir</dt>
+              <dt>Tegund staðar</dt>
               <dd id="map-role">Veiðistaður og viðmiðunarstaður</dd>
             </div>
             <div>

@@ -1657,6 +1657,88 @@ button {
 }
 
 /* Forecast cards */
+/* ── Núna við vatnið: yfirlit efst á veiðisíðunni ── */
+.now-strip {
+  padding-bottom: 0;
+}
+
+.section > h2.now-title {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  margin-bottom: 0.9rem;
+}
+
+.now-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin: 0;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--border-soft); /* 1px bilin milli reita verða að línum */
+}
+
+.now-item {
+  background: var(--color-bg-card);
+  padding: 1.1rem 1.25rem 1.2rem;
+  min-width: 0;
+}
+
+.now-item dt a {
+  font-size: 0.85rem;
+  color: var(--color-accent-light);
+  text-decoration: none;
+}
+
+.now-item dt a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.now-item dd {
+  margin: 0;
+}
+
+.now-value {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.now-icon {
+  display: inline-flex;
+  color: var(--color-text);
+}
+
+.now-icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.now-sub {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 600px) {
+  .now-item {
+    padding: 0.85rem 0.75rem 0.95rem;
+  }
+  .now-sub {
+    font-size: 0.78rem;
+  }
+}
+
 .forecast-closed {
   margin-top: 1.5rem;
   padding: 2rem;

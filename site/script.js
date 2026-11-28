@@ -288,7 +288,7 @@ if (mapSvgMount && mapInfo) {
         theme: "Veiði, landslag",
       };
 
-      mapKicker.textContent = "Veiðisvæði";
+      mapKicker.textContent = place.kicker || "Veiðisvæði";
       mapTitle.textContent = name;
       mapDescription.innerHTML = place.description;
       mapRole.textContent = place.role;
@@ -300,7 +300,12 @@ if (mapSvgMount && mapInfo) {
     activeMapElement = mapSvgMount.querySelector(
       `.map-point[data-nafn="${escapeSelectorValue(name)}"]`
     );
-    if (activeMapElement) activeMapElement.classList.add("is-active");
+    if (activeMapElement) {
+      activeMapElement.classList.add("is-active");
+      // Valinn staður verður tab-stopp kortsins, svo lyklaborðsfókus lendir þar næst
+      mapSvgMount.querySelectorAll('.map-point[tabindex="0"]').forEach((p) => p.setAttribute("tabindex", "-1"));
+      activeMapElement.setAttribute("tabindex", "0");
+    }
 
     if (activeMapButton) activeMapButton.classList.remove("is-active");
     activeMapButton = mapInfo.querySelector(
@@ -331,7 +336,9 @@ if (mapSvgMount && mapInfo) {
 
       svg.removeAttribute("width");
       svg.removeAttribute("height");
-      svg.setAttribute("role", "img");
+      // role="group" (ekki "img"): img gerir punktana innan í kortinu ósýnilega skjálesurum
+      svg.setAttribute("role", "group");
+      svg.setAttribute("aria-label", "Kort af veiðisvæðinu. Örvatakkar færa á milli staða, Enter velur.");
       svg.setAttribute("focusable", "false");
       svg.setAttribute("overflow", "hidden");
       mapSvgMount.replaceChildren(document.importNode(svg, true));
@@ -761,6 +768,15 @@ if (weatherTabs.length) {
   });
 }
 
+// „Núna við vatnið“ á veiðisíðunni: hver gagnaveita fyllir sinn reit þegar gögnin berast.
+// Ef reitirnir eru ekki á síðunni (t.d. forsíðan) gerir þetta ekkert.
+function setNow(key, value, sub) {
+  const valueEl = document.getElementById(`now-${key}`);
+  const subEl = document.getElementById(`now-${key}-sub`);
+  if (valueEl) valueEl.innerHTML = value;
+  if (subEl) subEl.textContent = sub ?? "";
+}
+
 function waterTempChartSVG(history) {
   if (!history || history.length < 2) return "";
   const W = 600, H = 150;
@@ -844,6 +860,7 @@ function initWaterTemp() {
       const history = data.history ? [...data.history] : [];
       if (history.length > 0) history[history.length - 1] = { ...history[history.length - 1], temp: data.temp };
       const chart = waterTempChartSVG(history);
+      setNow("water", `${tempLabel}°C`, `mælt ${timeLabel}`);
       widget.innerHTML = `
         <div class="water-temp-current">
           <span class="water-temp-label">Nýjasta gildi</span>
@@ -884,6 +901,7 @@ function initWaterTemp() {
       }
     })
     .catch(() => {
+      setNow("water", "&ndash;", "Næst ekki í augnablikinu");
       widget.innerHTML = '<p class="weather-status">Ekki tókst að sækja vatnshita núna. <a href="https://www.landsvirkjun.is/rauntimavoktun/vatnshiti-thingvallavatns" target="_blank" rel="noopener">Skoða vatnshita hjá Landsvirkjun</a>.</p>';
     });
 }
@@ -909,8 +927,9 @@ async function fetchBlikaForecast() {
     // Staðbundna skráin ekki tiltæk — reynum beina kallið hér að neðan.
   }
   const res = await fetch(FORECAST_CONFIG.api.blikaForecast);
-  // Beina API-kallið hefur engan fetched-tímastimpil — "Gögn sótt"-línan er þá sleppt.
-  return { days: await res.json(), fetched: null };
+  // Beina API-kallið skilar nýjum gögnum núna, svo „Gögn sótt“ er núverandi tími.
+  // (Áður var línunni sleppt, og veðurspáin sýndi þá aldrei hversu nýleg hún var.)
+  return { days: await res.json(), fetched: new Date().toISOString() };
 }
 
 if (weatherGrid) {
@@ -961,7 +980,20 @@ if (weatherGrid) {
   fetchBlikaForecast()
     .then(({ days, fetched }) => {
       const first7 = days.slice(0, 7);
-      if (!first7.length) { weatherGrid.innerHTML = blikaError; return; }
+      if (!first7.length) {
+        weatherGrid.innerHTML = blikaError;
+        setNow("weather", "&ndash;", "Næst ekki í augnablikinu");
+        return;
+      }
+
+      // Spá dagsins í yfirlitið efst (fyrsti dagur sem er í dag eða seinna)
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const today = first7.find((d) => d.dags_spar.slice(0, 10) >= todayIso) || first7[0];
+      setNow(
+        "weather",
+        `<span class="now-icon">${weatherIcons[today.merki] || iconKinds.cloudy}</span>${Math.round(today.t2)}°`,
+        `${Math.round(today.f10)} m/s ${(today.dtexti || "").toUpperCase()}`
+      );
       weatherGrid.innerHTML = "";
       first7.forEach((day) => {
         const date      = new Date(day.dags_spar.slice(0, 10) + "T12:00:00Z");
@@ -983,7 +1015,10 @@ if (weatherGrid) {
         spaFetchedNote.hidden = !note;
       }
     })
-    .catch(() => { weatherGrid.innerHTML = blikaError; });
+    .catch(() => {
+      weatherGrid.innerHTML = blikaError;
+      setNow("weather", "&ndash;", "Næst ekki í augnablikinu");
+    });
 }
 
 // ── Veiðispá ─────────────────────────────────────────────────────────────────
@@ -1071,9 +1106,14 @@ const VSP_DAY_OFFSETS = [0, 1, 2];
 async function initForecast() {
   const dataWarnings = [];
 
+  // Sögulega skýjahulu-API-ið getur verið mjög hægt (yfir 10 sek). Spáin bíður því í mesta lagi
+  // 5 sek eftir því og reiknar annars án þess (sama og ef það bregst; viðvörun birtist þá).
+  const withTimeout = (promise, ms) =>
+    Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), ms))]);
+
   const [blikaRes, archiveRes, waterRes] = await Promise.allSettled([
     fetchBlikaForecast(),
-    fetchHistoricalCloud(),
+    withTimeout(fetchHistoricalCloud(), 5000),
     fetch(`${window.ASSET_BASE ?? ""}assets/data/vatnshiti.json`, { cache: "no-cache" })
       .then((r) => r.json())
       .catch(() => null),
@@ -1534,6 +1574,7 @@ function initMoonWidget() {
 
   if (typeof SunCalc === "undefined") {
     phaseNameEl.textContent = "Ekki tókst að hlaða tunglagögnum. Reyndu að endurhlaða síðuna.";
+    setNow("moon", "&ndash;", "Næst ekki í augnablikinu");
     return;
   }
 
@@ -1549,6 +1590,7 @@ function initMoonWidget() {
   wheelContainer.innerHTML = moonWheelSVG(now, moonHref);
   phaseNameEl.textContent = moonPhaseName(phase);
   illumEl.textContent = `${Math.round(fraction * 100)}%`;
+  setNow("moon", `${Math.round(fraction * 100)}%`, `${moonPhaseName(phase)} · birta`);
   setupMoonTooltip(wheelContainer);
 
   const mt = SunCalc.getMoonTimes(now, LAT, LON);
