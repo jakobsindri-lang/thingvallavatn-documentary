@@ -1719,25 +1719,91 @@ button {
   background: var(--border-soft); /* 1px bilin milli reita verða að línum */
 }
 
+/* Hver reitur er hnappur sem opnar ítarefni fyrir neðan */
 .now-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   background: var(--color-bg-card);
-  padding: 1.1rem 1.25rem 1.2rem;
+  padding: 1.1rem 1.25rem 1rem;
   min-width: 0;
+  border: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.now-item dt a {
+.now-item:hover {
+  background: #133349;
+}
+
+.now-item[aria-expanded="true"] {
+  background: #16394f;
+}
+
+.now-item:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.now-label {
   font-size: 0.85rem;
   color: var(--color-accent-light);
-  text-decoration: none;
 }
 
-.now-item dt a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.now-more {
+  margin-top: 0.7rem;
+  font-size: 0.8rem;
+  color: var(--color-accent-light);
 }
 
-.now-item dd {
-  margin: 0;
+.now-chevron {
+  display: inline-block;
+  margin-left: 0.15rem;
+  transition: transform 0.2s ease;
+}
+
+.now-item[aria-expanded="true"] .now-chevron {
+  transform: rotate(90deg);
+}
+
+/* Ítarefnið: opnast beint undir reitunum, eitt í einu */
+.now-details {
+  margin-top: 0.75rem;
+}
+
+.now-detail {
+  padding: 1.5rem 1.5rem 1.25rem;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: rgba(15, 42, 61, 0.45);
+}
+
+.section .now-detail h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+/* Nýjasta gildið stendur nú þegar á reitnum; ítarefnið sýnir bara grafið */
+.now-detail .water-temp-current {
+  display: none;
+}
+
+/* Græjurnar höfðu sinn eigin ramma; inni í ítarefninu væri það kassi í kassa */
+.now-detail .weather-grid {
+  margin-top: 0;
+}
+
+.now-detail .water-temp-widget,
+.now-detail .moon-widget {
+  margin-top: 0;
+  padding: 0;
+  background: none;
+  border: none;
 }
 
 .now-value {
@@ -1769,10 +1835,14 @@ button {
 
 @media (max-width: 600px) {
   .now-item {
-    padding: 0.85rem 0.75rem 0.95rem;
+    padding: 0.85rem 0.75rem 0.85rem;
   }
-  .now-sub {
-    font-size: 0.78rem;
+  .now-sub,
+  .now-more {
+    font-size: 0.75rem;
+  }
+  .now-detail {
+    padding: 1.1rem 0.75rem 1rem;
   }
 }
 

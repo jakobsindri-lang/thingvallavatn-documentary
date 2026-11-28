@@ -777,6 +777,54 @@ function setNow(key, value, sub) {
   if (subEl) subEl.textContent = sub ?? "";
 }
 
+// „Aðstæður núna“: hver reitur opnar sitt ítarefni (veður, vatnshiti, tungl) beint fyrir neðan.
+// Eitt opið í einu; smellt aftur á opinn reit lokar honum. Tenglar á #spa, #vatnshiti og #tungl
+// (t.d. gamlir bókamerki eða tenglarnir í lokunarskilaboðunum) opna réttan reit.
+(function () {
+  const tiles = Array.from(document.querySelectorAll(".now-item[aria-controls]"));
+  if (!tiles.length) return;
+  const panelFor = (tile) => document.getElementById(tile.getAttribute("aria-controls"));
+
+  const open = (tile) => {
+    tiles.forEach((t) => {
+      const isThis = t === tile;
+      t.setAttribute("aria-expanded", isThis ? "true" : "false");
+      const panel = panelFor(t);
+      if (panel) panel.hidden = !isThis;
+    });
+  };
+  const closeAll = () => open(null);
+
+  tiles.forEach((tile) => {
+    tile.addEventListener("click", () => {
+      if (tile.getAttribute("aria-expanded") === "true") closeAll();
+      else open(tile);
+    });
+  });
+
+  const openFromHash = () => {
+    const id = location.hash.slice(1);
+    const tile = tiles.find((t) => t.getAttribute("aria-controls") === id);
+    if (!tile) return;
+    open(tile);
+    // Fletta að reitunum sjálfum svo bæði yfirlitið og ítarefnið sjáist
+    document.getElementById("nuna").scrollIntoView({ block: "start" });
+  };
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+})();
+
+// Á veiðitímabilinu (20. apríl – 15. september) er veiðispáin aðalverkfærið og fer efst.
+// Utan þess er hún bara lokunarskilaboð, svo „Aðstæður núna“ kemur fyrst.
+(function () {
+  const nuna = document.getElementById("nuna");
+  const vsp = document.getElementById("veidispa");
+  if (!nuna || !vsp) return;
+  const now = new Date();
+  const md = (now.getUTCMonth() + 1) * 100 + now.getUTCDate(); // t.d. 420 = 20. apríl
+  if (md >= 420 && md <= 915) nuna.parentNode.insertBefore(vsp, nuna);
+})();
+
 function waterTempChartSVG(history) {
   if (!history || history.length < 2) return "";
   const W = 600, H = 150;

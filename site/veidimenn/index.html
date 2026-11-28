@@ -42,9 +42,7 @@
 
   <nav class="site-nav">
     <a href="#veidispa">Veiðispá</a>
-    <a href="#spa">Veðurspá</a>
-    <a href="#vatnshiti">Vatnshiti</a>
-    <a href="#tungl">Tungl</a>
+    <a href="#nuna">Aðstæður</a>
     <a href="#kort">Kort</a>
     <a href="../" class="nav-crosslink">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
@@ -72,26 +70,69 @@
 
   <main>
 
-    <!-- Yfirlit sem svarar „hvernig er við vatnið núna?“ í einni sjónhendingu. Fyllt úr sömu gögnum og hlutarnir fyrir neðan. -->
+    <!-- Aðstæður núna: þrír reitir sem svara „hvernig er við vatnið?“ í einni sjónhendingu.
+         Hver reitur opnar ítarefni beint fyrir neðan (eitt í einu). Gamlir tenglar (#spa, #vatnshiti, #tungl) opna réttan reit. -->
     <section class="section now-strip" id="nuna" aria-labelledby="nuna-title">
-      <h2 id="nuna-title" class="now-title">Núna við vatnið</h2>
-      <dl class="now-grid">
-        <div class="now-item">
-          <dt><a href="#vatnshiti">Vatnshiti</a></dt>
-          <dd class="now-value" id="now-water">&hellip;</dd>
-          <dd class="now-sub" id="now-water-sub"></dd>
+      <h2 id="nuna-title" class="now-title">Aðstæður núna</h2>
+      <div class="now-grid">
+        <button type="button" class="now-item" aria-expanded="false" aria-controls="vatnshiti">
+          <span class="now-label">Vatnshiti</span>
+          <span class="now-value" id="now-water">&hellip;</span>
+          <span class="now-sub" id="now-water-sub"></span>
+          <span class="now-more">Graf síðustu daga <span class="now-chevron" aria-hidden="true">›</span></span>
+        </button>
+        <button type="button" class="now-item" aria-expanded="false" aria-controls="spa">
+          <span class="now-label">Veður í dag</span>
+          <span class="now-value" id="now-weather">&hellip;</span>
+          <span class="now-sub" id="now-weather-sub"></span>
+          <span class="now-more">7 daga spá <span class="now-chevron" aria-hidden="true">›</span></span>
+        </button>
+        <button type="button" class="now-item" aria-expanded="false" aria-controls="tungl">
+          <span class="now-label">Tungl</span>
+          <span class="now-value" id="now-moon">&hellip;</span>
+          <span class="now-sub" id="now-moon-sub"></span>
+          <span class="now-more">Tunglhjól <span class="now-chevron" aria-hidden="true">›</span></span>
+        </button>
+      </div>
+
+      <div class="now-details">
+      <section class="now-detail weather" id="spa" aria-labelledby="spa-title" hidden>
+        <h2 id="spa-title">Veðurspá í Vatnskoti, 7 dagar</h2>
+        <div class="weather-grid" id="weather-grid">
+          <p class="weather-status">Hleð inn veðurspá&hellip;</p>
         </div>
-        <div class="now-item">
-          <dt><a href="#spa">Veður í dag</a></dt>
-          <dd class="now-value" id="now-weather">&hellip;</dd>
-          <dd class="now-sub" id="now-weather-sub"></dd>
+        <p class="weather-source">
+          Veðurgögn frá <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Bliku ↗</a>.
+        </p>
+        <p class="weather-source" id="spa-fetched-note" hidden></p>
+      </section>
+
+      <section class="now-detail weather" id="vatnshiti" aria-labelledby="vatnshiti-title" hidden>
+        <h2 id="vatnshiti-title">Vatnshiti síðustu daga</h2>
+        <div class="water-temp-widget" id="water-temp-widget">
+          <p class="weather-status">Hleð vatnshita&hellip;</p>
         </div>
-        <div class="now-item">
-          <dt><a href="#tungl">Tungl</a></dt>
-          <dd class="now-value" id="now-moon">&hellip;</dd>
-          <dd class="now-sub" id="now-moon-sub"></dd>
+        <p class="weather-source">
+          Vatnshiti frá <a href="https://www.landsvirkjun.is/rauntimavoktun/vatnshiti-thingvallavatns" target="_blank" rel="noopener">Landsvirkjun ↗</a>.
+        </p>
+      </section>
+
+      <section class="now-detail weather" id="tungl" aria-labelledby="tungl-title" hidden>
+        <h2 id="tungl-title">Tunglstaða</h2>
+        <div class="moon-widget" id="moon-widget">
+          <div class="moon-wheel-inner">
+            <div id="moon-wheel-svg" class="moon-wheel-svg" aria-hidden="true"></div>
+            <div class="moon-wheel-center">
+              <div class="moon-phase-name" id="moon-phase-name">Hleð&hellip;</div>
+              <div class="moon-wheel-stat">Birta <b id="moon-illum-pct">&hellip;</b></div>
+              <div class="moon-wheel-stat" id="moon-times">Gengur</div>
+              <div class="moon-wheel-stat">Skýjahula <b id="moon-cloud-pct">&hellip;</b></div>
+            </div>
+          </div>
         </div>
-      </dl>
+        <p class="moon-photo-credit">Tunglmynd: <a href="https://commons.wikimedia.org/wiki/File:FullMoon2010.jpg" target="_blank" rel="noopener">Gregory H. Revera</a> / Wikimedia Commons CC BY-SA 3.0</p>
+      </section>
+      </div>
     </section>
 
     <section class="section weather" id="veidispa">
@@ -109,7 +150,7 @@
         <h3>Veiðitímabilið er ekki í gangi</h3>
         <p>Veiðitímabilið í þjóðgarðinum á Þingvöllum er frá 20. apríl til 15. september. Spálíkanið er ekki virkt utan veiðitímabilsins.</p>
         <p class="forecast-countdown" id="forecast-countdown" hidden></p>
-        <p>Á meðan má fylgjast með <a href="#spa">veðri</a>, <a href="#vatnshiti">vatnshita</a> og <a href="#tungl">tungli</a> hér fyrir neðan.</p>
+        <p>Á meðan má fylgjast með <a href="#spa">veðri</a>, <a href="#vatnshiti">vatnshita</a> og <a href="#tungl">tungli</a> undir „Aðstæður núna“.</p>
       </div>
 
       <div class="forecast-result" id="forecast-result" hidden>
@@ -171,43 +212,6 @@
       <p class="weather-source" id="vsp-fetched-note" hidden></p>
       <p class="weather-source">Spáin er þróuð samhliða <a href="../">heimildamynd um Þingvallavatn</a>.</p>
 
-    </section>
-
-    <section class="section weather" id="spa">
-      <h2>Veðurspá í Vatnskoti</h2>
-      <div class="weather-grid" id="weather-grid">
-        <p class="weather-status">Hleð inn veðurspá&hellip;</p>
-      </div>
-      <p class="weather-source">
-        Veðurgögn frá <a href="https://gamli.blika.is/spa/8553" target="_blank" rel="noopener">Bliku ↗</a>.
-      </p>
-      <p class="weather-source" id="spa-fetched-note" hidden></p>
-    </section>
-
-    <section class="section weather" id="vatnshiti">
-      <h2>Vatnshiti</h2>
-      <div class="water-temp-widget" id="water-temp-widget">
-        <p class="weather-status">Hleð vatnshita&hellip;</p>
-      </div>
-      <p class="weather-source">
-        Vatnshiti frá <a href="https://www.landsvirkjun.is/rauntimavoktun/vatnshiti-thingvallavatns" target="_blank" rel="noopener">Landsvirkjun ↗</a>.
-      </p>
-    </section>
-
-    <section class="section weather" id="tungl">
-      <h2>Tungl</h2>
-      <div class="moon-widget" id="moon-widget">
-        <div class="moon-wheel-inner">
-          <div id="moon-wheel-svg" class="moon-wheel-svg" aria-hidden="true"></div>
-          <div class="moon-wheel-center">
-            <div class="moon-phase-name" id="moon-phase-name">Hleð&hellip;</div>
-            <div class="moon-wheel-stat">Birta <b id="moon-illum-pct">&hellip;</b></div>
-            <div class="moon-wheel-stat" id="moon-times">Gengur</div>
-            <div class="moon-wheel-stat">Skýjahula <b id="moon-cloud-pct">&hellip;</b></div>
-          </div>
-        </div>
-      </div>
-      <p class="moon-photo-credit">Tunglmynd: <a href="https://commons.wikimedia.org/wiki/File:FullMoon2010.jpg" target="_blank" rel="noopener">Gregory H. Revera</a> / Wikimedia Commons CC BY-SA 3.0</p>
     </section>
 
     <section class="section map-section" id="kort">
