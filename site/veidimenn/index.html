@@ -41,8 +41,10 @@
   </header>
 
   <nav class="site-nav">
-    <a href="#veidispa">Veiðispá</a>
+    <!-- Röðin fylgir síðunni utan tímabils; á tímabilinu færir script.js Veiðispá fremst -->
     <a href="#nuna">Aðstæður</a>
+    <a href="#reglur">Leyfi og reglur</a>
+    <a href="#veidispa">Veiðispá</a>
     <a href="#kort">Kort</a>
     <a href="../" class="nav-crosslink">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
@@ -73,7 +75,7 @@
     <!-- Aðstæður núna: þrír reitir sem svara „hvernig er við vatnið?“ í einni sjónhendingu.
          Hver reitur opnar ítarefni beint fyrir neðan (eitt í einu). Gamlir tenglar (#spa, #vatnshiti, #tungl) opna réttan reit. -->
     <section class="section now-strip" id="nuna" aria-labelledby="nuna-title">
-      <h2 id="nuna-title" class="now-title">Aðstæður núna</h2>
+      <h2 id="nuna-title" class="now-title">Aðstæður núna<span class="now-date" id="now-date"></span></h2>
       <div class="now-grid">
         <button type="button" class="now-item" aria-expanded="false" aria-controls="vatnshiti">
           <span class="now-label">Vatnshiti</span>
@@ -135,6 +137,50 @@
       </div>
     </section>
 
+    <!-- Leyfi og reglur: það sem veiðimaður þarf að vita áður en lagt er af stað.
+         Var áður falið í þremur hnöppum inni í kortinu. -->
+    <section class="section rules-section" id="reglur">
+      <h2>Leyfi og reglur</h2>
+      <div class="rules-panel">
+        <div class="rules-col">
+          <h3>Veiðileyfi</h3>
+          <p>Veiðikortið gildir fyrir landi þjóðgarðsins, frá Langatanga til og með Leirutá. Land Kárastaða er undanskilið.</p>
+          <a class="button button-primary rules-buy" href="https://vefverslun.veidikortid.is/product/thingvallavatn/" target="_blank" rel="noopener">Kaupa dagsleyfi ↗</a>
+          <p class="rules-small">Börn yngri en 14 ára veiða frítt í fylgd með korthafa.</p>
+          <ul class="rules-links">
+            <li><a href="https://veidikortid.is/veidisvaedi/thingvallavatn/" target="_blank" rel="noopener">Upplýsingasíða Veiðikortsins ↗</a></li>
+            <li><a href="https://veidikortid.is/wp-content/uploads/2021/11/ThingvellirBaeklingur.pdf" target="_blank" rel="noopener">Bæklingur um veiðar (PDF) ↗</a></li>
+          </ul>
+        </div>
+
+        <div class="rules-col">
+          <h3>Tímabil og agn</h3>
+          <dl class="rules-periods">
+            <div>
+              <dt>20. apríl – 31. maí</dt>
+              <dd>Eingöngu fluga og flugustöng. Öllum urriða skal sleppt.</dd>
+            </div>
+            <div>
+              <dt>1. júní – 15. september</dt>
+              <dd>Fluga, spónn og maðkur.</dd>
+            </div>
+          </dl>
+          <p class="rules-small">Heimilt er að veiða allan sólarhringinn.</p>
+        </div>
+
+        <div class="rules-col">
+          <h3>Bönn</h3>
+          <ul class="rules-list">
+            <li>Veiðibann í <a href="#kort" data-map-jump-link="Ólafsdráttur">Ólafsdrætti</a> frá 1. júlí til 31. ágúst, vegna hrygningar kuðungableikjunnar.</li>
+            <li>Öll veiði í Öxarárósi er bönnuð.</li>
+            <li>Veiði úr bátum er bönnuð korthöfum Veiðikortsins.</li>
+          </ul>
+          <h3 class="rules-sub">Merktir urriðar</h3>
+          <p class="rules-small">Sumir urriðar eru merktir neðan við bakugga. Skráðu númer merkisins áður en fiskinum er sleppt og komdu því til þjónustumiðstöðvarinnar á Þingvöllum eða <a href="https://laxfiskar.is/index.php?option=com_content&amp;view=article&amp;id=64&amp;Itemid=133&amp;lang=is" target="_blank" rel="noopener">Laxfiska ↗</a>.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="section weather" id="veidispa">
       <h2>Veiðispá</h2>
       <div class="vsp-day-tabs" id="vsp-day-tabs" role="tablist" aria-label="Veldu dag" hidden>
@@ -146,11 +192,13 @@
         <p class="weather-status">Hleð inn veiðispá&hellip;</p>
       </div>
 
+      <!-- Utan tímabils: ein þétt lína í stað stórs spjalds (spáin er lokuð 7 mánuði á ári) -->
       <div class="forecast-closed" id="forecast-closed" hidden>
-        <h3>Veiðitímabilið er ekki í gangi</h3>
-        <p>Veiðitímabilið í þjóðgarðinum á Þingvöllum er frá 20. apríl til 15. september. Spálíkanið er ekki virkt utan veiðitímabilsins.</p>
-        <p class="forecast-countdown" id="forecast-countdown" hidden></p>
-        <p>Á meðan má fylgjast með <a href="#spa">veðri</a>, <a href="#vatnshiti">vatnshita</a> og <a href="#tungl">tungli</a> undir „Aðstæður núna“.</p>
+        <p class="forecast-closed-line">
+          <strong>Veiðitímabilið er ekki í gangi.</strong>
+          <span class="forecast-countdown" id="forecast-countdown">Það hefst 20. apríl.</span>
+        </p>
+        <p class="forecast-closed-sub">Spálíkanið er virkt á veiðitímabilinu, frá 20. apríl til 15. september.</p>
       </div>
 
       <div class="forecast-result" id="forecast-result" hidden>
@@ -224,11 +272,6 @@
           </div>
         </div>
         <aside class="map-info" id="map-info" aria-live="polite">
-          <div class="map-topics-row" id="map-topics-row">
-            <button type="button" class="map-place-button" data-map-place="Veiðileyfi">Veiðileyfi</button>
-            <button type="button" class="map-place-button" data-map-place="Tímabil og reglur">Tímabil og reglur</button>
-            <button type="button" class="map-place-button" data-map-place="Merktir urriðar">Merktir urriðar</button>
-          </div>
           <p class="map-kicker" id="map-kicker">Veiðisvæði</p>
           <h3 id="map-title">Vatnskot</h3>
           <p id="map-description">

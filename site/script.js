@@ -318,6 +318,11 @@ if (mapSvgMount && mapInfo) {
     btn.addEventListener("click", () => updateMapInfo(btn.dataset.mapPlace));
   });
 
+  // Tenglar utan korts (t.d. „Ólafsdrætti“ í Leyfi og reglur) fletta að kortinu og velja staðinn
+  document.querySelectorAll("[data-map-jump-link]").forEach((link) => {
+    link.addEventListener("click", () => updateMapInfo(link.dataset.mapJumpLink));
+  });
+
   mapDescription.addEventListener("click", (event) => {
     const jumpBtn = event.target.closest("[data-map-jump]");
     if (jumpBtn) updateMapInfo(jumpBtn.dataset.mapJump);
@@ -822,7 +827,19 @@ function setNow(key, value, sub) {
   if (!nuna || !vsp) return;
   const now = new Date();
   const md = (now.getUTCMonth() + 1) * 100 + now.getUTCDate(); // t.d. 420 = 20. apríl
-  if (md >= 420 && md <= 915) nuna.parentNode.insertBefore(vsp, nuna);
+  if (md >= 420 && md <= 915) {
+    nuna.parentNode.insertBefore(vsp, nuna);
+    // Valmyndin fylgir röð síðunnar: Veiðispá fremst
+    const navVsp = document.querySelector('.site-nav a[href="#veidispa"]');
+    if (navVsp) navVsp.parentNode.insertBefore(navVsp, navVsp.parentNode.firstElementChild);
+  }
+
+  // Dagsetning við „Aðstæður núna“ svo ljóst sé að tölurnar eru frá deginum í dag.
+  // Bíður eftir DOMContentLoaded svo dagsetningarföllin neðar í skránni séu tilbúin.
+  document.addEventListener("DOMContentLoaded", () => {
+    const dateEl = document.getElementById("now-date");
+    if (dateEl) dateEl.textContent = ` · ${formatWeekdayDayMonth(new Date())}`;
+  });
 })();
 
 function waterTempChartSVG(history) {
@@ -1253,9 +1270,8 @@ function renderSeasonCountdown() {
   const days = Math.round((opening - today) / 86400000);
   if (days <= 0) return;
   el.textContent = days === 1
-    ? "Næsta veiðitímabil hefst á morgun."
-    : `Næsta veiðitímabil hefst eftir ${days} daga.`;
-  el.hidden = false;
+    ? "Það hefst á morgun, 20. apríl."
+    : `Það hefst 20. apríl, eftir ${days} daga.`;
 }
 
 function renderForecast(bundle) {
@@ -1269,6 +1285,8 @@ function renderForecast(bundle) {
   if (!slotResults[0].inSeason) {
     if (closedEl) closedEl.hidden = false;
     if (resultEl) resultEl.hidden = true;
+    // Útskýring og „Gögn sótt“ eiga ekki við spá sem birtist ekki
+    document.getElementById("veidispa")?.classList.add("is-closed");
     renderSeasonCountdown();
     return;
   }
