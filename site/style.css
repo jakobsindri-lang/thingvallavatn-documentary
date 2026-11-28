@@ -2344,6 +2344,19 @@ button {
   margin-top: 0.4rem;
 }
 
+/* „eða“ milli millifærslu og PayPal-hnapps */
+.support-card .support-or {
+  margin: 1.1rem auto 0.7rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.support-paypal {
+  display: table;
+  margin: 0 auto;
+}
+
 .support-card h3 {
   color: var(--color-accent-light);
   font-weight: 400;
