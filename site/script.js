@@ -1285,8 +1285,9 @@ function formatMoonTime(date) {
   });
 }
 
+// Sama snið og aðrar dagsetningar á síðunni („9.11.“), áður „9/11“ í tunglhjólinu
 function formatDayMonth(date) {
-  return `${date.getUTCDate()}/${date.getUTCMonth() + 1}`;
+  return `${date.getUTCDate()}.${date.getUTCMonth() + 1}.`;
 }
 
 // Handvirk íslensk dagsetningasnið. EKKI nota toLocaleDateString/toLocaleString
@@ -1610,19 +1611,54 @@ function initMoonWidget() {
     .catch(() => { cloudEl.textContent = "Óþekkt"; });
 }
 
+// ── „Horfa á upphafið“ í hero: fletta að myndbandinu og spila það ───────────
+// Án þessa fletti hnappurinn bara að myndbandinu og gesturinn þurfti að smella aftur.
+// Ef vafrinn leyfir ekki sjálfvirka spilun stendur myndbandið tilbúið og ekkert brotnar.
+(function () {
+  const btn = document.getElementById('hero-play');
+  const frame = document.querySelector('#upphafid iframe');
+  if (!btn || !frame) return;
+  const wrap = document.getElementById('upphafid');
+  // Staðsetning sem miðjar myndbandið á skjánum, en aldrei undir föstu valmyndinni
+  const targetTop = () => {
+    const r = wrap.getBoundingClientRect();
+    return r.top + window.scrollY - Math.max(72, (window.innerHeight - r.height) / 2);
+  };
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: targetTop(), behavior: 'smooth' });
+    // Myndir sem hlaðast á leiðinni geta hliðrað síðunni: leiðrétta þegar flettingu lýkur,
+    // og ræsa myndbandið fyrst þá (að skipta um src á meðan getur stöðvað flettinguna).
+    setTimeout(() => {
+      window.scrollTo({ top: targetTop(), behavior: 'smooth' });
+      if (!frame.src.includes('autoplay=1')) {
+        frame.src += (frame.src.includes('?') ? '&' : '?') + 'autoplay=1';
+      }
+    }, 900);
+  });
+})();
+
 // ── Support: copy-to-clipboard ──────────────────────────────────────────────
 (function () {
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(btn.dataset.copy).then(() => {
-        btn.classList.add('copied');
-        const orig = btn.getAttribute('aria-label');
-        btn.setAttribute('aria-label', 'Afritað!');
+      // Sýnileg staðfesting („Afritað“ / „Afritun tókst ekki“) fyrir ofan hnappinn, ekki bara aria-label
+      const flash = (cls, label) => {
+        const orig = btn.dataset.origLabel || btn.getAttribute('aria-label');
+        btn.dataset.origLabel = orig;
+        btn.classList.remove('copied', 'copy-failed');
+        btn.classList.add(cls);
+        btn.setAttribute('aria-label', label);
         setTimeout(() => {
-          btn.classList.remove('copied');
+          btn.classList.remove(cls);
           btn.setAttribute('aria-label', orig);
-        }, 1500);
-      }).catch(() => {});
+        }, 1800);
+      };
+      const copy = navigator.clipboard
+        ? navigator.clipboard.writeText(btn.dataset.copy)
+        : Promise.reject(new Error('no clipboard'));
+      copy.then(() => flash('copied', 'Afritað'))
+          .catch(() => flash('copy-failed', 'Afritun tókst ekki, afritaðu handvirkt'));
     });
   });
 })();

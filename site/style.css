@@ -43,6 +43,12 @@ p {
   text-wrap: pretty;
 }
 
+/* Tenglar á hluta (valmynd, „Fara beint í efni“) lenda fyrir neðan föstu valmyndina, ekki undir henni */
+.section,
+.video-embed {
+  scroll-margin-top: 72px;
+}
+
 /* `hidden` á alltaf að fela, líka þegar klasi setur display: flex (t.d. dagahnappar veiðispár) */
 [hidden] {
   display: none !important;
@@ -330,8 +336,9 @@ button {
   padding: 3.5rem 1.5rem;
 }
 
-/* Hver hluti opnar eins og atriði í mynd: stór, vinstrijöfnuð fyrirsögn í ljósum texta.
-   Blágræni liturinn er geymdur fyrir tengla, hnappa og millifyrirsagnir í spjöldum. */
+/* Hver hluti opnar á stórri, miðjaðri fyrirsögn í ljósum texta. Síðan er hugsuð á einum miðás,
+   svo myndasafn og kort í fullri breidd raska ekki línum. Blágræni liturinn er geymdur fyrir
+   tengla, hnappa og millifyrirsagnir. */
 .section h2 {
   font-size: clamp(2rem, 5vw, 3.25rem);
   line-height: 1.1;
@@ -339,7 +346,7 @@ button {
   margin-bottom: 1.75rem;
   font-weight: 600;
   letter-spacing: 0;
-  text-align: left;
+  text-align: center;
 }
 
 /* Fyrirsagnir inni í spjöldum haldast miðjaðar eins og efnið í kring */
@@ -355,16 +362,21 @@ button {
   margin-right: auto;
 }
 
-/* Lesmál: stærra letur og vinstrijafnað undir fyrirsögninni, um 65 stafir á línu.
-   Myndatextar og heimildalínur undir græjum haldast miðjaðar. */
+/* Lesmál: stærra letur í miðjuðum dálki (um 65 stafir á línu), vinstrijafnað innan hans svo
+   lengri texti lesist vel. Stuttir inngangar eru miðjaðir eins og fyrirsögnin. */
 .section > p:not([class]),
 .section > .origin-text,
 .section > .section-intro {
   font-size: 1.125rem;
   line-height: 1.7;
   max-width: 65ch;
-  margin-left: 0;
+  margin-left: auto;
+  margin-right: auto;
   text-align: left;
+}
+
+.section > .section-intro {
+  text-align: center;
 }
 
 /* Fyrsta málsgrein um myndina er inngangur, eins og opnunarorð í mynd: stærri og víðari */
@@ -373,6 +385,7 @@ button {
   line-height: 1.55;
   max-width: 34em;
   margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .section-intro {
@@ -507,7 +520,7 @@ button {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   gap: 2.5rem;
-  align-items: center;
+  align-items: start; /* textinn byrjar strax undir fyrirsögninni (lóðrétt miðjun skildi eftir stórt autt bil) */
 }
 
 .author-text p {
@@ -1282,6 +1295,15 @@ button {
   text-transform: capitalize;
 }
 
+/* Í síma brotnaði dagsetningin misjafnt (sumar í eina línu, aðrar í tvær): alltaf tvær línur, dagur yfir dagsetningu */
+@media (max-width: 600px) {
+  .weather-date {
+    font-size: 0.78rem;
+    line-height: 1.3;
+    word-spacing: 100vw;
+  }
+}
+
 .weather-icon {
   line-height: 0;
   color: var(--color-text);
@@ -1590,6 +1612,10 @@ button {
   line-height: 1.3;
   color: var(--color-accent-light);
   text-align: left;
+  /* situr á vinstri brún lesmálsdálksins fyrir neðan (65ch af 18px Newsreader ≈ 51rem) */
+  max-width: 51rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 .origin-text {
   margin-bottom: 1.2rem;
@@ -1663,6 +1689,7 @@ button {
 }
 
 .section > h2.now-title {
+  text-align: center;
   font-size: 1rem;
   font-weight: 400;
   font-style: italic;
@@ -2401,6 +2428,88 @@ button {
 }
 
 /* ── Support cards ── */
+/* Styrkja verkefnið: ein miðjuð eining. Stutt saga og í hvað styrkurinn fer, síðan greiðsluspjaldið. */
+.support-layout {
+  display: grid;
+  justify-items: center;
+  gap: 2.5rem;
+  text-align: center;
+}
+
+.support-story {
+  max-width: 40rem;
+}
+
+.support-story p {
+  max-width: 34em;
+  font-size: 1.125rem;
+}
+
+.support-layout .support-card-primary {
+  width: 100%;
+  max-width: 34rem;
+}
+
+.support-story .support-lead {
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.support-uses-title {
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent-light);
+}
+
+.support-uses {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 22rem;
+}
+
+.support-uses li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 1.05rem;
+}
+
+.support-uses li:first-child {
+  border-top: 1px solid var(--border-soft);
+}
+
+/* Vatnabobbinn: handteiknaða teikningin sem fylgdi áður spjaldinu „Deila sögu“ */
+.support-story-art {
+  display: block;
+  width: 150px;
+  height: auto;
+  margin: 2rem auto 0;
+  opacity: 0.9;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+}
+
+.support-layout .support-card-primary {
+  padding: 2.2rem 2rem;
+}
+
+.support-layout .support-card-primary h3 {
+  font-size: 1.35rem;
+}
+
+@media (max-width: 800px) {
+  .support-layout {
+    gap: 2rem;
+  }
+  .support-story-art {
+    width: 100px;
+    margin-top: 1.5rem;
+  }
+}
+
 .support-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -2550,6 +2659,31 @@ button {
   color: var(--color-accent-light);
   outline: none;
 }
+.copy-btn.copied::before,
+.copy-btn.copy-failed::before {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-accent);
+  color: var(--color-text);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.copy-btn.copied::before {
+  content: "Afritað";
+}
+
+.copy-btn.copy-failed::before {
+  content: "Afritun tókst ekki";
+  border-color: var(--color-warning);
+}
+
 .copy-btn.copied {
   border-color: var(--color-accent);
   color: var(--color-accent);
