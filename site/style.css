@@ -128,11 +128,13 @@ button {
   z-index: 0;
 }
 
-@media (max-width: 480px) {
+/* Mjór skjár á breiddina: sýna aðeins hægra megin við miðju (þar er bleikjan) */
+@media (max-width: 480px) and (orientation: landscape) {
   .hero-video {
     object-position: 60% center;
   }
 }
+/* Sími á hæðina fær skorna útgáfu (herobleikjur-simi.mp4) sem er þegar miðjuð á réttan stað */
 
 .hero-content {
   position: relative;

@@ -45,7 +45,8 @@
       poster="assets/images/web/hero-video-poster.webp"
       aria-hidden="true"
     >
-      <source data-src="assets/video/herobleikjur.mp4" type="video/mp4">
+      <!-- data-src-simi: 406×720 skorin útgáfa (1,6 MB í stað 7,8 MB) fyrir síma á hæðina; valin í JS -->
+      <source data-src="assets/video/herobleikjur.mp4" data-src-simi="assets/video/herobleikjur-simi.mp4" type="video/mp4">
     </video>
     <script>
       (function () {
@@ -58,7 +59,9 @@
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !slow) {
           var start = function () {
             var source = v.querySelector("source[data-src]");
-            source.src = source.dataset.src;
+            // Sími á hæðina sér bara mjóan miðhluta myndbandsins, svo hann fær skorna útgáfu
+            var phone = window.matchMedia("(max-width: 600px) and (orientation: portrait)").matches;
+            source.src = phone ? source.dataset.srcSimi : source.dataset.src;
             v.preload = "auto";
             v.load();
             v.play().catch(function () {});
