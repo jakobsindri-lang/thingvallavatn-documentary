@@ -1857,15 +1857,12 @@ button {
   margin-bottom: 0.9rem;
 }
 
+/* Þrír aðskildir hnappar, hver með sinn ramma (ekki eitt samskeytt spjald) */
 .now-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
+  gap: 0.9rem;
   margin: 0;
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--border-soft); /* 1px bilin milli reita verða að línum */
 }
 
 /* Hver reitur er hnappur sem opnar ítarefni fyrir neðan */
@@ -1876,24 +1873,28 @@ button {
   background: var(--color-bg-card);
   padding: 1.1rem 1.25rem 1rem;
   min-width: 0;
-  border: none;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
   color: inherit;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .now-item:hover {
   background: #133349;
+  border-color: rgba(143, 217, 232, 0.35);
 }
 
+/* Opinn hnappur: áherslulitur á ramma svo ljóst sé hvaða ítarefni er opið */
 .now-item[aria-expanded="true"] {
   background: #16394f;
+  border-color: var(--color-accent);
 }
 
 .now-item:focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: -2px;
+  outline-offset: 2px;
 }
 
 .now-label {
@@ -1983,8 +1984,11 @@ button {
 }
 
 @media (max-width: 600px) {
+  .now-grid {
+    gap: 0.5rem;
+  }
   .now-item {
-    padding: 0.85rem 0.75rem 0.85rem;
+    padding: 0.85rem 0.5rem 0.85rem;
   }
   .now-sub,
   .now-more {
