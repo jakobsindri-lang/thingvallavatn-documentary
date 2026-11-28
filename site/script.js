@@ -334,7 +334,7 @@ if (mapSvgMount && mapInfo) {
         hit.classList.add("map-hit");
         hit.setAttribute("cx", cx);
         hit.setAttribute("cy", cy);
-        hit.setAttribute("r", "11");
+        hit.setAttribute("r", "14");
         hit.setAttribute("aria-hidden", "true");
         hit.addEventListener("click", () => updateMapInfo(name));
         pointLayer.appendChild(hit);
@@ -1401,6 +1401,8 @@ function initMoonWidget() {
     btn.addEventListener('click', () => {
       // Sýnileg staðfesting („Afritað“ / „Afritun tókst ekki“) fyrir ofan hnappinn, ekki bara aria-label
       const flash = (cls, label) => {
+        const status = document.getElementById('copy-status');
+        if (status) status.textContent = label;
         const orig = btn.dataset.origLabel || btn.getAttribute('aria-label');
         btn.dataset.origLabel = orig;
         btn.classList.remove('copied', 'copy-failed');
@@ -1425,8 +1427,12 @@ function initMoonWidget() {
 (function () {
   const dialog = document.getElementById("still-dialog");
   if (!dialog || typeof dialog.showModal !== "function") return;
-  const img = document.getElementById("still-dialog-img");
   const caption = document.getElementById("still-dialog-caption");
+  // Myndin er búin til hér (ekki í HTML) svo ekkert <img> standi án src áður en glugginn opnast
+  const img = document.createElement("img");
+  img.id = "still-dialog-img";
+  img.alt = "";
+  caption.before(img);
   let opener = null;
 
   document.querySelectorAll(".still").forEach((btn) => {

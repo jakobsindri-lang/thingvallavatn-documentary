@@ -50,12 +50,21 @@
     <script>
       (function () {
         var v = document.currentScript.previousElementSibling;
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          var source = v.querySelector("source[data-src]");
-          source.src = source.dataset.src;
-          v.preload = "auto";
-          v.load();
-          v.play().catch(function () {});
+        // Myndbandið er 7,8 MB. Það er ekki sótt ef notandi biður um minni hreyfingu, hefur kveikt á
+        // gagnasparnaði eða er á hægri tengingu (þá stendur kyrrmyndin). Annars er það sótt eftir að
+        // síðan hefur hlaðist, svo það keppi ekki við texta og myndir.
+        var c = navigator.connection || {};
+        var slow = c.saveData || /(^|-)2g$|^3g$/.test(c.effectiveType || "");
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !slow) {
+          var start = function () {
+            var source = v.querySelector("source[data-src]");
+            source.src = source.dataset.src;
+            v.preload = "auto";
+            v.load();
+            v.play().catch(function () {});
+          };
+          if (document.readyState === "complete") start();
+          else window.addEventListener("load", start, { once: true });
         }
       })();
     </script>
@@ -186,7 +195,6 @@
       <dialog class="still-dialog" id="still-dialog" aria-label="Stækkuð mynd">
         <form method="dialog"><button class="still-close" aria-label="Loka">&#10005;</button></form>
         <figure>
-          <img id="still-dialog-img" alt="">
           <figcaption id="still-dialog-caption"></figcaption>
         </figure>
       </dialog>
@@ -273,6 +281,8 @@
           <!-- Millifærsla: aukaleið fyrir Íslendinga. Í krónum og án gjalda, ólíkt PayPal (evrur, gjald af hverri greiðslu). -->
           <div class="fund-transfer">
             <p class="fund-transfer-title">Eða millifærðu í krónum, án gjalda</p>
+            <!-- Skjálesarar heyra „Afritað“ hér þegar ýtt er á afritunarhnapp -->
+            <span class="sr-only" id="copy-status" aria-live="polite"></span>
             <dl class="fund-account">
               <div class="fund-account-row">
                 <dt>Reikningur</dt>
