@@ -34,6 +34,11 @@ body {
   line-height: 1.7;
 }
 
+/* `hidden` á alltaf að fela, líka þegar klasi setur display: flex (t.d. dagahnappar veiðispár) */
+[hidden] {
+  display: none !important;
+}
+
 /* Hnappar erfa ekki letur sjálfkrafa — án þessa birtast þeir í kerfisletri */
 button {
   font-family: inherit;
@@ -59,6 +64,13 @@ button {
 }
 .hero-compact {
   min-height: 55vh;
+}
+
+/* Í síma á spáin að sjást sem fyrst: lægri hero á veiðisíðunni */
+@media (max-width: 600px) {
+  .hero.hero-compact {
+    min-height: 34vh;
+  }
 }
 
 .hero::after {
@@ -1537,6 +1549,20 @@ button {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   max-width: none;
+}
+
+.forecast-closed p + p {
+  margin-top: 0.75rem;
+}
+
+.forecast-closed a {
+  color: var(--color-accent-light);
+}
+
+/* Niðurtalningin er það eina nýja sem lokaða ástandið segir, svo hún fær meiri þyngd */
+.forecast-closed .forecast-countdown {
+  color: var(--color-text);
+  font-size: 1.15rem;
 }
 
 .forecast-loading {

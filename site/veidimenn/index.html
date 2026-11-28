@@ -34,22 +34,17 @@
 
   <header class="hero hero-compact" id="hero">
     <div class="hero-content">
-      <p class="hero-eyebrow">Veiði í þjóðgarðinum</p>
-      <h1>Þingvallavatn</h1>
-      <p class="subtitle">Aðstæður, spár og veiðisvæðið.</p>
-      <div class="hero-buttons">
-        <a href="#veidispa" class="button button-primary">Veiðispá</a>
-        <a href="../" class="hero-link">← Heimildamyndin</a>
-      </div>
+      <h1>Fyrir veiðimenn</h1>
+      <p class="subtitle">Veiðispá, veður, vatnshiti og tungl við Þingvallavatn.</p>
     </div>
   </header>
 
   <nav class="site-nav">
-    <a href="#kort">Þjóðgarðurinn</a>
     <a href="#veidispa">Veiðispá</a>
     <a href="#spa">Veðurspá</a>
     <a href="#vatnshiti">Vatnshiti</a>
     <a href="#tungl">Tungl</a>
+    <a href="#kort">Kort</a>
     <a href="../" class="nav-crosslink">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         <path d="M4 8h3.2l1.3-1.8h6.8L16.6 8H20a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
@@ -76,49 +71,7 @@
 
   <main>
 
-    <section class="section map-section" id="kort">
-      <h2>Þjóðgarðurinn</h2>
-
-      <div class="map-layout">
-        <div class="map-frame">
-          <div class="interactive-map-svg" id="interactive-map-svg" aria-live="polite">
-            <p class="map-status">Hleð korti&hellip;</p>
-          </div>
-        </div>
-        <aside class="map-info" id="map-info" aria-live="polite">
-          <div class="map-topics-row" id="map-topics-row">
-            <button type="button" class="map-place-button" data-map-place="Veiðileyfi">Veiðileyfi</button>
-            <button type="button" class="map-place-button" data-map-place="Tímabil og reglur">Tímabil og reglur</button>
-            <button type="button" class="map-place-button" data-map-place="Merktir urriðar">Merktir urriðar</button>
-          </div>
-          <p class="map-kicker" id="map-kicker">Veiðisvæði</p>
-          <h3 id="map-title">Vatnskot</h3>
-          <p id="map-description">
-            Miðpunktur veiðinnar í þessari fyrstu útgáfu kortsins. Héðan tengist
-            sagan veiðiaðstæðum, aðgengi og lestri vatnsins.
-          </p>
-          <dl class="map-meta" id="map-meta">
-            <div>
-              <dt>Helstu veiðistaðir</dt>
-              <dd id="map-role">Veiðistaður og viðmiðunarstaður</dd>
-            </div>
-            <div>
-              <dt>Gott að vita</dt>
-              <dd id="map-theme">Veiði, veður, aðgengi</dd>
-            </div>
-          </dl>
-          <div class="map-place-list" id="map-place-list"></div>
-        </aside>
-      </div>
-    </section>
-
     <section class="section weather" id="veidispa">
-      <div class="section-banner">
-        <picture>
-          <source srcset="../assets/images/web/vidtol-banner.webp" type="image/webp">
-          <img src="../assets/images/web/vidtol-banner.png" alt="Jakob Sindri að veiða við Þingvallavatn" loading="lazy">
-        </picture>
-      </div>
       <h2>Veiðispá</h2>
       <div class="vsp-day-tabs" id="vsp-day-tabs" role="tablist" aria-label="Veldu dag" hidden>
         <button type="button" class="vsp-day-tab" data-day-offset="0" role="tab" aria-selected="true"></button>
@@ -132,6 +85,8 @@
       <div class="forecast-closed" id="forecast-closed" hidden>
         <h3>Veiðitímabilið er ekki í gangi</h3>
         <p>Veiðitímabilið í þjóðgarðinum á Þingvöllum er frá 20. apríl til 15. september. Spálíkanið er ekki virkt utan veiðitímabilsins.</p>
+        <p class="forecast-countdown" id="forecast-countdown" hidden></p>
+        <p>Á meðan má fylgjast með <a href="#spa">veðri</a>, <a href="#vatnshiti">vatnshita</a> og <a href="#tungl">tungli</a> hér fyrir neðan.</p>
       </div>
 
       <div class="forecast-result" id="forecast-result" hidden>
@@ -190,7 +145,6 @@
         <p>Spáin vegur saman veðurspá frá Bliku, vatnshita frá Landsvirkjun, skýjahulu og stöðu tunglsins. Vægi þessara þátta byggja ekki á almennri formúlu heldur á reynslu og þekkingu sem hefur safnast við veiðar í Þingvallavatni sjálfu. Líkurnar á töku birtast sem 1 til 5 upplýstir fiskar, því fleiri því betra, en fluguveiðiaðstæður eru metnar slæmar, fínar eða mjög fínar. Urriði og bleikja fá hvor sína spá, enda hafa veður og birta ólík áhrif á tegundirnar tvær.</p>
         <p>Spáin er leiðbeinandi og kemur ekki í stað eigin mats við vatnið, aðstæður geta breyst hratt.</p>
       </details>
-      <p class="weather-source">Spáin byggir á veðurspá, vatnshita, tunglskeiði, skýjahulu og þekkingu sem hefur verið aflað við veiðar í Þingvallavatni.</p>
       <p class="weather-source" id="vsp-fetched-note" hidden></p>
       <p class="weather-source">Spáin er þróuð samhliða <a href="../">heimildamynd um Þingvallavatn</a>.</p>
 
@@ -233,9 +187,50 @@
       <p class="moon-photo-credit">Tunglmynd: <a href="https://commons.wikimedia.org/wiki/File:FullMoon2010.jpg" target="_blank" rel="noopener">Gregory H. Revera</a> / Wikimedia Commons CC BY-SA 3.0</p>
     </section>
 
+    <section class="section map-section" id="kort">
+      <h2>Kort af þjóðgarðinum</h2>
+
+      <div class="map-layout">
+        <div class="map-frame">
+          <div class="interactive-map-svg" id="interactive-map-svg" aria-live="polite">
+            <p class="map-status">Hleð korti&hellip;</p>
+          </div>
+        </div>
+        <aside class="map-info" id="map-info" aria-live="polite">
+          <div class="map-topics-row" id="map-topics-row">
+            <button type="button" class="map-place-button" data-map-place="Veiðileyfi">Veiðileyfi</button>
+            <button type="button" class="map-place-button" data-map-place="Tímabil og reglur">Tímabil og reglur</button>
+            <button type="button" class="map-place-button" data-map-place="Merktir urriðar">Merktir urriðar</button>
+          </div>
+          <p class="map-kicker" id="map-kicker">Veiðisvæði</p>
+          <h3 id="map-title">Vatnskot</h3>
+          <p id="map-description">
+            Miðpunktur veiðinnar í þessari fyrstu útgáfu kortsins. Héðan tengist
+            sagan veiðiaðstæðum, aðgengi og lestri vatnsins.
+          </p>
+          <dl class="map-meta" id="map-meta">
+            <div>
+              <dt>Helstu veiðistaðir</dt>
+              <dd id="map-role">Veiðistaður og viðmiðunarstaður</dd>
+            </div>
+            <div>
+              <dt>Gott að vita</dt>
+              <dd id="map-theme">Veiði, veður, aðgengi</dd>
+            </div>
+          </dl>
+          <div class="map-place-list" id="map-place-list"></div>
+        </aside>
+      </div>
+    </section>
+
     <section class="section" id="myndin">
+      <div class="section-banner">
+        <picture>
+          <source srcset="../assets/images/web/vidtol-banner.webp" type="image/webp">
+          <img src="../assets/images/web/vidtol-banner.png" alt="Jakob Sindri að veiða við Þingvallavatn" loading="lazy">
+        </picture>
+      </div>
       <div class="support-card">
-        <p class="hero-eyebrow">Heimildamynd í þróun</p>
         <h2>Þessi síða er hluti af stærri sögu</h2>
         <p class="section-intro">
           Veiðispáin og kortið hér urðu til samhliða gerð heimildamyndar um

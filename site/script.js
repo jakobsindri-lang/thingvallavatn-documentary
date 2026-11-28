@@ -830,7 +830,7 @@ function initWaterTemp() {
       }
     })
     .catch(() => {
-      widget.innerHTML = '<p class="weather-status">Ekki tókst að sækja vatnshita.</p>';
+      widget.innerHTML = '<p class="weather-status">Ekki tókst að sækja vatnshita núna. <a href="https://www.landsvirkjun.is/rauntimavoktun/vatnshiti-thingvallavatns" target="_blank" rel="noopener">Skoða vatnshita hjá Landsvirkjun</a>.</p>';
     });
 }
 
@@ -1072,7 +1072,8 @@ async function initForecast() {
 
 function setupDayTabs(dayBundles) {
   const tabsEl = document.getElementById("vsp-day-tabs");
-  if (!tabsEl) { renderForecast(dayBundles[0]); return; }
+  // Utan veiðitímabils gera dagahnapparnir ekkert, svo þeir eru faldir og lokunarskilaboðin standa ein
+  if (!tabsEl || !dayBundles[0].slotResults[0].inSeason) { renderForecast(dayBundles[0]); return; }
 
   const buttons = Array.from(tabsEl.querySelectorAll(".vsp-day-tab"));
   buttons.forEach((btn) => {
@@ -1098,6 +1099,23 @@ function setupDayTabs(dayBundles) {
   renderForecast(dayBundles[0]);
 }
 
+// Niðurtalning að næsta veiðitímabili (20. apríl), svo lokaða ástandið segi hvenær má koma aftur.
+// Ísland er alltaf UTC+0, svo UTC-dagsetningar gefa réttan almanaksdag.
+function renderSeasonCountdown() {
+  const el = document.getElementById("forecast-countdown");
+  if (!el) return;
+  const now = new Date();
+  const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  let opening = Date.UTC(now.getUTCFullYear(), 3, 20);
+  if (opening < today) opening = Date.UTC(now.getUTCFullYear() + 1, 3, 20);
+  const days = Math.round((opening - today) / 86400000);
+  if (days <= 0) return;
+  el.textContent = days === 1
+    ? "Næsta veiðitímabil hefst á morgun."
+    : `Næsta veiðitímabil hefst eftir ${days} daga.`;
+  el.hidden = false;
+}
+
 function renderForecast(bundle) {
   const { slotResults, offset } = bundle;
   const loadingEl = document.getElementById("forecast-loading");
@@ -1109,6 +1127,7 @@ function renderForecast(bundle) {
   if (!slotResults[0].inSeason) {
     if (closedEl) closedEl.hidden = false;
     if (resultEl) resultEl.hidden = true;
+    renderSeasonCountdown();
     return;
   }
   if (closedEl) closedEl.hidden = true;
@@ -1460,7 +1479,7 @@ function initMoonWidget() {
   if (!wheelContainer) return;
 
   if (typeof SunCalc === "undefined") {
-    phaseNameEl.textContent = "Ekki tókst að hlaða tunglagögnum.";
+    phaseNameEl.textContent = "Ekki tókst að hlaða tunglagögnum. Reyndu að endurhlaða síðuna.";
     return;
   }
 
