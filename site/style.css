@@ -2701,6 +2701,36 @@ button {
   color: var(--color-text);
 }
 
+/* Markmiðið: stærsta talan í spjaldinu, svo gefandi sjái strax hvað verið er að safna fyrir */
+.section .fund-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.5rem 0 1.25rem;
+  padding: 1rem 0;
+  max-width: none;
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.fund-goal-label {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.fund-goal-amount {
+  font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent-light);
+}
+
+.fund-goal-for {
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
 .section .fund-text {
   margin: 0;
   max-width: 34em;
