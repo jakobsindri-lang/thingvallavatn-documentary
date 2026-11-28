@@ -37,29 +37,6 @@ const mapTheme = document.getElementById("map-theme");
 const mapMeta = document.getElementById("map-meta");
 const mapPlaceList = document.getElementById("map-place-list");
 
-// Hagnýtar upplýsingar (veiðileyfi, reglur, merktir urriðar) birtast í sama
-// upplýsingaspjaldi og staðirnir, valdar með hnöppunum í #map-topics-row.
-const mapTopics = {
-  "Veiðileyfi": `
-    <p>Veiðikortið gildir fyrir landi þjóðgarðsins, frá Langatanga til og með Leirutá (land Kárastaða er undanskilið).</p>
-    <p>Dagsleyfi er keypt í <a href="https://vefverslun.veidikortid.is/product/thingvallavatn/" target="_blank" rel="noopener">vefverslun Veiðikortsins ↗</a>. Börn yngri en 14 ára veiða frítt í fylgd með korthafa.</p>
-    <p><a href="https://veidikortid.is/veidisvaedi/thingvallavatn/" target="_blank" rel="noopener">Veiðikortið – upplýsingasíða um Þingvallavatn ↗</a></p>
-    <p><a href="https://veidikortid.is/wp-content/uploads/2021/11/ThingvellirBaeklingur.pdf" target="_blank" rel="noopener">Bæklingur um veiðar í Þingvallavatni (PDF) ↗</a></p>
-  `,
-  "Tímabil og reglur": `
-    <p>Fluguveiðitímabil er frá 20. apríl til 31. maí. Þá má eingöngu veiða á flugu með flugustöng og öllum urriða skal sleppt. Almenna veiðitímabilið er frá 1. júní til 15. september, og þá er leyfilegt agn fluga, spónn og maðkur.</p>
-    <ul>
-      <li>Veiðibann er í <button type="button" class="map-inline-link" data-map-jump="Ólafsdráttur">Ólafsdrætti</button> frá 1. júlí til 31. ágúst vegna hrygningar kuðungableikjunnar.</li>
-      <li>Öll veiði í Öxarárósi er bönnuð.</li>
-      <li>Veiði úr bátum er bönnuð korthöfum Veiðikortsins.</li>
-      <li>Heimilt er að veiða allan sólarhringinn.</li>
-    </ul>
-  `,
-  "Merktir urriðar": `
-    <p>Vegna rannsókna eru sumir urriðar merktir neðan við bakugga með slöngumerki eða rafeindamerki. Veiðimenn eru beðnir að skrá númer merkis áður en fiski er sleppt og koma upplýsingunum til þjónustumiðstöðvarinnar á Þingvöllum eða <a href="https://laxfiskar.is/index.php?option=com_content&amp;view=article&amp;id=64&amp;Itemid=133&amp;lang=is" target="_blank" rel="noopener">Laxfiska ↗</a>. Þessar upplýsingar nýtast beint í rannsóknum á fiskistofnum vatnsins.</p>
-  `,
-};
-
 const mapPlaces = {
   Vatnskot: {
     kicker: "Gamalt býli",
@@ -273,28 +250,19 @@ if (mapSvgMount && mapInfo) {
 
   const updateMapInfo = (rawName) => {
     const name = normalizeMapName(rawName);
-    const topic = mapTopics[name];
+    const place = mapPlaces[name] || {
+      description:
+        "Þessi staður er hluti af veiðisvæðinu og verður hægt að tengja við nánari upplýsingar síðar.",
+      role: "Örnefni",
+      theme: "Veiði, landslag",
+    };
 
-    if (topic) {
-      mapKicker.textContent = "Hagnýtt";
-      mapTitle.textContent = name;
-      mapDescription.innerHTML = topic;
-      if (mapMeta) mapMeta.hidden = true;
-    } else {
-      const place = mapPlaces[name] || {
-        description:
-          "Þessi staður er hluti af veiðisvæðinu og verður hægt að tengja við nánari upplýsingar síðar.",
-        role: "Örnefni",
-        theme: "Veiði, landslag",
-      };
-
-      mapKicker.textContent = place.kicker || "Veiðisvæði";
-      mapTitle.textContent = name;
-      mapDescription.innerHTML = place.description;
-      mapRole.textContent = place.role;
-      mapTheme.textContent = place.theme;
-      if (mapMeta) mapMeta.hidden = false;
-    }
+    mapKicker.textContent = place.kicker || "Veiðisvæði";
+    mapTitle.textContent = name;
+    mapDescription.innerHTML = place.description;
+    mapRole.textContent = place.role;
+    mapTheme.textContent = place.theme;
+    if (mapMeta) mapMeta.hidden = false;
 
     if (activeMapElement) activeMapElement.classList.remove("is-active");
     activeMapElement = mapSvgMount.querySelector(
@@ -314,9 +282,6 @@ if (mapSvgMount && mapInfo) {
     if (activeMapButton) activeMapButton.classList.add("is-active");
   };
 
-  document.querySelectorAll("#map-topics-row .map-place-button").forEach((btn) => {
-    btn.addEventListener("click", () => updateMapInfo(btn.dataset.mapPlace));
-  });
 
   // Tenglar utan korts (t.d. „Ólafsdrætti“ í Leyfi og reglur) fletta að kortinu og velja staðinn
   document.querySelectorAll("[data-map-jump-link]").forEach((link) => {
@@ -324,7 +289,7 @@ if (mapSvgMount && mapInfo) {
   });
 
   mapDescription.addEventListener("click", (event) => {
-    const jumpBtn = event.target.closest("[data-map-jump]");
+    const jumpBtn = event.target.closest("[data-map-jump]"); // tenglar í lýsingum staða
     if (jumpBtn) updateMapInfo(jumpBtn.dataset.mapJump);
   });
 
@@ -498,281 +463,7 @@ if (mapSvgMount && mapInfo) {
     });
 }
 
-const galleryScroll   = document.querySelector(".gallery-scroll");
-const galleryWrap     = document.getElementById("gallery-wrap");
-const galleryCounter  = document.getElementById("gallery-counter");
-const galleryProgressThumb = document.getElementById("gallery-progress-thumb");
-
-if (galleryScroll) {
-  const items     = Array.from(galleryScroll.children);
-  const totalReal = items.length;
-  const cloneCount = 3;
-
-  // Record image data for lightbox before cloning
-  const imageData = items.map((item, i) => {
-    const img = item.querySelector("img");
-    item.dataset.realIndex = i;
-    return { src: img.getAttribute("src"), alt: img.alt };
-  });
-
-  const makePrepend = items.slice(-cloneCount).map((el, i) => {
-    const c = el.cloneNode(true);
-    c.setAttribute("aria-hidden", "true");
-    c.dataset.realIndex = totalReal - cloneCount + i;
-    return c;
-  });
-  const makeAppend = items.slice(0, cloneCount).map((el, i) => {
-    const c = el.cloneNode(true);
-    c.setAttribute("aria-hidden", "true");
-    c.dataset.realIndex = i;
-    return c;
-  });
-
-  galleryScroll.innerHTML = "";
-  [...makePrepend, ...items, ...makeAppend].forEach((el) => galleryScroll.appendChild(el));
-
-  let currentIndex   = cloneCount;
-  let transitioning  = false;
-  let transitionFallback;
-  let resizeTimer;
-
-  const getItemsPerView = () => {
-    if (window.innerWidth >= 1800) return 3;
-    if (window.innerWidth >= 1000) return 2;
-    return 1;
-  };
-
-  const updateCounter = () => {
-    const real = ((currentIndex - cloneCount) % totalReal + totalReal) % totalReal;
-    if (galleryCounter) {
-      galleryCounter.textContent = `Mynd ${real + 1} af ${totalReal}`;
-    }
-    if (galleryProgressThumb) {
-      galleryProgressThumb.style.width = `${100 / totalReal}%`;
-      galleryProgressThumb.style.left  = `${(real / totalReal) * 100}%`;
-    }
-  };
-
-  const updatePosition = (animate) => {
-    const wrapWidth = galleryScroll.parentElement.offsetWidth;
-    const itemWidth = wrapWidth / getItemsPerView();
-    galleryScroll.style.transition = animate ? "transform 0.4s ease" : "none";
-    galleryScroll.style.transform  = `translateX(${-currentIndex * itemWidth}px)`;
-  };
-
-  galleryScroll.addEventListener("transitionend", (e) => {
-    if (e.propertyName !== "transform") return;
-    clearTimeout(transitionFallback);
-    let wrapped = false;
-    if (currentIndex < cloneCount) {
-      currentIndex += totalReal; wrapped = true;
-    } else if (currentIndex >= cloneCount + totalReal) {
-      currentIndex -= totalReal; wrapped = true;
-    }
-    if (wrapped) { updatePosition(false); void galleryScroll.offsetHeight; }
-    transitioning = false;
-  });
-
-  const goTo = (newIndex) => {
-    if (transitioning) return;
-    transitioning = true;
-    clearTimeout(transitionFallback);
-    currentIndex = newIndex;
-    updatePosition(true);
-    updateCounter();
-    transitionFallback = setTimeout(() => { transitioning = false; }, 600);
-  };
-
-  // Raunverulegt númer myndarinnar sem er fremst (afrit í byrjun/enda eru ekki talin)
-  const currentRealIndex = () => (((currentIndex - cloneCount) % totalReal) + totalReal) % totalReal;
-
-  if (galleryWrap) {
-    galleryWrap.setAttribute("role", "region");
-    galleryWrap.setAttribute("aria-label", "Stillur. Örvatakkar fletta, Enter opnar mynd.");
-    galleryWrap.addEventListener("keydown", (e) => {
-      if (e.target !== galleryWrap) return;
-      if (e.key === "ArrowLeft")  { e.preventDefault(); goTo(currentIndex - 1); }
-      if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex + 1); }
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); lbOpen(currentRealIndex()); }
-    });
-
-    // Sýnilegir fletti-hnappar: án þeirra vissu notendur ekki að myndaröðin hreyfist
-    const navBtn = (cls, label, glyphPath, step) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = `gallery-nav ${cls}`;
-      b.setAttribute("aria-label", label);
-      b.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="${glyphPath}"/></svg>`;
-      b.addEventListener("click", (e) => { e.stopPropagation(); goTo(currentIndex + step); });
-      b.addEventListener("mousedown", (e) => e.stopPropagation());
-      galleryWrap.appendChild(b);
-    };
-    navBtn("gallery-prev", "Fyrri myndir", "M15 5l-7 7 7 7", -1);
-    navBtn("gallery-next", "Næstu myndir", "M9 5l7 7-7 7", 1);
-  }
-
-  const galleryProgress      = document.querySelector(".gallery-progress");
-  const galleryProgressTrack = document.querySelector(".gallery-progress-track");
-  if (galleryProgress && galleryProgressTrack) {
-    galleryProgress.addEventListener("click", (e) => {
-      const rect = galleryProgressTrack.getBoundingClientRect();
-      const frac = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
-      const targetReal = Math.min(totalReal - 1, Math.floor(frac * totalReal));
-      goTo(cloneCount + targetReal);
-    });
-  }
-
-  updatePosition(false);
-  updateCounter();
-
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => updatePosition(false), 100);
-  });
-
-  // Touch swipe
-  let gTouchX = 0;
-  galleryScroll.addEventListener("touchstart", (e) => { gTouchX = e.touches[0].clientX; }, { passive: true });
-  galleryScroll.addEventListener("touchend", (e) => {
-    const delta = e.changedTouches[0].clientX - gTouchX;
-    if (Math.abs(delta) > 48) goTo(currentIndex + (delta < 0 ? 1 : -1));
-  });
-
-  // Mouse drag
-  let gDragX = 0, gDragging = false, gWasDrag = false;
-  galleryScroll.addEventListener("mousedown", (e) => {
-    gDragX = e.clientX; gDragging = true; gWasDrag = false;
-    galleryScroll.style.cursor = "grabbing";
-  });
-  document.addEventListener("mouseup", (e) => {
-    if (!gDragging) return;
-    gDragging = false;
-    galleryScroll.style.cursor = "";
-    const delta = e.clientX - gDragX;
-    if (Math.abs(delta) > 8) gWasDrag = true;
-    if (Math.abs(delta) > 48) goTo(currentIndex + (delta < 0 ? 1 : -1));
-  });
-  galleryScroll.addEventListener("dragstart", (e) => e.preventDefault());
-
-  // ── Lightbox ──────────────────────────────────────────────────────────────
-  const lb = document.createElement("div");
-  lb.className = "lightbox";
-  lb.setAttribute("role", "dialog");
-  lb.setAttribute("aria-modal", "true");
-  lb.setAttribute("aria-label", "Stækkuð mynd");
-  lb.hidden = true;
-  lb.innerHTML = `
-    <button class="lb-close" id="lb-close" aria-label="Loka">&#10005;</button>
-    <button class="lb-prev"  id="lb-prev"  aria-label="Fyrri mynd">&#8249;</button>
-    <figure class="lb-inner">
-      <img class="lb-img" id="lb-img" src="" alt="">
-      <figcaption class="lb-caption" id="lb-caption"></figcaption>
-      <div class="lb-progress" aria-hidden="true">
-        <div class="lb-progress-track">
-          <div class="lb-progress-thumb" id="lb-progress-thumb"></div>
-        </div>
-      </div>
-      <p class="sr-only" id="lb-counter" aria-live="polite"></p>
-    </figure>
-    <button class="lb-next" id="lb-next" aria-label="Næsta mynd">&#8250;</button>`;
-  document.body.appendChild(lb);
-
-  const lbImg     = document.getElementById("lb-img");
-  const lbCaption = document.getElementById("lb-caption");
-  const lbCounter = document.getElementById("lb-counter");
-  const lbProgressThumb = document.getElementById("lb-progress-thumb");
-  const lbClose   = document.getElementById("lb-close");
-  const lbPrevBtn = document.getElementById("lb-prev");
-  const lbNextBtn = document.getElementById("lb-next");
-  const lbFocusEls = [lbClose, lbPrevBtn, lbNextBtn];
-
-  let lbIdx = 0, lbLastFocused = null;
-
-  const lbSet = (idx) => {
-    lbIdx = ((idx % totalReal) + totalReal) % totalReal;
-    lbImg.src = imageData[lbIdx].src;
-    lbImg.alt = imageData[lbIdx].alt;
-    lbCaption.textContent = imageData[lbIdx].alt;
-    lbCounter.textContent = `Mynd ${lbIdx + 1} af ${totalReal}`;
-    if (lbProgressThumb) {
-      lbProgressThumb.style.width = `${100 / totalReal}%`;
-      lbProgressThumb.style.left  = `${(lbIdx / totalReal) * 100}%`;
-    }
-  };
-
-  const lbOpen = (idx) => {
-    lbLastFocused = document.activeElement;
-    lbSet(idx);
-    lb.hidden = false;
-    document.body.style.overflow = "hidden";
-    lbClose.focus();
-  };
-
-  const closeLb = () => {
-    lb.hidden = true;
-    document.body.style.overflow = "";
-    if (lbLastFocused) lbLastFocused.focus();
-  };
-
-  lbClose.addEventListener("click", closeLb);
-  lbPrevBtn.addEventListener("click", () => lbSet(lbIdx - 1));
-  lbNextBtn.addEventListener("click", () => lbSet(lbIdx + 1));
-  lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
-
-  const lbProgress      = lb.querySelector(".lb-progress");
-  const lbProgressTrack = lb.querySelector(".lb-progress-track");
-  if (lbProgress && lbProgressTrack) {
-    lbProgress.addEventListener("click", (e) => {
-      const rect = lbProgressTrack.getBoundingClientRect();
-      const frac = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
-      lbSet(Math.min(totalReal - 1, Math.floor(frac * totalReal)));
-    });
-  }
-
-  lb.addEventListener("keydown", (e) => {
-    if (e.key === "Escape")     { closeLb(); return; }
-    if (e.key === "ArrowLeft")  { lbSet(lbIdx - 1); return; }
-    if (e.key === "ArrowRight") { lbSet(lbIdx + 1); return; }
-    if (e.key === "Tab") {
-      const first = lbFocusEls[0], last = lbFocusEls[lbFocusEls.length - 1];
-      if (e.shiftKey && document.activeElement === first)  { e.preventDefault(); last.focus(); }
-      if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-
-  let lbTouchX = 0;
-  lb.addEventListener("touchstart", (e) => { lbTouchX = e.touches[0].clientX; }, { passive: true });
-  lb.addEventListener("touchend", (e) => {
-    const delta = e.changedTouches[0].clientX - lbTouchX;
-    if (Math.abs(delta) > 48) lbSet(lbIdx + (delta < 0 ? 1 : -1));
-  });
-
-  // Click on gallery item → open lightbox (blocked if was a drag)
-  galleryScroll.addEventListener("click", (e) => {
-    if (gWasDrag) { gWasDrag = false; return; }
-    const item = e.target.closest(".gallery-item");
-    if (!item) return;
-    const idx = parseInt(item.dataset.realIndex, 10);
-    if (!isNaN(idx)) lbOpen(idx);
-  });
-}
-
 const weatherGrid = document.getElementById("weather-grid");
-const weatherTabs = document.querySelectorAll(".weather-tab");
-const weatherPanels = document.querySelectorAll(".weather-panel");
-
-if (weatherTabs.length) {
-  weatherTabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      weatherTabs.forEach((t) => t.classList.remove("active"));
-      weatherPanels.forEach((panel) => {
-        panel.hidden = panel.dataset.panel !== tab.dataset.tab;
-      });
-      tab.classList.add("active");
-    });
-  });
-}
-
 // „Núna við vatnið“ á veiðisíðunni: hver gagnaveita fyllir sinn reit þegar gögnin berast.
 // Ef reitirnir eru ekki á síðunni (t.d. forsíðan) gerir þetta ekkert.
 function setNow(key, value, sub) {
@@ -1752,118 +1443,6 @@ function initMoonWidget() {
   dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
   // Vafrinn skilar fókus sjálfur eftir „close“, svo við bíðum eitt augnablik og setjum hann á myndina
   dialog.addEventListener("close", () => { if (opener) setTimeout(() => opener.focus(), 0); });
-})();
-
-// ── Theme carousel ──────────────────────────────────────────────────────────
-(function () {
-  const themes = [
-    { src: 'assets/images/web/theme-thjodgardur.webp',  alt: 'Landslag við Þingvallavatn',               title: 'Þingvallavatn og þjóðgarðurinn',     desc: 'Sérstaða vatnsins, sagan og staðurinn sem geymir bæði náttúru og menningararf þjóðarinnar.' },
-    { src: 'assets/images/web/theme-bleikja.webp',        alt: 'Bleikja úr Þingvallavatni',                title: 'Bleikjan og afbrigði hennar',         desc: 'Eitt merkasta dæmi heimsins um hraða þróun: fjögur afbrigði bleikju sem hafa aðlagast sama vatninu á mismunandi hátt.' },
-    { src: 'assets/images/web/theme-urridi.webp',         alt: 'Urriði á næturveiði í Þingvallavatni',     title: 'Urriðinn og næturveiðin',             desc: 'Stærsti urriði landsins leynist í djúpinu og kemur fram þegar myrkrið skellur á.' },
-    { src: 'assets/images/web/theme-faedukedja.webp',     alt: 'Vatnabobbi úr Þingvallavatni',             title: 'Mýflugan, vatnabobbinn og vorflugan', desc: 'Smádýrin sem mynda undirstöðu fæðukeðjunnar og halda öllu vistkerfinu gangandi.' },
-    { src: 'assets/images/web/theme-hornsili-murta.webp', alt: 'Murta úr Þingvallavatni',                  title: 'Hornsíli, murta og fæðukeðjan',       desc: 'Hvernig lítil dýr og smáfiskar tengja saman allt lífríki vatnsins, frá botni og upp.' },
-    { src: 'assets/images/web/theme-veidiadferdir.webp',  alt: 'Veiðimaður við Þingvallavatn',             title: 'Veiðiaðferðir og lestur vatnsins',    desc: 'Hvernig á að lesa vatnið: birtu, vind, dýpi og hegðun bleikju og urriða.' },
-    { src: 'assets/images/web/theme-visindi.webp',        alt: 'Líffræðingur að störfum við Þingvallavatn',title: 'Vísindi og sérfræðiþekking',          desc: 'Rannsóknir á lífríki vatnsins og því sem vísindamenn hafa lært af einu merkasta stöðuvatni heims.' },
-    { src: 'assets/images/web/theme-framtid.webp',        alt: 'Alda í óveðri á Þingvallavatni',           title: 'Framtíð vatnsins',                    desc: 'Hvað bíður Þingvallavatns og hvernig getum við varðveitt þennan einstaka heim?' },
-  ];
-
-  const carousel  = document.getElementById('theme-carousel');
-  if (!carousel) return;
-
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const imgEl     = document.getElementById('theme-card-img');
-  const titleEl   = document.getElementById('theme-card-title');
-  const descEl    = document.getElementById('theme-card-desc');
-  const contentEl = document.getElementById('theme-card-content');
-  const nameList  = document.getElementById('theme-name-list');
-  const card      = document.getElementById('theme-main-card');
-  const total     = themes.length;
-
-  let current = 0;
-  let busy    = false;
-
-  const nameBtns = themes.map((t, i) => {
-    const li  = document.createElement('li');
-    const btn = document.createElement('button');
-    btn.className   = 'theme-name-btn' + (i === 0 ? ' is-active' : '');
-    btn.type        = 'button';
-    btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-    btn.textContent = t.title;
-    btn.addEventListener('click', () => goTo(i));
-    li.appendChild(btn);
-    nameList.appendChild(li);
-    return btn;
-  });
-
-  function goTo(idx) {
-    if (busy) return;
-    idx = ((idx % total) + total) % total;
-    if (idx === current) return;
-    busy = true;
-
-    const t = themes[idx];
-    const preload = new Image();
-    preload.src = t.src;
-    let imageReady = preload.complete;
-    let fadeOutDone = false;
-
-    imgEl.classList.add('is-fading');
-    contentEl.classList.add('is-fading');
-
-    const reveal = () => {
-      if (!fadeOutDone || !imageReady) return;
-      current = idx;
-      imgEl.src             = t.src;
-      imgEl.alt             = t.alt;
-      titleEl.textContent   = t.title;
-      descEl.textContent    = t.desc;
-
-      nameBtns.forEach((b, i) => {
-        b.classList.toggle('is-active', i === current);
-        b.setAttribute('aria-pressed', i === current ? 'true' : 'false');
-      });
-
-      imgEl.classList.remove('is-fading');
-      contentEl.classList.remove('is-fading');
-      busy = false;
-    };
-
-    if (!imageReady) {
-      preload.onload  = () => { imageReady = true; reveal(); };
-      preload.onerror = () => { imageReady = true; reveal(); };
-    }
-
-    setTimeout(() => { fadeOutDone = true; reveal(); }, reducedMotion ? 0 : 280);
-  }
-
-  carousel.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
-  });
-
-  let txStart = 0;
-  card.addEventListener('touchstart', (e) => { txStart = e.touches[0].clientX; }, { passive: true });
-  card.addEventListener('touchend',   (e) => {
-    const delta = e.changedTouches[0].clientX - txStart;
-    if (Math.abs(delta) > 48) goTo(delta < 0 ? current + 1 : current - 1);
-  });
-
-  let mxStart  = 0;
-  let dragging = false;
-  card.addEventListener('mousedown', (e) => {
-    mxStart  = e.clientX;
-    dragging = true;
-    card.classList.add('is-dragging');
-  });
-  document.addEventListener('mouseup', (e) => {
-    if (!dragging) return;
-    dragging = false;
-    card.classList.remove('is-dragging');
-    const delta = e.clientX - mxStart;
-    if (Math.abs(delta) > 48) goTo(delta < 0 ? current + 1 : current - 1);
-  });
-  card.addEventListener('dragstart', (e) => e.preventDefault());
 })();
 
 initMoonWidget();
