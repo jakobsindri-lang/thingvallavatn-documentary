@@ -2389,6 +2389,16 @@ button {
 
 @keyframes illus-fadein { from { opacity: 0; } to { opacity: 1; } }
 
+/* Murtan undir texta höfundar: miðjuð í textadálknum, hluti af hlutanum en ekki sér skilrúm */
+.author-murta {
+  display: block;
+  width: 200px;
+  max-width: 60%;
+  height: auto;
+  margin: 2rem auto 0;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+}
+
 /* Single illustration used as a divider between sections */
 .section-divider {
   display: flex;
