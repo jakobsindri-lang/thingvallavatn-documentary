@@ -1729,6 +1729,31 @@ function initMoonWidget() {
   });
 })();
 
+// ── Stillur: smellt á mynd opnar hana stærri í <dialog> ─────────────────────
+// <dialog> sér sjálft um Esc, fókus og að loka á bakgrunn; við skilum fókus á myndina sem var opnuð.
+(function () {
+  const dialog = document.getElementById("still-dialog");
+  if (!dialog || typeof dialog.showModal !== "function") return;
+  const img = document.getElementById("still-dialog-img");
+  const caption = document.getElementById("still-dialog-caption");
+  let opener = null;
+
+  document.querySelectorAll(".still").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const thumb = btn.querySelector("img");
+      opener = btn;
+      img.src = btn.dataset.full;
+      img.alt = thumb.alt;
+      caption.textContent = thumb.alt;
+      dialog.showModal();
+    });
+  });
+  // Smellt utan við myndina (á bakgrunninn) lokar líka
+  dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+  // Vafrinn skilar fókus sjálfur eftir „close“, svo við bíðum eitt augnablik og setjum hann á myndina
+  dialog.addEventListener("close", () => { if (opener) setTimeout(() => opener.focus(), 0); });
+})();
+
 // ── Theme carousel ──────────────────────────────────────────────────────────
 (function () {
   const themes = [

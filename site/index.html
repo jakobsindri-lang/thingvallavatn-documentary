@@ -76,8 +76,6 @@
 
   <nav class="site-nav">
     <a href="#um-myndina">Um myndina</a>
-    <a href="#themu">Þemu</a>
-    <a href="#stada">Staða verkefnisins</a>
     <a href="#stillur">Stillur</a>
     <a href="#hofundur">Um höfundinn</a>
     <a href="#leggja-lid">Styrkja verkefnið</a>
@@ -109,6 +107,19 @@
   </nav>
 
   <main>
+    <!-- PLÁSS FYRIR STIKLU (reel): þegar hún er komin á YouTube, setja VIDEO_ID inn hér, taka
+         athugasemdina utan af, og breyta aðalhnappnum í hero í „Horfa á stikluna“ (href="#stikla").
+    <section class="section" id="stikla">
+      <h2>Stikla</h2>
+      <div class="video-embed video-embed-wide">
+        <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="Stikla: Þingvallavatn"
+                loading="lazy" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+    </section>
+    -->
+
     <section class="section" id="um-myndina">
       <h2>Um myndina</h2>
       <p>
@@ -138,6 +149,18 @@
         veiðina sjálfa og á erindi við breiðan hóp, frá veiðimönnum til
         náttúruunnenda, vísindamanna og almennings.
       </p>
+      <!-- Þemu myndarinnar: áður hringekja með átta hnöppum, nú stuttur listi í lesmálinu -->
+      <h3 class="origin-heading">Þemu myndarinnar</h3>
+      <ul class="theme-list">
+        <li>Þingvallavatn og þjóðgarðurinn</li>
+        <li>Bleikjan og afbrigði hennar</li>
+        <li>Urriðinn og næturveiðin</li>
+        <li>Mýflugan, vatnabobbinn og vorflugan</li>
+        <li>Hornsíli, murta og fæðukeðjan</li>
+        <li>Veiðiaðferðir og lestur vatnsins</li>
+        <li>Vísindi og sérfræðiþekking</li>
+        <li>Framtíð vatnsins</li>
+      </ul>
       <h3 class="origin-heading">Hvernig verkefnið hófst</h3>
       <p class="origin-text">
         Eldra, sjálfstætt verkefni um Þingvallavatn varð kveikjan. Þó mun minna
@@ -160,110 +183,29 @@
       </p>
     </section>
 
-    <section class="section" id="themu">
-      <h2>Þemu</h2>
-      <div class="theme-carousel" id="theme-carousel" tabindex="0" role="region" aria-label="Þemu myndarinnar. Örvatakkar skipta um þema.">
-        <div class="theme-main-card" id="theme-main-card">
-          <img class="theme-card-img" id="theme-card-img"
-               src="assets/images/web/theme-thjodgardur.webp"
-               alt="Landslag við Þingvallavatn">
-          <div class="theme-card-overlay" aria-hidden="true"></div>
-          <div class="theme-card-content" id="theme-card-content" aria-live="polite">
-            <h3 class="theme-card-title" id="theme-card-title">Þingvallavatn og þjóðgarðurinn</h3>
-            <p class="theme-card-desc" id="theme-card-desc">Sérstaða vatnsins, sagan og staðurinn sem geymir bæði náttúru og menningararf þjóðarinnar.</p>
-          </div>
-        </div>
-        <ul class="theme-name-list" id="theme-name-list"></ul>
-      </div>
-    </section>
-
     <div class="section-divider" aria-hidden="true">
       <img src="assets/illustrations/murta.png" alt="" width="540" height="198" loading="lazy">
     </div>
 
-    <section class="section" id="stada">
-      <h2>Staða verkefnisins</h2>
-      <p class="section-intro">
-        Yfirlit yfir hvar heimildamyndin er stödd, frá fyrstu tökum til frumsýningar.
-      </p>
-
-      <ol class="progress-timeline">
-        <li class="progress-step is-done">
-          <p class="progress-status sr-only">Lokið:</p>
-          <p class="progress-label">Drög að handriti skrifuð 2024</p>
-        </li>
-        <li class="progress-step is-done">
-          <p class="progress-status sr-only">Lokið:</p>
-          <p class="progress-label">Tökur hófust 2025 við vatnið og fyrstu viðtöl</p>
-        </li>
-        <li class="progress-step is-current">
-          <img class="progress-current-icon" src="assets/illustrations/himbrimi.png" alt="" aria-hidden="true" width="530" height="284" loading="lazy">
-          <p class="progress-status">Í vinnslu núna</p>
-          <p class="progress-label">Frekari árstíðabundnar tökur og neðansjávarupptökur</p>
-        </li>
-        <li class="progress-step is-upcoming">
-          <p class="progress-status sr-only">Fram undan:</p>
-          <p class="progress-label">Klipping, hljóðvinnsla og litgreining áætluð 2027</p>
-        </li>
-        <li class="progress-step is-upcoming">
-          <p class="progress-status sr-only">Fram undan:</p>
-          <p class="progress-label">Frumsýning áætluð í lok árs 2027 eða byrjun árs 2028</p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="section gallery" id="stillur">
+    <!-- Stillur: sex valdar myndir í grind (áður hringekja með 37 myndum).
+         Smellt á mynd opnar hana stærri í <dialog>; Esc eða „Loka“ lokar. -->
+    <section class="section" id="stillur">
       <h2>Stillur</h2>
-      <p class="section-intro">
-        Úrval mynda úr verkefninu: lífríki, landslag og veiði við Þingvallavatn.
-      </p>
-      <div class="gallery-wrap" id="gallery-wrap" tabindex="0">
-        <div class="gallery-scroll">
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-ur-lofti-1.webp" type="image/webp"><img src="assets/images/web/stillur-ur-lofti-1.jpg" alt="Lambhagi"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-bleikja-5.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-5.jpg" alt="Kuðungableikja" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-veidimadur-4.webp" type="image/webp"><img src="assets/images/web/stillur-veidimadur-4.jpg" alt="Glíma við sílableikju á Leirutá" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-6.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-6.jpg" alt="Urriði" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-himbrimi.webp" type="image/webp"><img src="assets/images/web/stillur-himbrimi.jpg" alt="Himbrimi" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-gaes.webp" type="image/webp"><img src="assets/images/web/stillur-gaes.jpg" alt="Gæs" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-solsetur.webp" type="image/webp"><img src="assets/images/web/stillur-solsetur.jpg" alt="Sólsetur við Arnarfell" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-bleikja-6.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-6.jpg" alt="Kuðungableikja á Langatanga" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-veidimadur-1.webp" type="image/webp"><img src="assets/images/web/stillur-veidimadur-1.jpg" alt="Veiði á grynningum við Nautatanga" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-haus.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-haus.jpg" alt="Stór urriði sem fékkst í næturveiði" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-kria.webp" type="image/webp"><img src="assets/images/web/stillur-kria.jpg" alt="Kría með unga" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-bleikja-1.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-1.jpg" alt="Kuðungableikja í hrygningarbúningi" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-toppfluga.webp" type="image/webp"><img src="assets/images/web/stillur-toppfluga.jpg" alt="Toppfluga, hluti af fæðukeðju vatnsins" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-ur-lofti-2.webp" type="image/webp"><img src="assets/images/web/stillur-ur-lofti-2.jpg" alt="Þingvallavatn, Öxará og fjallahringurinn úr lofti" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-4.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-4.jpg" alt="Kuðungableikjur á riðbletti" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-lomur.webp" type="image/webp"><img src="assets/images/web/stillur-lomur.jpg" alt="Lómur" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-bleikja-7.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-7.jpg" alt="Kuðungableikja" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-storsjor.webp" type="image/webp"><img src="assets/images/web/stillur-storsjor.jpg" alt="Breiðitangi í vonskuveðri að vori" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-veidimadur-2.webp" type="image/webp"><img src="assets/images/web/stillur-veidimadur-2.jpg" alt="Bleikjurnar eru oft nálægt bakkanum" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-i-vatni.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-i-vatni.jpg" alt="Urriða sleppt aftur í Þingvallavatn" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-odinshani-1.webp" type="image/webp"><img src="assets/images/web/stillur-odinshani-1.jpg" alt="Óðinshani" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-naeturveidi.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-naeturveidi.jpg" alt="Næturveiði að vori" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-svifkrabbi.webp" type="image/webp"><img src="assets/images/web/stillur-svifkrabbi.jpg" alt="Svifkrabbi, hluti af lífríki vatnsins" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-hraunbotn.webp" type="image/webp"><img src="assets/images/web/stillur-hraunbotn.jpg" alt="Botn Þingvallavatns úr lofti" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-bleikja-3.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-3.jpg" alt="Stór hængur" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-odinshani-2.webp" type="image/webp"><img src="assets/images/web/stillur-odinshani-2.jpg" alt="Óðinshanar" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-2.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-2.jpg" alt="Urriði" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-veidimadur-3.webp" type="image/webp"><img src="assets/images/web/stillur-veidimadur-3.jpg" alt="Það er von á öllum veðuraðstæðum við veiðar í Þingvallavatni" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-bleikja-4.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-4.jpg" alt="Sílableikja" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-tungl.webp" type="image/webp"><img src="assets/images/web/stillur-tungl.jpg" alt="Tunglið yfir Þingvallavatni" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-rjupa.webp" type="image/webp"><img src="assets/images/web/stillur-rjupa.jpg" alt="Rjúpa" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-5.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-5.jpg" alt="Kuðungableikja á grynningum" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-bleikja-8.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-8.jpg" alt="Áberandi undirmynnt kuðungableikja" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-stokkond.webp" type="image/webp"><img src="assets/images/web/stillur-stokkond.jpg" alt="Stokkönd að kafa eftir fæðu" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-mus.webp" type="image/webp"><img src="assets/images/web/stillur-mus.jpg" alt="Mýsnar eru oft á stjá á nóttinni í Vatnskoti" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-gjamurta.webp" type="image/webp"><img src="assets/images/web/stillur-gjamurta.jpg" alt="Dvergbleikja" loading="lazy"></picture></div>
-          <div class="gallery-item"><picture><source srcset="assets/images/web/stillur-urridi-natt.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-natt.jpg" alt="Urriði sem lét glepjast af stórri straumflugu" loading="lazy"></picture></div>
-        </div>
-      </div>
-      <div class="gallery-progress" aria-hidden="true">
-        <div class="gallery-progress-track">
-          <div class="gallery-progress-thumb" id="gallery-progress-thumb"></div>
-        </div>
-      </div>
-      <p class="sr-only" id="gallery-counter" aria-live="polite"></p>
+      <ul class="stills-grid">
+        <li><button type="button" class="still" data-full="assets/images/web/stillur-solsetur.jpg"><picture><source srcset="assets/images/web/stillur-solsetur.webp" type="image/webp"><img src="assets/images/web/stillur-solsetur.jpg" alt="Sólsetur við Arnarfell" loading="lazy"></picture><span class="still-caption">Sólsetur við Arnarfell</span></button></li>
+        <li><button type="button" class="still" data-full="assets/images/web/stillur-bleikja-1.jpg"><picture><source srcset="assets/images/web/stillur-bleikja-1.webp" type="image/webp"><img src="assets/images/web/stillur-bleikja-1.jpg" alt="Kuðungableikja í hrygningarbúningi" loading="lazy"></picture><span class="still-caption">Kuðungableikja í hrygningarbúningi</span></button></li>
+        <li><button type="button" class="still" data-full="assets/images/web/stillur-urridi-naeturveidi.jpg"><picture><source srcset="assets/images/web/stillur-urridi-naeturveidi.webp" type="image/webp"><img src="assets/images/web/stillur-urridi-naeturveidi.jpg" alt="Næturveiði að vori" loading="lazy"></picture><span class="still-caption">Næturveiði að vori</span></button></li>
+        <li><button type="button" class="still" data-full="assets/images/web/stillur-hraunbotn.jpg"><picture><source srcset="assets/images/web/stillur-hraunbotn.webp" type="image/webp"><img src="assets/images/web/stillur-hraunbotn.jpg" alt="Botn Þingvallavatns úr lofti" loading="lazy"></picture><span class="still-caption">Botn Þingvallavatns úr lofti</span></button></li>
+        <li><button type="button" class="still" data-full="assets/images/web/stillur-himbrimi.jpg"><picture><source srcset="assets/images/web/stillur-himbrimi.webp" type="image/webp"><img src="assets/images/web/stillur-himbrimi.jpg" alt="Himbrimi" loading="lazy"></picture><span class="still-caption">Himbrimi</span></button></li>
+        <li><button type="button" class="still" data-full="assets/images/web/stillur-veidimadur-1.jpg"><picture><source srcset="assets/images/web/stillur-veidimadur-1.webp" type="image/webp"><img src="assets/images/web/stillur-veidimadur-1.jpg" alt="Veiði á grynningum við Nautatanga" loading="lazy"></picture><span class="still-caption">Veiði á grynningum við Nautatanga</span></button></li>
+      </ul>
+      <dialog class="still-dialog" id="still-dialog" aria-label="Stækkuð mynd">
+        <form method="dialog"><button class="still-close" aria-label="Loka">&#10005;</button></form>
+        <figure>
+          <img id="still-dialog-img" alt="">
+          <figcaption id="still-dialog-caption"></figcaption>
+        </figure>
+      </dialog>
     </section>
 
     <section class="section" id="hofundur">
