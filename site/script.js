@@ -784,8 +784,12 @@ function waterTempChartSVG(history) {
     const lbl = formatDayMonthDot(dt);
     return `<text x="${toX(i).toFixed(1)}" y="${H - 5}" text-anchor="middle" font-size="9.5" fill="rgba(200,215,220,0.55)">${lbl}</text>`;
   }).join("");
-  const yMin = `${minT.toFixed(1)}°`;
-  const yMax = `${maxT.toFixed(1)}°`;
+  // Ásmerkingar sýna raunverulegt hæsta og lægsta gildi og sitja við þá punkta.
+  // (minT/maxT eru víkkuð um 0,3° til að gefa línunni rými; þau gildi máttu ekki birtast sem tölur.)
+  const realMin = Math.min(...temps);
+  const realMax = Math.max(...temps);
+  const yMin = `${realMin.toFixed(1).replace(".", ",")}°`;
+  const yMax = `${realMax.toFixed(1).replace(".", ",")}°`;
 
   const lastIdx = n - 1;
   const lastX = toX(lastIdx);
@@ -818,8 +822,8 @@ function waterTempChartSVG(history) {
     ${regularPoints}
     ${currentPoint}
     ${xLabels}
-    <text x="${padL - 4}" y="${(toY(maxT - 0.3) + 4).toFixed(1)}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMax}</text>
-    <text x="${padL - 4}" y="${(toY(minT + 0.3) + 4).toFixed(1)}" text-anchor="end" font-size="9.5" fill="rgba(200,215,220,0.45)">${yMin}</text>
+    <text x="${padL - 4}" y="${(toY(realMax) + 4).toFixed(1)}" text-anchor="end" font-size="10.5" fill="rgba(200,215,220,0.75)">${yMax}</text>
+    <text x="${padL - 4}" y="${(toY(realMin) + 4).toFixed(1)}" text-anchor="end" font-size="10.5" fill="rgba(200,215,220,0.75)">${yMin}</text>
   </svg>`;
 }
 

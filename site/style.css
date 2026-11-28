@@ -137,8 +137,10 @@ button {
 
 /* Titill eins og á upphafsskilti kvikmyndar: hástafir, vítt bil, ljós texti, enginn ljómi.
    Skuggi með hliðrun heldur titlinum læsilegum yfir myndbandinu. */
+/* Stærðin er valin svo ÞINGVALLAVATN (13 stafir með víðu bili, um 10,4em) komist í eina línu
+   innan 900px reitsins á öllum breiddum. Aldrei brjóta orð í miðju: það gaf „ÞINGVALLAVAT / N“. */
 .hero-content h1 {
-  font-size: clamp(1.9rem, 7vw, 5.5rem);
+  font-size: clamp(1.9rem, 6.2vw, 5rem);
   line-height: 1.05;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -146,7 +148,6 @@ button {
   font-weight: 400;
   color: var(--color-text);
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
-  overflow-wrap: anywhere;
 }
 
 /* „Heimildamynd í þróun“ undir titlinum, eins og lína á kvikmyndaplakati */
